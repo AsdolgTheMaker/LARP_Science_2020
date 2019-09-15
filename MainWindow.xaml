@@ -1,0 +1,78 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LARP.Science"
+        xmlns:Database="clr-namespace:LARP.Science.Database" x:Class="LARP.Science.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="684.056" Width="1316.873"
+        WindowState="Maximized" WindowStyle="None">
+
+    <TabControl x:Name="tabctrlRootNavigator" Height="auto" Width="auto">
+        <TabItem x:Name="tabNavigation" Header="NavigationPage" Visibility="Collapsed">
+            <Grid x:Name ="NavigationPage">
+                <Grid Width="215" HorizontalAlignment="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="btnNavMenuPatients" Content="Пациенты" Grid.Row="0" Click="BtnNavMenuPatients_Click"/>
+                    <Button x:Name="btnNavMenuJournal" Content="Операции" Grid.Row="1" Click="BtnNavMenuJournal_Click"/>
+                    <Button x:Name="btnNavMenuStorage" Content="Склад" Grid.Row="2" Click="BtnNavMenuStorage_Click"/>
+                    <Button x:Name="btnNavMenuEconomics" Content="Экономика" Grid.Row="3" Click="BtnNavMenuEconomics_Click"/>
+                    <Button x:Name="btnNavMenuOther" Content="Прочее" Grid.Row="4" Click="BtnNavMenuOther_Click"/>
+                </Grid>
+            </Grid>
+        </TabItem>
+
+        <!-- Patients Page -->
+        <!--  Column 1 - Menu -->
+        <!--    Row 2 - To Main Menu -->
+        <TabItem x:Name="tabPatients" Header="Patients Page" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click"/>
+                <DataGrid Name="datagridPatientsList"  Grid.Column="1" Grid.RowSpan="2"/>
+            </Grid>
+        </TabItem>
+
+        <!-- Journal Page -->
+        <TabItem x:Name="tabJournal" Header="Journal Page" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5">
+                <Button x:Name="btnJournalBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+            </Grid>
+        </TabItem>
+
+        <!-- Storage Page -->
+        <TabItem x:Name="tabStorage" Header="Storage Page" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5">
+                <Button x:Name="btnStorageBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+            </Grid>
+        </TabItem>
+
+        <!-- Economics Page -->
+        <TabItem x:Name="tabEconomics" Header="Economics Page" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5">
+                <Button x:Name="btnEconomicsBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+            </Grid>
+        </TabItem>
+
+        <!-- Other Page -->
+        <TabItem x:Name="tabOther" Header="Other Page" Visibility="Collapsed">
+            <Grid Background="#FFE5E5E5">
+                <Button x:Name="btnOtherBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
