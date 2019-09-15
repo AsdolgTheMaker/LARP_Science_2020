@@ -5,7 +5,8 @@
         public enum RaceType
         {
             Human,
-            Zabrak
+            Zabrak,
+            Undefined
         }
     }
 }

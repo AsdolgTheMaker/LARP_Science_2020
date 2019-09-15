@@ -15,8 +15,12 @@ namespace LARP.Science.Database
         public Augment AugmentEquivalent;
         public BodyAlign Align;
 
-        internal string srcName = "";
-        internal string srcDescr = "";
+        // Это очень важные параметры - именно srcName отвечает за слот, в который попадёт орган при отображении.
+        internal string srcName;
+        internal string srcDescr;
+
+        public string GetNativeName() => srcName;
+        public string GetNativeDescription() => srcDescr;
 
         public enum BodyAlign
         {
@@ -39,9 +43,6 @@ namespace LARP.Science.Database
             if (AugmentEquivalent == null)
             {
                 AugmentEquivalent = augment;
-
-                srcName = Name;
-                srcDescr = Description;
 
                 Name = augment.Name;
                 Description = augment.Description;
@@ -104,25 +105,21 @@ namespace LARP.Science.Database
 
         public Organ(
             string name,
-            string description = "",
+            string description,
             Augment augment = null,
             Dictionary<string, string> customParams = null,
             BodyAlign align = BodyAlign.None)
         {
-            id = Controller.NewOrgan();
+            srcName = name;
+            srcDescr = description;
+
             AugmentEquivalent = augment;
             Name = augment == null ? name : augment.Name;
             Description = augment == null ? description : augment.Description;
             CustomParameters = customParams;
             Align = align;
-        }
 
-        // Debug
-        public class DuplicateOrgansException : Exception
-        {
-            public DuplicateOrgansException() {}
-            public DuplicateOrgansException(string message) : base(message) {}
-            public DuplicateOrgansException(string message, Exception inner) : base(message, inner) {}
+            id = Controller.NewOrgan();
         }
     }
 }

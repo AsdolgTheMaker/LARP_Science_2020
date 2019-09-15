@@ -34,8 +34,8 @@ namespace LARP.Science.Database
             Organ.Presets["Левый глаз"], Organ.Presets["Правый глаз"],
             Organ.Presets["Левая рука"], Organ.Presets["Правая рука"],
             Organ.Presets["Сердце"],
-            Organ.Presets["Легкое"], Organ.Presets["Легкое"],
-            Organ.Presets["Нога"], Organ.Presets["Нога"]
+            Organ.Presets["Левое легкое"], Organ.Presets["Правое легкое"],
+            Organ.Presets["Левая нога"], Organ.Presets["Правая нога"]
         };
 
         public Character(string name,
@@ -56,19 +56,9 @@ namespace LARP.Science.Database
             Controller.NewCharacter(this);
         }
 
-        // Constructor validity tools
-        private void CheckOrganDuplicates()
-        {
-            for (int i = 0; i < Organs.Count - 1; i++)
-            {
-                string comparer = Organs[i].Name;
-                for (int j = i + 1; j < Organs.Count; j++)
-                    if (comparer == Organs[j].Name) throw new Organ.DuplicateOrgansException("Ошибка персонажа " + this.Name + ":\nОбнаружены дублирующиеся органы.");
-            }
-        }
         private static void ValidateCharacter(Character character)
         {
-            character.CheckOrganDuplicates();
+            // empty for now
         }
 
     }
