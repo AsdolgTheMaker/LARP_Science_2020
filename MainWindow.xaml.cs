@@ -26,7 +26,7 @@ namespace LARP.Science
             Database.Controller.Initialize(patientsList: datagridPatientsList);
 
             #if DEBUG
-                Database.Controller.CreateTestingDatabase();
+                Database.Controller.CreateTestDatabase();
             #else
                 // TODO - Read initial data from... somewhere.
             #endif

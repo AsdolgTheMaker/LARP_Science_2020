@@ -39,9 +39,28 @@ namespace LARP.Science.Database
             patientsList.ItemsSource = Characters;
         }
 
-        public static void CreateTestingDatabase()
+        public static void CreateTestDatabase()
         {
-            
+            Characters = new List<Character>()
+            {
+                // Человек со стандартным набором органов
+                new Character(name: "Обычный Джо", description: "Это самый обычный Джо, которого только можно вообразить."),
+
+                // Человек с протезом левой ноги
+                new Character(name: "Одноногий Бача", description: "Бача с рождения служил на флоте, а ногу потерял после неудачного опыта с ролевиками.",
+                    organs: new List<Organ>()
+                    {
+                        Organ.Presets["Кожа"],
+                        Organ.Presets["Мозг"],
+                        Organ.Presets["Левый глаз"], Organ.Presets["Правый глаз"],
+                        Organ.Presets["Левая рука"], Organ.Presets["Правая рука"],
+                        Organ.Presets["Сердце"],
+                        Organ.Presets["Легкое"], Organ.Presets["Легкое"],
+                        new Organ("Левая нога", Organ.PresetDescriptions["Нога"], new Augment("Протез левой ноги", "Протез из обработанного воронежскими электриками металла. ")),
+                        Organ.Presets["Правая нога"]
+                    })
+
+            };
         }
     }
 }

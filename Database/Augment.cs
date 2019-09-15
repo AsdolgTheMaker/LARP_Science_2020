@@ -10,11 +10,13 @@ namespace LARP.Science.Database
     {
         public string Name;
         public string Description;
+        public Dictionary<string, string> CustomParameters;
 
-        public Augment(string name, string description = "...")
+        public Augment(string name, string description, Dictionary<string, string> customParams = null)
         {
             Name = name;
             Description = description;
+            CustomParameters = customParams;
         }
     }
 }
