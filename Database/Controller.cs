@@ -6,88 +6,107 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows;
 using System.Data;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.IO;
 
 namespace LARP.Science.Database
 {
+    // Этот класс можно назвать главным бэк-эндом всего нашего бэк-энда.
     public static class Controller
     {
-        public static List<Character> Characters;
+        public static readonly string CurrentExecutableDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public static readonly string CharactersDatabaseFile = "characters.json";
+        public static readonly string UnknownDataTemplate = "[ДАННЫЕ УДАЛЕНЫ]";
+        private static readonly List<Character> Characters = new List<Character>();
         public static List<string> CharacterIDs = new List<string>() { "0000" };
-        public static string GetFreeCharacterID()
+
+        public static string GetAndRegisterNewCharacterID()
         {
             string id = "0000";
+            Random random = new Random();
             while (CharacterIDs.Contains(id))
-                id = new Random().Next(1000, 9999).ToString();
+                id = random.Next(1000, 9999).ToString();
             CharacterIDs.Add(id);
 
             return id;
         }
-        public static void NewCharacter(Character character)
-        {
-            Characters.Add(character);
-        }
-
-        public static int GlobalOrganCounter = 0;
-        public static int NewOrgan()
-        {
-            GlobalOrganCounter++;
-            return GlobalOrganCounter;
-        }
+        public static void RegisterCharacter(Character character) => Characters.Add(character);
+        public static List<Character> GetCharacters() => Characters;
 
         public static void Initialize(System.Windows.Controls.DataGrid patientsList = null)
         {
-            patientsList.ItemsSource = Characters;
+            if (patientsList == null) throw new ArgumentNullException("patientsList");
         }
 
-#if DEBUG // Это нам в релизе не потребуется. Я на это очень надеюсь.
+        public static void SetCharactersDatabase(List<Character> input)
+        {
+            Characters.Clear();
+            foreach (Character character in input)
+                RegisterCharacter(character);
+        }
+
+        public static void ReadCharacters()
+        {
+            if (File.Exists(CharactersDatabaseFile))
+            { // read database from file
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Character>));
+                MemoryStream stream = new MemoryStream(File.ReadAllBytes(CharactersDatabaseFile));
+                stream.Position = 0;
+                SetCharactersDatabase(serializer.ReadObject(stream) as List<Character>);
+            }
+        }
+
+        public static void SaveCharacters()
+        {
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Character>));
+            MemoryStream stream = new MemoryStream();
+            serializer.WriteObject(stream, GetCharacters());
+            stream.Position = 0;
+            var streamRead = new StreamReader(stream);
+            File.WriteAllText(CharactersDatabaseFile, streamRead.ReadToEnd());
+        }
+
+        #if DEBUG // Create testing database for debug configs
         public static void CreateTestDatabase()
         {
-            Characters = new List<Character>();
+            // A human with standart organs set
+            Character tempContainer = new Character(
+                name: "Обычный Джо",
+                gender: Character.GenderType.Male,
+                race: Character.RaceType.Human,
+                description: "Это самый обычный Джо, которого только можно вообразить.");
 
-            // Человек со стандартным набором органов
-            new Character(name: "Обычный Джо", description: "Это самый обычный Джо, которого только можно вообразить.");
+            // A human with augmented left leg
+            tempContainer = new Character(
+                name: "Одноногий Бача",
+                gender: Character.GenderType.Male,
+                race: Character.RaceType.Human,
+                description: "Бача с рождения служил на флоте, а ногу потерял после неудачного знакомства с ролевиками.");
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Стальной протез левой ноги", Character.OrganSlot.SlotType.LeftLeg));
 
-            // Человек с протезом левой ноги
-            new Character(name: "Одноногий Бача", description: "Бача с рождения служил на флоте, а ногу потерял после неудачного знакомства с ролевиками.",
-                organs: new List<Organ>()
-                {
-                    Organ.Presets["Кожа"],
-                    Organ.Presets["Мозг"],
-                    Organ.Presets["Левый глаз"], Organ.Presets["Правый глаз"],
-                    Organ.Presets["Левая рука"], Organ.Presets["Правая рука"],
-                    Organ.Presets["Сердце"],
-                    Organ.Presets["Левое легкое"], Organ.Presets["Правое легкое"],
-                    new Organ("Левая нога", Organ.PresetDescriptions["Нога"],
-                        new Augment("Протез левой ноги", "Протез собран из кусков высокотехнологичного мусора, которым изобилуют нижние уровни Корусанта.")),
-                    Organ.Presets["Правая нога"]
-                });
-
-            // Гуманоид неизвестной расы с кибернетическим телом.
-            new Character(name: "Терминатор", description: "Прислан Скайнет из будущего чтобы остановить ролёвку про киберпанк, зашедшую слишком далеко.", race: Character.RaceType.Undefined,
-                organs: new List<Organ>()
-                {
-                    new Organ("Кожа", Organ.PresetDescriptions["Кожа"],
-                        new Augment("Мифриловый покров", "Практически неотличим от настоящей кожи. Нижние слои покрова выкованы древнейшими гномами-мастерами.")),
-                    new Organ("Мозг", Organ.PresetDescriptions["Мозг"],
-                        new Augment("Процессор Intel® Core™ i9-9820X серии X", "В семействе процессоров Intel® Core™ серии X разблокирован множитель для обеспечения дополнительного запаса производительности. Среди новых функций: возможность оверклокинга каждого ядра в отдельности, управление коэффициентом AVX для повышения стабильности, а также управление напряжением VccU в экстремальных сценариях. В сочетании с такими инструментами, как Intel® Extreme Tuning Utility (Intel® XTU) и Intel® Extreme Memory Profile (Intel® XMP) вы получаете мощный набор для достижения максимальной производительности.")),
-                    new Organ("Левый глаз", Organ.PresetDescriptions["Глаз"], align: Organ.BodyAlign.Left,
-                        augment: new Augment("Камера от iPhone 11", "В iPhone 11 используется новая система двух камер — широкоугольной и сверхширокоугольной. Благодаря тесной интеграции с iOS 13 она позволяет снимать видео высочайшего качества и значительно расширяет функциональность, доступную при фотосъёмке." +
-                        "\nВидеозаписи, снятые на камеру iPhone 11, отличаются удивительной чёткостью. Кроме того, обе камеры поддерживают съёмку видео 4K с расширенным динамическим диапазоном, хорошо проработанными светлыми участками и кинематографической стабилизацией видео. Сверхширокоугольная камера с более широким углом обзора и большой фокусной плоскостью отлично подходит для съёмки сцен с движением." +
-                        "\nПереключаться между двумя камерами очень легко, а функция аудиозума сопоставляет источник звука с тем, что вы видите в кадре, приглушая посторонние шумы. В iOS 13 каждому доступны мощные инструменты редактирования видео. Новый интерфейс приложения «Камера» позволяет поворачивать и обрезать кадр, увеличивать экспозицию и мгновенно применять фильтры.")),
-                    new Organ("Правый глаз", Organ.PresetDescriptions["Глаз"], align: Organ.BodyAlign.Right,
-                        augment: new Augment("Окуляр маски Корво Аттано", "Система тройного окуляра маски Корво из Dishonored позволяет рассматривать даже сильно отдалённые объекты.")),
-                    new Organ("Сердце", Organ.PresetDescriptions["Сердце"], align: Organ.BodyAlign.Middle,
-                        augment: new Augment("Водяной насос из OBI", "Насос повышенной мощности, приобретенный в OBI в секции дачной техники.")),
-                    new Organ("Левая рука", Organ.PresetDescriptions["Рука"], align: Organ.BodyAlign.Left,
-                        augment: new Augment("Рука Супер Тенген Топпа Гуррен-Лаганна", "Рука самого громадного существа за всю история кинематографа. Как это вообще присобачено к телу?")),
-                    new Organ("Правая рука", Organ.PresetDescriptions["Рука"], align: Organ.BodyAlign.Right,
-                        augment: new Augment("Протез в виде Стар Платинума", "Выплавленный из сплава стали, мифрила, спиральной энергии, хренулима и ещё бог знает чего, этот протез воплощает секретную технику легендарного джедая Джотаро Куджо. Может действовать без участия воли владельца.")),
-                    new Organ("Левая нога", Organ.PresetDescriptions["Нога"], align: Organ.BodyAlign.Left,
-                        augment: new Augment("Складной миниган", "Это миниган, который складывается пополам (типа коленный сустав). Т.е. тут просто миниган вместо ноги, вообще ничего интересного.")),
-                    new Organ("Правая нога", Organ.PresetDescriptions["Нога"], align: Organ.BodyAlign.Right,
-                        augment: new Augment("Боль программиста", "Протез, выглядящий как плавающие в воздухе нули и единицы. Если поднести к ним ухо, можно услышать плач программиста."))
-                });
+            // Unknown race humanoid with cybernetic body
+            tempContainer = new Character(
+                name: "Терминатор", 
+                gender: Character.GenderType.Male,
+                race: Character.RaceType.Undefined,
+                description: "Прислан Скайнет из будущего чтобы остановить ролёвку про киберпанк, зашедшую слишком далеко.");
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Процессор Intel Core i9 серии X", Character.OrganSlot.SlotType.Brain));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Мифриловое покрытие", Character.OrganSlot.SlotType.Body));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Гидравлический пресс «ORA-HAN-D»", Character.OrganSlot.SlotType.LeftArm));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Отбойный молоток класса WK", Character.OrganSlot.SlotType.RightArm));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Валенок левый", Character.OrganSlot.SlotType.LeftLeg));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Костыль", Character.OrganSlot.SlotType.RightLeg));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Насос из колодца на даче", Character.OrganSlot.SlotType.Heart));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Замкнутая система жизнеобеспечения БИОС-3", Character.OrganSlot.SlotType.Breath));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Неизвестно что это, но по документации должно быть здесь", Character.OrganSlot.SlotType.Spleen));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Печень, распечатанная на 3D-принтере", Character.OrganSlot.SlotType.Liver));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Топливный бак от девятки", Character.OrganSlot.SlotType.Stomach));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Водопроводная система из сантехнического ларька", Character.OrganSlot.SlotType.Intestines));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Почки от дуба", Character.OrganSlot.SlotType.Kidneys));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Пылевой мешок от пылесоса", Character.OrganSlot.SlotType.Bladder));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Система клонирвоания Grineer", Character.OrganSlot.SlotType.Reproduction));
         }
-#endif
+        #endif
     }
 }

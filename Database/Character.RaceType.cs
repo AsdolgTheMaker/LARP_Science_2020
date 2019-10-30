@@ -8,5 +8,19 @@
             Zabrak,
             Undefined
         }
+
+        public string GetRace => GetRaceByEnum(Race);
+        public string GetRaceByEnum(RaceType input)
+        {
+            switch (input)
+            {
+                case RaceType.Human:
+                    return "Человек";
+                case RaceType.Zabrak:
+                    return "Забрак";
+                case RaceType.Undefined:
+                default: return "Неопределено";
+            }
+        }
     }
 }

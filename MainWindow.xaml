@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LARP.Science"
-        xmlns:Database="clr-namespace:LARP.Science.Database" x:Class="LARP.Science.MainWindow"
+        x:Class="LARP.Science.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="684.056" Width="1316.873"
+        Title="MainWindow" Height="713.056" Width="1254.873"
         WindowState="Maximized" WindowStyle="None">
 
     <TabControl x:Name="tabctrlRootNavigator" Height="auto" Width="auto">
-        <TabItem x:Name="tabNavigation" Header="NavigationPage" Visibility="Collapsed">
+        <TabItem x:Name="tabNavigation" Header="Navigation">
             <Grid x:Name ="NavigationPage">
                 <Grid Width="215" HorizontalAlignment="Left">
                     <Grid.RowDefinitions>
@@ -32,44 +31,83 @@
         <!-- Patients Page -->
         <!--  Column 1 - Menu -->
         <!--    Row 2 - To Main Menu -->
-        <TabItem x:Name="tabPatients" Header="Patients Page" Visibility="Collapsed">
+        <TabItem x:Name="tabPatients" Header="Patients">
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click"/>
+                <DataGrid Name="datagridPatientsList" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}"/>
+                        <DataGridTextColumn Header="Раса" Binding="{Binding Path=GetRace}"/>
+                        <DataGridTextColumn Header="Дополнительно" Binding="{Binding Path=Description}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button x:Name="btnPatientsForward" Content="Просмотреть" Grid.Column="2" Click="BtnNavViewPatients_Click"/>
+                <Button x:Name="DEBUG_btnSerializeTest" Content="Тест сериализатора"  Click="Debug_SerializerTest" Grid.Column="1" Margin="37,551,0,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167"/>
+                <Button x:Name="DEBUG_btnDeserializeTest" Content="Тест десериализатора"  Click="Debug_DeserializerTest" Grid.Column="1" Margin="204,551,0,0" HorizontalAlignment="Left" Width="167" Height="31" VerticalAlignment="Top"/>
+                <Button x:Name="DEBUG_btnClearCharacters" Content="Очистить персонажей из контроллера"  Click="Debug_ClearCharacters" Grid.Column="1" Margin="457,551,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
+                <Button x:Name="DEBUG_btnCreateTestingDB" Content="Ренициализировать тестовую базу данных"  Click="Debug_ReinitializeTestingDatabase" Grid.Column="1" Margin="702,551,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
+            </Grid>
+        </TabItem>
+
+        <!-- View Patient -->
+        <TabItem x:Name="tabPatientView" Header="Patient View" >
             <Grid Background="#FFE5E5E5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click"/>
-                <DataGrid Name="datagridPatientsList"  Grid.Column="1" Grid.RowSpan="2"/>
+                <Button x:Name="btnViewPatientBack" Content="Назад" Grid.Column="0" Click="BtnNavMenuPatients_Click"/>
+                <Image x:Name="imgPatientViewHead" Grid.Column="1" HorizontalAlignment="Left" Margin="682,45,0,0" VerticalAlignment="Top" Width="100" Source="Resources/Bodies/Human/Male/Head.png"/>
+                <Image x:Name="imgPatientViewBody" Grid.Column="1" HorizontalAlignment="Left" Height="234" Margin="654,105,0,0" VerticalAlignment="Top" Width="158" Source="Resources/Bodies/Human/Male/Body.png"/>
+                <Image x:Name="imgPatientViewArmRight" Grid.Column="1" HorizontalAlignment="Left" Height="86" Margin="402,105,0,0" VerticalAlignment="Top" Width="252" Source="Resources/Bodies/Human/Male/RightArm.png"/>
+                <Image x:Name="imgPatientViewArmLeft" Grid.Column="1" HorizontalAlignment="Left" Height="86" Margin="812,105,0,0" VerticalAlignment="Top" Width="252" Source="Resources/Bodies/Human/Male/LeftArm.png"/>
+                <Image x:Name="imgPatientViewLegRight" Grid.Column="1" HorizontalAlignment="Left" Height="216" Margin="645,339,0,0" VerticalAlignment="Top" Width="85" Source="Resources/Bodies/Human/Male/RightLeg.png"/>
+                <Image x:Name="imgPatientViewLegLeft" Grid.Column="1" HorizontalAlignment="Left" Height="216" Margin="730,339,0,0" VerticalAlignment="Top" Width="92" Source="Resources/Bodies/Human/Male/LeftLeg.png"/>
+                <Image x:Name="imgPatientViewBrain" Grid.Column="1" HorizontalAlignment="Left" Height="40" Margin="694,45,0,0" VerticalAlignment="Top" Width="78" Source="Resources/Bodies/Human/Male/Brain.png"/>
+                <Image x:Name="imgPatientViewHeart" Grid.Column="1" HorizontalAlignment="Left" Height="59" Margin="740,132,0,0" VerticalAlignment="Top" Width="67" Source="Resources/Bodies/Human/Male/Heart.png"/>
+                <Image x:Name="imgPatientViewBreath" Grid.Column="1" HorizontalAlignment="Left" Height="99" Margin="671,120,0,0" VerticalAlignment="Top" Width="126" Source="Resources/Bodies/Human/Male/Breath.png"/>
+                <Image x:Name="imgPatientViewLiver" Grid.Column="1" HorizontalAlignment="Left" Height="39" Margin="659,224,0,0" VerticalAlignment="Top" Width="71" Source="Resources/Bodies/Human/Male/Liver.png"/>
+                <Image x:Name="imgPatientViewKidneys" HorizontalAlignment="Left" Height="55" VerticalAlignment="Top" Width="148" Margin="659,279,0,0" Grid.Column="1" Source="Resources/Bodies/Human/Male/Kidneys.png"/>
+                <Image x:Name="imgPatientViewStomach" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="701,233,0,0" VerticalAlignment="Top" Width="71" Source="Resources/Bodies/Human/Male/Stomach.png"/>
+                <Image x:Name="imgPatientViewIntestines" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="671,263,0,0" VerticalAlignment="Top" Width="126" Source="Resources/Bodies/Human/Male/Intestines.png"/>
+                <Image x:Name="imgPatientViewBladder" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="716,292,0,0" VerticalAlignment="Top" Width="37" Source="Resources/Bodies/Human/Male/Bladder.png"/>
+                <Image x:Name="imgPatientViewReproduction" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="37" Margin="716,325,0,0" Grid.Column="1" Source="Resources/Bodies/Human/Male/Reproduction.png"/>
+                <Image x:Name="imgPatientViewSpleen" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="781,205,0,0" VerticalAlignment="Top" Width="25" Source="Resources/Bodies/Human/Male/Spleen.png"/>
             </Grid>
         </TabItem>
 
         <!-- Journal Page -->
-        <TabItem x:Name="tabJournal" Header="Journal Page" Visibility="Collapsed">
+        <TabItem x:Name="tabJournal" Header="Journal">
             <Grid Background="#FFE5E5E5">
                 <Button x:Name="btnJournalBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
             </Grid>
         </TabItem>
 
         <!-- Storage Page -->
-        <TabItem x:Name="tabStorage" Header="Storage Page" Visibility="Collapsed">
+        <TabItem x:Name="tabStorage" Header="Storage">
             <Grid Background="#FFE5E5E5">
                 <Button x:Name="btnStorageBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
             </Grid>
         </TabItem>
 
         <!-- Economics Page -->
-        <TabItem x:Name="tabEconomics" Header="Economics Page" Visibility="Collapsed">
+        <TabItem x:Name="tabEconomics" Header="Economics">
             <Grid Background="#FFE5E5E5">
                 <Button x:Name="btnEconomicsBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
             </Grid>
         </TabItem>
 
         <!-- Other Page -->
-        <TabItem x:Name="tabOther" Header="Other Page" Visibility="Collapsed">
+        <TabItem x:Name="tabOther" Header="Other">
             <Grid Background="#FFE5E5E5">
                 <Button x:Name="btnOtherBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
             </Grid>

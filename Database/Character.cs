@@ -1,65 +1,118 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LARP.Science.Database
 {
+    [DataContract]
     public partial class Character
     {
-        public string ID;
-        public string Name;
-        public RaceType Race;
-        public string Description;
-        public List<Organ> Organs;
-        public Statistics Stat = new Statistics();
+        [DataMember] public string ID { get; set; }
+        [DataMember] public string Name { get; set; }
+        [DataMember] public GenderType Gender { get; set; }
+        [DataMember] public RaceType Race { get; set; }
+        [DataMember] public string Description { get; set; }
+        [DataMember] private Dictionary<OrganSlot.SlotType, Organ> Organs { get; set; } = new Dictionary<OrganSlot.SlotType, Organ>();
+        [DataMember] private readonly List<Augment> SecondaryAugments = new List<Augment>();
+        [DataMember] public Statistics Stat { get; set; }
 
-        // Internal method works through static method
-        public Organ GetOrganByName(string name, bool ignoreAugments = false) => GetOrganByName(name, Organs, ignoreAugments);
-        public static Organ GetOrganByName(string name, List<Organ> organs, bool ignoreAugments = false)
+        // Primary organs/augments methods
+        public Organ GetOrgan(OrganSlot.SlotType slot) => Organs.Keys.Contains(slot) ? Organs[slot] : null;
+        public List<Organ> GetOrgansList() => Organs.Values.ToList();
+        public List<Augment> GetPrimaryAugments()
         {
-            foreach (Organ organ in organs)
-                if (organ.Name == name && (ignoreAugments ? organ.IsAugment() : true)) return organ;
-            return null;
+            List<Augment> res = new List<Augment>();
+            foreach (Organ organ in Organs.Values)
+                if (organ.IsAugmented()) res.Add(organ.AugmentEquivalent);
+            return res;
         }
 
-        /// <summary>
-        /// Стандартный набор органов: кожа, мозг, 2 глаза, 2 руки, сердце, 2 легких, 2 ноги
-        /// </summary>
-        public static readonly List<Organ> DefaultOrgansPreset = new List<Organ>()
+        public Organ InstallOrgan(Organ newOrgan)
         {
-            Organ.Presets["Кожа"],
-            Organ.Presets["Мозг"],
-            Organ.Presets["Левый глаз"], Organ.Presets["Правый глаз"],
-            Organ.Presets["Левая рука"], Organ.Presets["Правая рука"],
-            Organ.Presets["Сердце"],
-            Organ.Presets["Левое легкое"], Organ.Presets["Правое легкое"],
-            Organ.Presets["Левая нога"], Organ.Presets["Правая нога"]
-        };
+            OrganSlot.SlotType slot = newOrgan.Slot;
+            Organ removed = GetOrgan(slot);
+            Organs[slot] = newOrgan;
 
+            return removed;
+        }
+        public List<Organ> InstallOrgansRange(List<Organ> organs)
+        {
+            List<Organ> ejectedOrgans = new List<Organ>();
+            foreach (var item in organs)
+            {
+                Organ replacing = InstallOrgan(item);
+                if (replacing != null) ejectedOrgans.Add(replacing);
+            }
+            return ejectedOrgans;
+        }
+
+        public Augment InstallAugmentToOrganSlot(Augment augment)
+        {
+            // Store installed augment if present
+            Augment removed = null;
+            Organ organ = GetOrgan(augment.GetDestinationSlot());
+            if (organ.IsAugmented())
+                removed = organ.AugmentEquivalent;
+
+            // Install new augment
+            organ.AugmentEquivalent = augment;
+
+            return removed;
+        }
+
+        public Organ EjectOrgan(OrganSlot.SlotType slot)
+        {
+            Organ removed = GetOrgan(slot);
+            Organs[slot] = null;
+            return removed;
+        }
+        public Augment EjectAugmentFromOrganSlot(OrganSlot.SlotType slot)
+        {
+            Augment removed = GetOrgan(slot).AugmentEquivalent;
+            GetOrgan(slot).AugmentEquivalent = null;
+            return removed;
+        }
+
+        // Augments methods
+        public void AddAugment(Augment aug) => SecondaryAugments.Add(aug);
+        public void AddAugmentsRange(List<Augment> augs)
+        {
+            foreach (Augment aug in augs)
+                SecondaryAugments.Add(aug);
+        }
+        public bool EjectAugment(Augment aug) => SecondaryAugments.Remove(aug);
+        public List<Augment> GetSecondaryAugments() => SecondaryAugments;
+
+        // Main constructor
         public Character(string name,
-            RaceType race = RaceType.Human,
+            GenderType gender,
+            RaceType race,
             string id = "0000",
             string description = "",
-            List<Organ> organs = null)
+            Statistics statistics = null)
         {
-            ID = id == "0000" ? Controller.GetFreeCharacterID() : id;
+            ID = id == "0000" ? Controller.GetAndRegisterNewCharacterID() : id;
             Name = name;
+            Gender = gender;
             Race = race;
-            Description = description;
-            Organs = organs == null ? DefaultOrgansPreset : organs;
+            Description = Controller.UnknownDataTemplate;
+            Stat = statistics == null ? new Statistics() : statistics;
 
-            // Go through validity pass to ensure we have everything under control.
-            ValidateCharacter(this);
+            // Install default organs list
+            this.InstallOrgansRange(OrganSlot.GetOrgansListForCharacter(race, gender));
 
-            Controller.NewCharacter(this);
+            this.ValidateCharacter();
+            Controller.RegisterCharacter(this);
         }
 
-        private static void ValidateCharacter(Character character)
+        private void ValidateCharacter()
         {
-            // empty for now
+            Console.WriteLine("NotImplemented: Валидация готового персонажа перед регистрацией.");
         }
-
     }
 }
