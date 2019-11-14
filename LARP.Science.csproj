@@ -73,7 +73,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="WPF\AugmentDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WPF\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,16 +86,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database\Augment.cs" />
+    <Compile Include="Database\BodyPart.cs" />
     <Compile Include="Database\Character.cs" />
     <Compile Include="Database\Character.GenderType.cs" />
-    <Compile Include="Database\Character.OrganSlot.cs" />
-    <Compile Include="Database\Character.OrganSlot.SlotType.cs" />
+    <Compile Include="Database\Character.BodyPartSlot.cs" />
+    <Compile Include="Database\Character.BodyPartSlot.SlotType.cs" />
     <Compile Include="Database\Character.RaceType.cs" />
     <Compile Include="Database\Controller.cs" />
     <Compile Include="Database\Damage.cs" />
     <Compile Include="Database\Organ.cs" />
     <Compile Include="Database\Statistics.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="WPF\AugmentDisplay.xaml.cs">
+      <DependentUpon>AugmentDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

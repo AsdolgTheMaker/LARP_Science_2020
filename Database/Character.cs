@@ -17,12 +17,12 @@ namespace LARP.Science.Database
         [DataMember] public GenderType Gender { get; set; }
         [DataMember] public RaceType Race { get; set; }
         [DataMember] public string Description { get; set; }
-        [DataMember] private Dictionary<OrganSlot.SlotType, Organ> Organs { get; set; } = new Dictionary<OrganSlot.SlotType, Organ>();
+        [DataMember] private Dictionary<BodyPartSlot.SlotType?, Organ> Organs { get; set; } = new Dictionary<BodyPartSlot.SlotType?, Organ>();
         [DataMember] private readonly List<Augment> SecondaryAugments = new List<Augment>();
         [DataMember] public Statistics Stat { get; set; }
 
         // Primary organs/augments methods
-        public Organ GetOrgan(OrganSlot.SlotType slot) => Organs.Keys.Contains(slot) ? Organs[slot] : null;
+        public Organ GetOrgan(BodyPartSlot.SlotType? slot) => Organs.Keys.Contains(slot) ? Organs[slot] : null;
         public List<Organ> GetOrgansList() => Organs.Values.ToList();
         public List<Augment> GetPrimaryAugments()
         {
@@ -34,7 +34,7 @@ namespace LARP.Science.Database
 
         public Organ InstallOrgan(Organ newOrgan)
         {
-            OrganSlot.SlotType slot = newOrgan.Slot;
+            BodyPartSlot.SlotType? slot = newOrgan.Slot;
             Organ removed = GetOrgan(slot);
             Organs[slot] = newOrgan;
 
@@ -65,18 +65,13 @@ namespace LARP.Science.Database
             return removed;
         }
 
-        public Organ EjectOrgan(OrganSlot.SlotType slot)
+        public Organ EjectOrgan(BodyPartSlot.SlotType slot)
         {
             Organ removed = GetOrgan(slot);
             Organs[slot] = null;
             return removed;
         }
-        public Augment EjectAugmentFromOrganSlot(OrganSlot.SlotType slot)
-        {
-            Augment removed = GetOrgan(slot).AugmentEquivalent;
-            GetOrgan(slot).AugmentEquivalent = null;
-            return removed;
-        }
+        public Augment EjectAugmentFromOrganSlot(BodyPartSlot.SlotType slot) => GetOrgan(slot).EjectAugment();
 
         // Augments methods
         public void AddAugment(Augment aug) => SecondaryAugments.Add(aug);
@@ -104,7 +99,7 @@ namespace LARP.Science.Database
             Stat = statistics == null ? new Statistics() : statistics;
 
             // Install default organs list
-            this.InstallOrgansRange(OrganSlot.GetOrgansListForCharacter(race, gender));
+            this.InstallOrgansRange(BodyPartSlot.GetOrgansListForCharacter(race, gender));
 
             this.ValidateCharacter();
             Controller.RegisterCharacter(this);

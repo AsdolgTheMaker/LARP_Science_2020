@@ -4,7 +4,7 @@ namespace LARP.Science.Database
 {
     public partial class Character
     {
-        public static partial class OrganSlot
+        public static partial class BodyPartSlot
         { // SlotType declaration and operations on the type itself
             
             public enum SlotType

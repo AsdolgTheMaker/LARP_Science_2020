@@ -8,26 +8,13 @@ using System.Threading.Tasks;
 namespace LARP.Science.Database
 {
     [DataContract]
-    public class Augment
+    public class Augment : BodyPart
     {
-        [DataMember] public string Name;
-        [DataMember] public string Description;
         [DataMember] private readonly Dictionary<string, string> CustomParameters;
-        [DataMember] private readonly Character.OrganSlot.SlotType DestinationSlot;
         [DataMember] private readonly bool Visible;
 
-        // Methods
-        public bool DoesParameterExist(string param)
-        {
-            if (CustomParameters.Keys.Contains(param)) return true; 
-            else return false;
-        }
-
-        // Getters
-        public bool IsVisible() => Visible;
-        public Character.OrganSlot.SlotType GetDestinationSlot() => DestinationSlot;
-
-        // Setters
+        // Custom params methods
+        public bool DoesParameterExist(string param) => CustomParameters.Keys.Contains(param);
         public bool AddCustomParameter(string paramName, string paramValue)
         {
             if (DoesParameterExist(paramName)) return false;
@@ -37,21 +24,23 @@ namespace LARP.Science.Database
         }
         public bool RemoveCustomParameter(string paramName) => CustomParameters.Remove(paramName);
 
+        // Getters
+        public bool IsVisible() => Visible;
+        public Dictionary<string, string> GetAllCustomParameters() => CustomParameters;
+        public Character.BodyPartSlot.SlotType? GetDestinationSlot() => Slot;
+
         // Primary augment constructor
-        public Augment(string name, Character.OrganSlot.SlotType slot, string description = "", Dictionary<string, string> customParams = null)
+        public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null) 
+            : base(name, slot, image, description)
         {
-            Name = name;
-            Description = description;
             CustomParameters = customParams;
-            DestinationSlot = slot;
             Visible = true;
         }
 
         // Secondary augment constructor
-        public Augment(string name, string description = "", Dictionary<string, string> customParams = null) 
+        public Augment(string name, string image, string description = "", Dictionary<string, string> customParams = null) 
+            : base(name, image, description)
         {
-            Name = name;
-            Description = description;
             CustomParameters = customParams;
             Visible = false;
         }

@@ -9,7 +9,7 @@ namespace LARP.Science.Database
         /// <summary>
         /// Defines available organ slots. Also features default organs data.
         /// </summary>
-        public static partial class OrganSlot
+        public static partial class BodyPartSlot
         {
             // Default organs data
             public static List<Organ> GetOrgansListForCharacter(RaceType race, GenderType gender)
@@ -54,6 +54,8 @@ namespace LARP.Science.Database
                         return "Мочевой пузырь";
                     case SlotType.Reproduction:
                         return "Половая система";
+                    case SlotType.Head:
+                        return "Голова";
                     default:
                         throw new ArgumentException("slot");
                 }

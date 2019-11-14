@@ -130,34 +130,30 @@ namespace LARP.Science
         private void DisplayOrgans(Database.Character character)
         {
             foreach (Database.Organ organ in character.GetOrgansList())
-            {
-                Image image = GetImageEntity(organ.Slot);
-                var imgSource = organ.GetImageSource();
-                image.Source = imgSource;
-            }
+                GetImageEntity(organ.Slot).Source = organ.GetImageEntity();
         }
 
-        private Image GetImageEntity(Database.Character.OrganSlot.SlotType slot)
+        private Image GetImageEntity(Database.Character.BodyPartSlot.SlotType? slot)
         {
             switch (slot)
             {
-                case Database.Character.OrganSlot.SlotType.Brain: return imgPatientViewBrain;
-                case Database.Character.OrganSlot.SlotType.Heart: return imgPatientViewHeart;
-                case Database.Character.OrganSlot.SlotType.Breath: return imgPatientViewBreath;
-                case Database.Character.OrganSlot.SlotType.Head: return imgPatientViewHead;
-                case Database.Character.OrganSlot.SlotType.Body: return imgPatientViewBody;
-                case Database.Character.OrganSlot.SlotType.LeftArm: return imgPatientViewArmLeft;
-                case Database.Character.OrganSlot.SlotType.RightArm: return imgPatientViewArmRight;
-                case Database.Character.OrganSlot.SlotType.LeftLeg: return imgPatientViewLegLeft;
-                case Database.Character.OrganSlot.SlotType.RightLeg: return imgPatientViewLegRight;
-                case Database.Character.OrganSlot.SlotType.Spleen: return imgPatientViewSpleen;
-                case Database.Character.OrganSlot.SlotType.Liver: return imgPatientViewLiver;
-                case Database.Character.OrganSlot.SlotType.Stomach: return imgPatientViewStomach;
-                case Database.Character.OrganSlot.SlotType.Kidneys: return imgPatientViewKidneys;
-                case Database.Character.OrganSlot.SlotType.Intestines: return imgPatientViewIntestines;
-                case Database.Character.OrganSlot.SlotType.Bladder: return imgPatientViewBladder;
-                case Database.Character.OrganSlot.SlotType.Reproduction: return imgPatientViewReproduction;
-                default: throw new ArgumentException("Ошибка: аргумент передан не с типом SlotType.", "slot");
+                case Database.Character.BodyPartSlot.SlotType.Brain: return imgPatientViewBrain;
+                case Database.Character.BodyPartSlot.SlotType.Heart: return imgPatientViewHeart;
+                case Database.Character.BodyPartSlot.SlotType.Breath: return imgPatientViewBreath;
+                case Database.Character.BodyPartSlot.SlotType.Head: return imgPatientViewHead;
+                case Database.Character.BodyPartSlot.SlotType.Body: return imgPatientViewBody;
+                case Database.Character.BodyPartSlot.SlotType.LeftArm: return imgPatientViewArmLeft;
+                case Database.Character.BodyPartSlot.SlotType.RightArm: return imgPatientViewArmRight;
+                case Database.Character.BodyPartSlot.SlotType.LeftLeg: return imgPatientViewLegLeft;
+                case Database.Character.BodyPartSlot.SlotType.RightLeg: return imgPatientViewLegRight;
+                case Database.Character.BodyPartSlot.SlotType.Spleen: return imgPatientViewSpleen;
+                case Database.Character.BodyPartSlot.SlotType.Liver: return imgPatientViewLiver;
+                case Database.Character.BodyPartSlot.SlotType.Stomach: return imgPatientViewStomach;
+                case Database.Character.BodyPartSlot.SlotType.Kidneys: return imgPatientViewKidneys;
+                case Database.Character.BodyPartSlot.SlotType.Intestines: return imgPatientViewIntestines;
+                case Database.Character.BodyPartSlot.SlotType.Bladder: return imgPatientViewBladder;
+                case Database.Character.BodyPartSlot.SlotType.Reproduction: return imgPatientViewReproduction;
+                default: throw new ArgumentException("Ошибка: передан пустой слот.", "slot");
             }
         }
     }
