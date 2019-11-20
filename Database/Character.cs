@@ -95,7 +95,7 @@ namespace LARP.Science.Database
             Name = name;
             Gender = gender;
             Race = race;
-            Description = Controller.UnknownDataTemplate;
+            Description = description == "" ? Controller.UnknownDataTemplate : description;
             Stat = statistics == null ? new Statistics() : statistics;
 
             // Install default organs list

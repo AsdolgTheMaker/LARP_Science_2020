@@ -75,7 +75,7 @@ namespace LARP.Science
             Database.Character character = datagridPatientsList.SelectedItem as Database.Character;
             if (character != null)
             { 
-                DisplayOrgans(character);
+                DisplayCharacter(character);
                 SwitchPage(tabPatientView);
             };
         }
@@ -127,10 +127,15 @@ namespace LARP.Science
         #endregion
 
         // Image displayer block
-        private void DisplayOrgans(Database.Character character)
+        private void DisplayCharacter(Database.Character character)
         {
             foreach (Database.Organ organ in character.GetOrgansList())
                 GetImageEntity(organ.Slot).Source = organ.GetImageEntity();
+
+            textblockPatientName.Text = character.Name;
+            textblockPatientRace.Text = character.GetRace;
+            textblockPatientGender.Text = character.GetGender;
+            textblockPatientDescr.Text = character.Description;
         }
 
         private Image GetImageEntity(Database.Character.BodyPartSlot.SlotType? slot)

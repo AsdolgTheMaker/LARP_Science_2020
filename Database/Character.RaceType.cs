@@ -10,7 +10,7 @@
         }
 
         public string GetRace => GetRaceByEnum(Race);
-        public string GetRaceByEnum(RaceType input)
+        public static string GetRaceByEnum(RaceType input)
         {
             switch (input)
             {
