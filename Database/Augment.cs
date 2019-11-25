@@ -10,7 +10,7 @@ namespace LARP.Science.Database
     [DataContract]
     public class Augment : BodyPart
     {
-        [DataMember] private readonly Dictionary<string, string> CustomParameters;
+        [DataMember] private readonly Dictionary<string, string> CustomParameters = new Dictionary<string, string>();
         [DataMember] private readonly bool Visible;
 
         // Custom params methods
@@ -33,7 +33,7 @@ namespace LARP.Science.Database
         public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null) 
             : base(name, slot, image, description)
         {
-            CustomParameters = customParams;
+            CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = true;
         }
 
@@ -41,7 +41,7 @@ namespace LARP.Science.Database
         public Augment(string name, string image, string description = "", Dictionary<string, string> customParams = null) 
             : base(name, image, description)
         {
-            CustomParameters = customParams;
+            CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = false;
         }
     }

@@ -38,6 +38,7 @@ namespace LARP.Science.Database
         {
             // First, decide if we will use Organ's image or its Augment's one
             string path = IsAugmented() ? (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) ? ImagePath : AugmentEquivalent.ImagePath) : ImagePath;
+            if (!File.Exists(path)) path = Character.BodyPartSlot.GetDefaultSlotPicture(this.Slot);
 
             FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             BitmapImage bitmapImage = new BitmapImage();

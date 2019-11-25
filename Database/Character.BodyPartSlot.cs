@@ -11,7 +11,7 @@ namespace LARP.Science.Database
         /// </summary>
         public static partial class BodyPartSlot
         {
-            // Default organs data
+            #region // Default organs data
             public static List<Organ> GetOrgansListForCharacter(RaceType race, GenderType gender)
             {
                 List<Organ> res = new List<Organ>();
@@ -66,8 +66,12 @@ namespace LARP.Science.Database
                 if (PresetDescriptions.Keys.Contains(slot)) return PresetDescriptions[slot];
                 else return Controller.UnknownDataTemplate;
             }
-            public static string GetSlotPicture(SlotType slot, RaceType race, GenderType gender)
+
+            public static string GetDefaultSlotPicture(SlotType? slot) 
+                => slot == null ? Controller.NotFoundImagePath : GetSlotPicture(slot, RaceType.Human, GenderType.Male);
+            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender) 
                 => "Resources\\Bodies\\" + race.ToString() + "\\" + gender.ToString() + "\\" + slot.ToString() + ".png";
+            #endregion
 
             private static readonly IReadOnlyDictionary<SlotType, string> PresetDescriptions = new Dictionary<SlotType, string>()
             {

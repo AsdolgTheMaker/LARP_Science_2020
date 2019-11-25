@@ -91,12 +91,12 @@ namespace LARP.Science.Database
             string description = "",
             Statistics statistics = null)
         {
-            ID = id == "0000" ? Controller.GetAndRegisterNewCharacterID() : id;
+            ID = id == "0000" ? Controller.GetNewCharacterID() : id;
             Name = name;
             Gender = gender;
             Race = race;
             Description = description == "" ? Controller.UnknownDataTemplate : description;
-            Stat = statistics == null ? new Statistics() : statistics;
+            Stat = statistics ?? new Statistics();
 
             // Install default organs list
             this.InstallOrgansRange(BodyPartSlot.GetOrgansListForCharacter(race, gender));
@@ -107,7 +107,7 @@ namespace LARP.Science.Database
 
         private void ValidateCharacter()
         {
-            Console.WriteLine("NotImplemented: Валидация готового персонажа перед регистрацией.");
+            Console.WriteLine("NotImplemented: метод ValidateCharacter класса Character.");
         }
     }
 }

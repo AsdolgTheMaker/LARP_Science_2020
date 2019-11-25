@@ -74,7 +74,8 @@ namespace LARP.Science
         {
             Database.Character character = datagridPatientsList.SelectedItem as Database.Character;
             if (character != null)
-            { 
+            {
+                Database.Controller.SelectedCharacter = character;
                 DisplayCharacter(character);
                 SwitchPage(tabPatientView);
             };
@@ -126,7 +127,7 @@ namespace LARP.Science
         }
         #endregion
 
-        // Image displayer block
+        #region // Patient view displayers
         private void DisplayCharacter(Database.Character character)
         {
             foreach (Database.Organ organ in character.GetOrgansList())
@@ -136,7 +137,52 @@ namespace LARP.Science
             textblockPatientRace.Text = character.GetRace;
             textblockPatientGender.Text = character.GetGender;
             textblockPatientDescr.Text = character.Description;
+
+            rectanglePatientOrgan.Visibility = Visibility.Visible;
+            rectanglePatientOrganAug.Visibility = Visibility.Visible;
+            rectanglePatientAuxDetails.Visibility = Visibility.Visible;
         }
+
+        private void DisplayOrgan(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Database.Organ organ = Database.Controller.SelectedCharacter.GetOrgan(GetSlotByImageEntity(sender as Image));
+            textblockPatientOrganName.Text = organ.Name;
+            textblockPatientOrganDescription.Text = organ.Description;
+            if (organ.IsAugmented())
+            {
+                Database.Augment aug = organ.AugmentEquivalent;
+                textblockPatientOrganAugName.Text = aug.Name;
+                textblockPatientOrganAugDescription.Text = aug.Description;
+                textblockPatientOrganAugSlotType.Text = organ.Name;
+                datagridPatientOrganAugParams.Items.Clear();
+                foreach (KeyValuePair<string, string> pair in aug.GetAllCustomParameters() ?? new Dictionary<string, string>())
+                    datagridPatientOrganAugParams.Items.Add(pair);
+
+                textblockPatientOrganAugmentNotifier.Visibility = Visibility.Visible;
+                rectanglePatientOrganAug.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                textblockPatientOrganAugmentNotifier.Visibility = Visibility.Collapsed;
+                rectanglePatientOrganAug.Visibility = Visibility.Visible;
+            }
+            rectanglePatientOrgan.Visibility = Visibility.Collapsed;
+        }
+
+        #region // Animation handlers
+        private static System.Windows.Media.Effects.DropShadowEffect hoverEffect = new System.Windows.Media.Effects.DropShadowEffect()
+        {
+            Color = System.Windows.Media.Color.FromRgb(25, 255, 0),
+            ShadowDepth = 7
+        };
+
+        private void EnableDropShadow(Image image) => image.Effect = hoverEffect;
+        private void ClearEffect(Image image) => image.Effect = null;
+
+        private void PatientImageMouseEnter(object sender, System.Windows.Input.MouseEventArgs e) => EnableDropShadow(sender as Image);
+        private void PatientImageMouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => ClearEffect(sender as Image);
+        #endregion
+        #endregion
 
         private Image GetImageEntity(Database.Character.BodyPartSlot.SlotType? slot)
         {
@@ -160,6 +206,26 @@ namespace LARP.Science
                 case Database.Character.BodyPartSlot.SlotType.Reproduction: return imgPatientViewReproduction;
                 default: throw new ArgumentException("Ошибка: передан пустой слот.", "slot");
             }
+        }
+        private Database.Character.BodyPartSlot.SlotType? GetSlotByImageEntity(Image image)
+        {
+            if (image.Equals(imgPatientViewArmLeft)) return Database.Character.BodyPartSlot.SlotType.LeftArm;
+            else if (image.Equals(imgPatientViewArmRight)) return Database.Character.BodyPartSlot.SlotType.RightArm;
+            else if (image.Equals(imgPatientViewBody)) return Database.Character.BodyPartSlot.SlotType.Body;
+            else if (image.Equals(imgPatientViewLegLeft)) return Database.Character.BodyPartSlot.SlotType.LeftLeg;
+            else if (image.Equals(imgPatientViewLegRight)) return Database.Character.BodyPartSlot.SlotType.RightLeg;
+            else if (image.Equals(imgPatientViewHead)) return Database.Character.BodyPartSlot.SlotType.Head;
+            else if (image.Equals(imgPatientViewHeart)) return Database.Character.BodyPartSlot.SlotType.Heart;
+            else if (image.Equals(imgPatientViewBladder)) return Database.Character.BodyPartSlot.SlotType.Bladder;
+            else if (image.Equals(imgPatientViewBrain)) return Database.Character.BodyPartSlot.SlotType.Brain;
+            else if (image.Equals(imgPatientViewBreath)) return Database.Character.BodyPartSlot.SlotType.Breath;
+            else if (image.Equals(imgPatientViewIntestines)) return Database.Character.BodyPartSlot.SlotType.Intestines;
+            else if (image.Equals(imgPatientViewKidneys)) return Database.Character.BodyPartSlot.SlotType.Kidneys;
+            else if (image.Equals(imgPatientViewLiver)) return Database.Character.BodyPartSlot.SlotType.Liver;
+            else if (image.Equals(imgPatientViewReproduction)) return Database.Character.BodyPartSlot.SlotType.Reproduction;
+            else if (image.Equals(imgPatientViewSpleen)) return Database.Character.BodyPartSlot.SlotType.Spleen;
+            else if (image.Equals(imgPatientViewStomach)) return Database.Character.BodyPartSlot.SlotType.Stomach;
+            else return null;
         }
     }
 }
