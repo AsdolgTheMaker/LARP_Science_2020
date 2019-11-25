@@ -32,6 +32,11 @@ namespace LARP.Science.Database
             return res;
         }
 
+        /// <summary>
+        /// Установка органа с заменой в подходящий слот
+        /// </summary>
+        /// <param name="newOrgan"></param>
+        /// <returns></returns>
         public Organ InstallOrgan(Organ newOrgan)
         {
             BodyPartSlot.SlotType? slot = newOrgan.Slot;
@@ -65,13 +70,15 @@ namespace LARP.Science.Database
             return removed;
         }
 
-        public Organ EjectOrgan(BodyPartSlot.SlotType slot)
+        public Organ EjectOrgan(BodyPartSlot.SlotType? slot)
         {
+            if (slot == null) return null;
+
             Organ removed = GetOrgan(slot);
             Organs[slot] = null;
             return removed;
         }
-        public Augment EjectAugmentFromOrganSlot(BodyPartSlot.SlotType slot) => GetOrgan(slot).EjectAugment();
+        public Augment EjectAugmentFromOrganSlot(BodyPartSlot.SlotType? slot) => slot == null ? null : GetOrgan(slot).EjectAugment();
 
         // Augments methods
         public void AddAugment(Augment aug) => SecondaryAugments.Add(aug);

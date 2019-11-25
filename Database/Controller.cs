@@ -15,15 +15,34 @@ namespace LARP.Science.Database
     // Этот класс можно назвать главным бэк-эндом всего нашего бэк-энда.
     public static class Controller
     {
+        #region // Global variables
+        private static readonly List<Character> Characters = new List<Character>();
+
+        public static List<string> CharacterIDs = new List<string>() { "0000" };
+        public static Character SelectedCharacter = null;
+        #endregion
+
+        #region // Global constants
         public static readonly string CurrentExecutableDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         public static readonly string NotFoundImagePath = "\\Resources\\NotFound.png";
         public static readonly string UnknownDataTemplate = "[ДАННЫЕ УДАЛЕНЫ]";
-
         public static readonly string CharactersDatabaseFile = "characters.json";
-        private static readonly List<Character> Characters = new List<Character>();
-        public static List<string> CharacterIDs = new List<string>() { "0000" };
-        public static Character SelectedCharacter = null;
+        #endregion
 
+        #region // Storage manipulations
+        public static void AddToStorage(BodyPart item)
+        {
+            Console.WriteLine(item.Name + " «добавлено» в хранилище.");
+        }
+        #endregion
+
+        // Я не знаю зачем это, но если это убрать - всё перестаёт работать
+        public static void Initialize(System.Windows.Controls.DataGrid patientsList = null)
+        {
+            if (patientsList == null) throw new ArgumentNullException("patientsList");
+        }
+
+        #region // Characters database manipulations
         public static string GetNewCharacterID()
         {
             string id = "0000";
@@ -39,18 +58,13 @@ namespace LARP.Science.Database
             Characters.Add(character);
         }
         public static List<Character> GetCharacters() => Characters;
-
-        public static void Initialize(System.Windows.Controls.DataGrid patientsList = null)
-        {
-            if (patientsList == null) throw new ArgumentNullException("patientsList");
-        }
-
         public static void SetCharactersDatabase(List<Character> input)
         {
             Characters.Clear();
             foreach (Character character in input)
                 RegisterCharacter(character);
         }
+
 
         public static void ReadCharacters()
         {
@@ -62,7 +76,6 @@ namespace LARP.Science.Database
                 SetCharactersDatabase(serializer.ReadObject(stream) as List<Character>);
             }
         }
-
         public static void SaveCharacters()
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Character>));
@@ -75,31 +88,28 @@ namespace LARP.Science.Database
             stream.Dispose();
             streamRead.Dispose();
         }
+        #endregion
 
-        #if DEBUG // Create testing database for debug configs
+#if DEBUG // Create testing database for debug configs
         public static void CreateTestDatabase()
         {
             // A human with standart organs set
-            Character tempContainer = new Character(
-                name: "Обычный Джо",
-                gender: Character.GenderType.Male,
-                race: Character.RaceType.Human,
-                description: "Это самый обычный Джо, которого только можно вообразить.");
+            Character tempContainer = new Character(name: "Обычный Джо",
+                                                    gender: Character.GenderType.Male,
+                                                    race: Character.RaceType.Human,
+                                                    description: "Это самый обычный Джо, которого только можно вообразить.");
 
             // A human with augmented left leg
-            tempContainer = new Character(
-                name: "Одноногий Бача",
-                gender: Character.GenderType.Male,
-                race: Character.RaceType.Human,
-                description: "Бача с рождения служил на флоте, а ногу потерял после неудачного знакомства с ролевиками.");
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Стальной протез левой ноги", Character.BodyPartSlot.SlotType.LeftLeg, ""));
+            tempContainer = new Character(name: "Одноногий Бача",
+                                          gender: Character.GenderType.Male,
+                                          race: Character.RaceType.Human,
+                                          description: "Бача с рождения служил на флоте, а ногу потерял после неудачного знакомства с ролевиками.");
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Стальной протез левой ноги", Character.BodyPartSlot.SlotType.LeftLeg, "", "Хороший металлический протез, по всем киберпанковским канонам проверку проходит."));
 
             // Unknown race humanoid with cybernetic body
-            tempContainer = new Character(
-                name: "Терминатор", 
-                gender: Character.GenderType.Male,
-                race: Character.RaceType.Undefined,
-                description: "Прислан Скайнет из будущего чтобы остановить ролёвку про киберпанк, зашедшую слишком далеко.");
+            tempContainer = new Character(name: "Терминатор", gender: Character.GenderType.Male,
+                                          race: Character.RaceType.Undefined,
+                                          description: "Прислан Скайнет из будущего чтобы остановить ролёвку про киберпанк, зашедшую слишком далеко.");
             tempContainer.InstallAugmentToOrganSlot(new Augment("Процессор Intel Core i9 серии X", Character.BodyPartSlot.SlotType.Brain, "", "Мощь."));
             tempContainer.InstallAugmentToOrganSlot(new Augment("Мифриловое покрытие", Character.BodyPartSlot.SlotType.Body, "", "Выковано древними гномьими мастерами."));
             tempContainer.InstallAugmentToOrganSlot(new Augment("Гидравлический пресс «ORA-HAN-D»", Character.BodyPartSlot.SlotType.LeftArm, "", "Сожмёт и адаптируется."));
@@ -116,6 +126,6 @@ namespace LARP.Science.Database
             tempContainer.InstallAugmentToOrganSlot(new Augment("Пылевой мешок от пылесоса", Character.BodyPartSlot.SlotType.Bladder, "", "Потому что какая разница, куда собирать отходы."));
             tempContainer.InstallAugmentToOrganSlot(new Augment("Система клонирвоания Grineer", Character.BodyPartSlot.SlotType.Reproduction, "", "Ох уж эти гриндилки."));
         }
-        #endif
+#endif
     }
 }

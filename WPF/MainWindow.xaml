@@ -20,7 +20,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button x:Name="btnNavMenuPatients" Content="Пациенты" Grid.Row="0" Click="BtnNavMenuPatients_Click" />
-                    <Button x:Name="btnNavMenuJournal" Content="Операции" Grid.Row="1" Click="BtnNavMenuJournal_Click" />
+                    <Button x:Name="btnNavMenuJournal" Content="Журнал" Grid.Row="1" Click="BtnNavMenuJournal_Click" />
                     <Button x:Name="btnNavMenuStorage" Content="Склад" Grid.Row="2" Click="BtnNavMenuStorage_Click" />
                     <Button x:Name="btnNavMenuEconomics" Content="Экономика" Grid.Row="3" Click="BtnNavMenuEconomics_Click" />
                     <Button x:Name="btnNavMenuOther" Content="Прочее" Grid.Row="4" Click="BtnNavMenuOther_Click" />
@@ -62,10 +62,10 @@
         <TabItem x:Name="tabPatientView" Header="Patient View" >
             <Grid Background="#FFE5E5E5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="127*"/>
-                    <RowDefinition Height="163*"/>
-                    <RowDefinition Height="279*"/>
-                    <RowDefinition Height="309*"/>
+                    <RowDefinition Height="125*"/>
+                    <RowDefinition Height="160*"/>
+                    <RowDefinition Height="312*"/>
+                    <RowDefinition Height="267*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -156,9 +156,17 @@
                 </GroupBox>
                 <GroupBox Grid.Column="3" Header="Аугментация импланта" Grid.Row="2">
                     <Grid>
-                        
+
                         <Rectangle x:Name="rectanglePatientAuxDetails" Fill="#FFAEAEAE" Stroke="Black" Visibility="Collapsed"/>
                     </Grid>
+                </GroupBox>
+                <GroupBox Grid.Column="4" Header="Подготовить операцию" Margin="65,10" Grid.Row="3">
+                    <UniformGrid Columns="1">
+                        <Button Content="Лечение"/>
+                        <Button Content="Замена и удаление органов"/>
+                        <Button Content="Аугментация выбранного органа"/>
+                        <Button Content="Имплантация и удаление вторичных аугментов"/>
+                    </UniformGrid>
                 </GroupBox>
             </Grid>
         </TabItem>

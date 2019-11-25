@@ -92,6 +92,10 @@
     <Compile Include="Database\Damage.cs" />
     <Compile Include="Database\Organ.cs" />
     <Compile Include="Database\Statistics.cs" />
+    <Compile Include="Operation\Augmentation.cs" />
+    <Compile Include="Operation\Healing.cs" />
+    <Compile Include="Operation\OperationInfo.cs" />
+    <Compile Include="Operation\OperationType.cs" />
     <Compile Include="WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
