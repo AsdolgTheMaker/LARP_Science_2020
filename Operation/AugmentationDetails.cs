@@ -10,7 +10,7 @@ namespace LARP.Science.Operation
     /// <summary>
     /// Create the instance first, call PerformOperation() method next.
     /// </summary>
-    public class Augmentation : OperationInfo
+    public class AugmentationDetails : OperationInfo
     {
         private readonly AugmentationType type;
         private readonly AugmentationAction action;
@@ -82,7 +82,7 @@ namespace LARP.Science.Operation
         /// Delete Organ/Primary    - Pass Organ as TARGET <br/>
         /// Delete Auxilary         - Pass Augment as TARGET
         /// </summary>
-        public Augmentation(AugmentationType _type, AugmentationAction _action, BodyPart _target = null, BodyPart _implant = null)
+        public AugmentationDetails(AugmentationType _type, AugmentationAction _action, BodyPart _target = null, BodyPart _implant = null)
         {
             type = _type;
             action = _action;

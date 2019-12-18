@@ -9,6 +9,8 @@ using System.Data;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
+using Newtonsoft.Json.Linq;
+
 
 namespace LARP.Science.Database
 {
@@ -82,9 +84,9 @@ namespace LARP.Science.Database
             MemoryStream stream = new MemoryStream();
             serializer.WriteObject(stream, GetCharacters());
             stream.Position = 0;
-            var streamRead = new StreamReader(stream);
-            File.WriteAllText(CharactersDatabaseFile, streamRead.ReadToEnd());
-
+            StreamReader streamRead = new StreamReader(stream);
+            File.WriteAllText(CharactersDatabaseFile, JToken.Parse(streamRead.ReadToEnd()).ToString(Newtonsoft.Json.Formatting.Indented));
+            
             stream.Dispose();
             streamRead.Dispose();
         }

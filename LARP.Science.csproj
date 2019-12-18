@@ -46,6 +46,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -81,21 +84,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Database\Augment.cs" />
-    <Compile Include="Database\BodyPart.cs" />
-    <Compile Include="Database\Character.cs" />
-    <Compile Include="Database\Character.GenderType.cs" />
-    <Compile Include="Database\Character.BodyPartSlot.cs" />
-    <Compile Include="Database\Character.BodyPartSlot.SlotType.cs" />
-    <Compile Include="Database\Character.RaceType.cs" />
+    <Compile Include="Database\BodyPart\Augment.cs" />
+    <Compile Include="Database\BodyPart\BodyPart.cs" />
+    <Compile Include="Database\Character\Character.cs" />
+    <Compile Include="Database\Character\Character.GenderType.cs" />
+    <Compile Include="Database\Character\Character.BodyPartSlot.cs" />
+    <Compile Include="Database\Character\Character.BodyPartSlot.SlotType.cs" />
+    <Compile Include="Database\Character\Character.RaceType.cs" />
     <Compile Include="Database\Controller.cs" />
-    <Compile Include="Database\Damage.cs" />
-    <Compile Include="Database\Organ.cs" />
+    <Compile Include="Database\BodyPart\Organ.cs" />
     <Compile Include="Database\Statistics.cs" />
-    <Compile Include="Operation\Augmentation.cs" />
-    <Compile Include="Operation\Healing.cs" />
+    <Compile Include="Operation\AugmentationDetails.cs" />
+    <Compile Include="Operation\HealingDetails.cs" />
     <Compile Include="Operation\OperationInfo.cs" />
-    <Compile Include="Operation\OperationType.cs" />
+    <Compile Include="Operation\AugmentationType.cs" />
     <Compile Include="WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -196,6 +198,18 @@
     <Resource Include="Resources\NotFound.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LARP.Minesweeper\Minesweeper.WPF\LARP.Minesweeper.csproj">
+      <Project>{66a6f30a-0c5a-4dc7-bdc8-09db8a613717}</Project>
+      <Name>LARP.Minesweeper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Flag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bomb.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -96,8 +96,6 @@ namespace LARP.Science
             var streamRead = new StreamReader(stream);
             File.WriteAllText("serializer_test.json", streamRead.ReadToEnd());
 
-            System.Diagnostics.Process.Start("explorer.exe", "-select " + Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase) + "serializer_test.json");
-
             // Dispose streams
             stream.Dispose();
             streamRead.Dispose();
@@ -124,6 +122,16 @@ namespace LARP.Science
         {
             Database.Controller.CreateTestDatabase();
             UpdateDisplayedTables();
+        }
+        private async void Debug_TestDefaultOperation(object sender, RoutedEventArgs e)
+        {
+#if DEBUG
+            Minesweeper.MinesweeperWindow sweeper = new Minesweeper.MinesweeperWindow(new int[] { 5, 10, 15 } );
+            sweeper.ShowDialog();
+            MessageBox.Show("Operation quality: " + await sweeper.Execute());
+
+            UpdateDisplayedTables();
+#endif
         }
         #endregion
 

@@ -20,6 +20,7 @@ namespace LARP.Science.Database
         [DataMember] private Dictionary<BodyPartSlot.SlotType?, Organ> Organs { get; set; } = new Dictionary<BodyPartSlot.SlotType?, Organ>();
         [DataMember] private readonly List<Augment> SecondaryAugments = new List<Augment>();
         [DataMember] public Statistics Stat { get; set; }
+        [DataMember] public bool Alive { get; set; } = true;
 
         // Primary organs/augments methods
         public Organ GetOrgan(BodyPartSlot.SlotType? slot) => Organs.Keys.Contains(slot) ? Organs[slot] : null;
@@ -114,7 +115,7 @@ namespace LARP.Science.Database
 
         private void ValidateCharacter()
         {
-            Console.WriteLine("NotImplemented: метод ValidateCharacter класса Character.");
+            Console.WriteLine("Сделать валидацию персонажа при регистрации. Разобрать подробнее процесс - может, получится совсем опустить этот этап.");
         }
     }
 }

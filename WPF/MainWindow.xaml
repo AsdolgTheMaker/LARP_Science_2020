@@ -166,6 +166,7 @@
                         <Button Content="Замена и удаление органов"/>
                         <Button Content="Аугментация выбранного органа"/>
                         <Button Content="Имплантация и удаление вторичных аугментов"/>
+                        <Button x:Name="DEBUG_TestDefaultOperation" Content="Test default operation"  Click="Debug_TestDefaultOperation"/>
                     </UniformGrid>
                 </GroupBox>
             </Grid>
