@@ -29,12 +29,25 @@ namespace LARP.Science.Database
         public Dictionary<string, string> GetAllCustomParameters() => CustomParameters;
         public Character.BodyPartSlot.SlotType? GetDestinationSlot() => Slot;
 
-        // Primary augment constructor
+        [Obsolete("Использование устаревшего конструктора аугмента приведёт к невозможности отображения верных изображений. Ошибку необходимо устранить.")]
+        // !! OBSOLETE !! Primary augment constructor
         public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null) 
             : base(name, slot, image, description)
         {
             CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = true;
+        }
+
+        // Valid primary augment constructor
+        public Augment(string name, string description, Character.BodyPartSlot.SlotType slot, Character.RaceType race, Character.GenderType gender, Dictionary<string, string> customParams = null)
+            : base(name, slot, string.Empty, description)
+        {
+            CustomParameters = customParams ?? new Dictionary<string, string>();
+            Visible = true;
+
+            if (CustomParameters.Count > 0) 
+                ImagePath = Character.BodyPartSlot.GetSlotPicture(slot, race, gender, 2);
+            else ImagePath = Character.BodyPartSlot.GetSlotPicture(slot, race, gender, 1);
         }
 
         // Secondary augment constructor

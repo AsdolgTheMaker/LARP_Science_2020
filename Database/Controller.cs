@@ -73,8 +73,7 @@ namespace LARP.Science.Database
             if (File.Exists(CharactersDatabaseFile))
             { // read database from file
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Character>));
-                MemoryStream stream = new MemoryStream(File.ReadAllBytes(CharactersDatabaseFile));
-                stream.Position = 0;
+                MemoryStream stream = new MemoryStream(File.ReadAllBytes(CharactersDatabaseFile)) { Position = 0 };
                 SetCharactersDatabase(serializer.ReadObject(stream) as List<Character>);
             }
         }
@@ -96,37 +95,37 @@ namespace LARP.Science.Database
         public static void CreateTestDatabase()
         {
             // A human with standart organs set
-            Character tempContainer = new Character(name: "Обычный Джо",
+            new Character(name: "Обычный Джо",
                                                     gender: Character.GenderType.Male,
                                                     race: Character.RaceType.Human,
                                                     description: "Это самый обычный Джо, которого только можно вообразить.");
 
             // A human with augmented left leg
-            tempContainer = new Character(name: "Одноногий Бача",
+            Character tempContainer = new Character(name: "Одноногий Бача",
                                           gender: Character.GenderType.Male,
                                           race: Character.RaceType.Human,
                                           description: "Бача с рождения служил на флоте, а ногу потерял после неудачного знакомства с ролевиками.");
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Стальной протез левой ноги", Character.BodyPartSlot.SlotType.LeftLeg, "", "Хороший металлический протез, по всем киберпанковским канонам проверку проходит."));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Стальной протез левой ноги", "Хороший металлический протез, по всем киберпанковским канонам проверку проходит.", Character.BodyPartSlot.SlotType.LeftLeg, tempContainer.Race, tempContainer.Gender));
 
             // Unknown race humanoid with cybernetic body
             tempContainer = new Character(name: "Терминатор", gender: Character.GenderType.Male,
-                                          race: Character.RaceType.Undefined,
+                                          race: Character.RaceType.Human,
                                           description: "Прислан Скайнет из будущего чтобы остановить ролёвку про киберпанк, зашедшую слишком далеко.");
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Процессор Intel Core i9 серии X", Character.BodyPartSlot.SlotType.Brain, "", "Мощь."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Мифриловое покрытие", Character.BodyPartSlot.SlotType.Body, "", "Выковано древними гномьими мастерами."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Гидравлический пресс «ORA-HAN-D»", Character.BodyPartSlot.SlotType.LeftArm, "", "Сожмёт и адаптируется."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Отбойный молоток класса WK", Character.BodyPartSlot.SlotType.RightArm, "", "Советуем обратиться в Фонд."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Валенок левый", Character.BodyPartSlot.SlotType.LeftLeg, "", "Хороший тёплый валенок вашего дедушки."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Костыль", Character.BodyPartSlot.SlotType.RightLeg, "", "На самом деле всё тело можно было сделать из таких костылей."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Насос из колодца на даче", Character.BodyPartSlot.SlotType.Heart, "Этот ржавый насос видел Сталина."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Замкнутая система жизнеобеспечения БИОС-3", Character.BodyPartSlot.SlotType.Breath, ""));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Какая-то хрень", Character.BodyPartSlot.SlotType.Spleen, "", "Неизвестно что это, но по документации должно быть здесь"));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Печень, распечатанная на 3D-принтере", Character.BodyPartSlot.SlotType.Liver, "Пластик был не очень качественный."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Топливный бак от девятки", Character.BodyPartSlot.SlotType.Stomach, "", "На сорок литров."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Водопроводная система из сантехнического ларька", Character.BodyPartSlot.SlotType.Intestines, "", "Вообще изначально эти трубы купили для сантехсабера, но что-то пошло не так в процессе сборки."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Почки от дуба", Character.BodyPartSlot.SlotType.Kidneys, ""));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Пылевой мешок от пылесоса", Character.BodyPartSlot.SlotType.Bladder, "", "Потому что какая разница, куда собирать отходы."));
-            tempContainer.InstallAugmentToOrganSlot(new Augment("Система клонирвоания Grineer", Character.BodyPartSlot.SlotType.Reproduction, "", "Ох уж эти гриндилки."));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Процессор Intel Core i9 серии X", "Мощь.", Character.BodyPartSlot.SlotType.Brain, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Мифриловое покрытие", "Выковано древними гномьими мастерами.", Character.BodyPartSlot.SlotType.Body, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Гидравлический пресс «ORA-HAN-D»", "Сожмёт и адаптируется.", Character.BodyPartSlot.SlotType.LeftArm, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Отбойный молоток класса WK", "Советуем обратиться в Фонд.", Character.BodyPartSlot.SlotType.RightArm, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Валенок левый", "Хороший тёплый валенок вашего дедушки.", Character.BodyPartSlot.SlotType.LeftLeg, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Костыль", "На самом деле всё тело можно было сделать из таких костылей.", Character.BodyPartSlot.SlotType.RightLeg, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Насос из колодца на даче", "Этот ржавый насос видел Сталина.", Character.BodyPartSlot.SlotType.Heart, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Замкнутая система жизнеобеспечения БИОС-3", "", Character.BodyPartSlot.SlotType.Breath, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Какая-то хрень", "Неизвестно что это, но по документации должно быть здесь", Character.BodyPartSlot.SlotType.Spleen, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Печень, распечатанная на 3D-принтере", "Пластик был не очень качественный.", Character.BodyPartSlot.SlotType.Liver, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Топливный бак от девятки", "На сорок литров.", Character.BodyPartSlot.SlotType.Bladder, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Водопроводная система из сантехнического ларька", "Вообще изначально эти трубы купили для сантехсабера, но что-то пошло не так в процессе сборки.", Character.BodyPartSlot.SlotType.Intestines, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Почки от дуба", "", Character.BodyPartSlot.SlotType.Kidneys, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Пылевой мешок от пылесоса", "Потому что какая разница, куда собирать отходы.", Character.BodyPartSlot.SlotType.Stomach, tempContainer.Race, tempContainer.Gender));
+            tempContainer.InstallAugmentToOrganSlot(new Augment("Система клонирвоания Grineer", "Ох уж эти гриндилки.", Character.BodyPartSlot.SlotType.Reproduction, tempContainer.Race, tempContainer.Gender));
         }
 #endif
     }

@@ -49,6 +49,6 @@ namespace LARP.Science.Database
             return bitmapImage;
         }
 
-        public Organ(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "") : base(name, slot, image, description) {}
+        public Organ(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "") : base(name, slot, image, description) { }
     }
 }

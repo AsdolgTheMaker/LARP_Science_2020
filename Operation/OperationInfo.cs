@@ -11,6 +11,18 @@ namespace LARP.Science.Operation
     {
         protected readonly Character Patient;
 
-        public abstract void PerformOperation();
+        public void Execute()
+        {
+            OnStart();
+            bool isSuccessful = Process().Result;
+            if (isSuccessful) OnSuccess(); else OnFail();
+            OnFinished();
+        }
+
+        protected abstract Task<bool> Process();
+        protected abstract void OnStart();
+        protected abstract void OnFail();
+        protected abstract void OnSuccess();
+        protected abstract void OnFinished();
     }
 }

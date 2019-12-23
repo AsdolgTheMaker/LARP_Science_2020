@@ -1,0 +1,270 @@
+﻿<Window x:Class="LARP.Science.Operation.WoundSelection"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LARP.Science.Operation"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Title="WoundSelection" Height="auto" Width="585">
+    <Window.Background>
+        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients.png" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="400*"/>
+            <RowDefinition Height="57*"/>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="1">
+            <Button x:Name="ButtonBlade" Click="ButtonBlade_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Колото-резаные повреждения" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonBlunt" Click="ButtonBlunt_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Ушибленно-рваные повреждения и переломы" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonElectro" Click="ButtonElectro_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Электрические повреждения" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonBlaster" Click="ButtonBlaster_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Ожоги от плазменных и лазерных зарядов" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonSaber" Click="ButtonSaber_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Повреждение от светового меча" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonPoison" Click="ButtonPoison_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Отравление" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold" />
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button x:Name="ButtonBodyHole" Click="ButtonBodyHole_Click" Foreground="White" FontFamily="Calibri">
+                <Button.Content>
+                    <TextBlock Text="Крупное структурное повреждение" TextAlignment="Center" VerticalAlignment="Center" FontFamily="Lucida Console" Foreground="#FFD0E3FF" FontSize="16" FontWeight="Bold"/>
+                </Button.Content>
+                <Button.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric.png" Stretch="UniformToFill"/>
+                </Button.Background>
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Hover.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush Stretch="UniformToFill" ImageSource="/LARP.Science;component/Resources/Interface/ButtonGeneric_Click.png"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </UniformGrid>
+        <Button x:Name="ButtonCancel" Grid.Row="1" BorderBrush="Transparent" Click="ButtonCancel_Click" HorizontalAlignment="Right" Width="50">
+            <Button.Foreground>
+                <ImageBrush/>
+            </Button.Foreground>
+            <Button.Background>
+                <ImageBrush ImageSource="/LARP.Science;component/Resources/NotFound.png" Stretch="Uniform"/>
+            </Button.Background>
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/LARP.Science;component/Resources/NotFound_Hover.png" Stretch="Uniform" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="Button.IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/LARP.Science;component/Resources/NotFound_Clicked.png" Stretch="Uniform" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </Grid>
+</Window>

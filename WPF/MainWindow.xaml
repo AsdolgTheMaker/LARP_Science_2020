@@ -5,26 +5,59 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="LARP.Science.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600"
-        WindowState="Maximized" WindowStyle="None">
+        Title="MainWindow" Height="1080" Width="1920"
+        WindowState="Maximized" WindowStyle="None" Background="#FF260638">
 
     <TabControl x:Name="tabctrlRootNavigator" Height="auto" Width="auto">
+        <TabControl.Background>
+            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/MainMenu.png" Stretch="UniformToFill"/>
+        </TabControl.Background>
         <TabItem x:Name="tabNavigation" Header="Navigation">
             <Grid x:Name ="NavigationPage">
-                <Grid Width="215" HorizontalAlignment="Left">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnNavMenuPatients" Content="Пациенты" Grid.Row="0" Click="BtnNavMenuPatients_Click" />
-                    <Button x:Name="btnNavMenuJournal" Content="Журнал" Grid.Row="1" Click="BtnNavMenuJournal_Click" />
-                    <Button x:Name="btnNavMenuStorage" Content="Склад" Grid.Row="2" Click="BtnNavMenuStorage_Click" />
-                    <Button x:Name="btnNavMenuEconomics" Content="Экономика" Grid.Row="3" Click="BtnNavMenuEconomics_Click" />
-                    <Button x:Name="btnNavMenuOther" Content="Прочее" Grid.Row="4" Click="BtnNavMenuOther_Click" />
-                </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="310*"/>
+                    <ColumnDefinition Width="241*"/>
+                    <ColumnDefinition Width="241*"/>
+                    <ColumnDefinition Width="241*"/>
+                    <ColumnDefinition Width="241*"/>
+                    <ColumnDefinition Width="310*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="319*"/>
+                    <RowDefinition Height="241*"/>
+                    <RowDefinition Height="319*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="btnNavMenuPatients" Click="BtnNavMenuPatients_Click"  Grid.Column="1" Grid.Row="1" Focusable="False" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients.png"/>
+                    </Button.Background>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background">
+                                        <Setter.Value>
+                                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients_MouseOver.png"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="Button.IsPressed" Value="True">
+                                    <Setter TargetName="Border" Property="Background">
+                                        <Setter.Value>
+                                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients_Click.png"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Button x:Name="btnNavMenuJournal" Content="Журнал" Click="BtnNavMenuJournal_Click" Grid.Column="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
+                <Button x:Name="btnNavMenuStorage" Content="Склад" Click="BtnNavMenuStorage_Click" Grid.Column="3" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
+                <Button x:Name="btnNavMenuEconomics" Content="Экономика" Click="BtnNavMenuEconomics_Click" Grid.Column="4" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
             </Grid>
         </TabItem>
 
@@ -41,8 +74,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click"/>
-                <DataGrid Name="datagridPatientsList" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True">
+                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"/>
+                <DataGrid Name="datagridPatientsList" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}"/>
                         <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}"/>
@@ -50,7 +83,7 @@
                         <DataGridTextColumn Header="Дополнительно" Binding="{Binding Path=Description}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="btnPatientsForward" Content="Просмотреть" Grid.Column="2" Click="BtnNavViewPatients_Click"/>
+                <Button x:Name="btnPatientsForward" Content="Просмотреть" Grid.Column="2" Click="BtnNavViewPatients_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"/>
                 <Button x:Name="DEBUG_btnSerializeTest" Content="Тест сериализатора"  Click="Debug_SerializerTest" Grid.Column="1" Margin="37,551,0,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167"/>
                 <Button x:Name="DEBUG_btnDeserializeTest" Content="Тест десериализатора"  Click="Debug_DeserializerTest" Grid.Column="1" Margin="204,551,0,0" HorizontalAlignment="Left" Width="167" Height="31" VerticalAlignment="Top"/>
                 <Button x:Name="DEBUG_btnClearCharacters" Content="Очистить персонажей из контроллера"  Click="Debug_ClearCharacters" Grid.Column="1" Margin="457,551,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
@@ -62,87 +95,86 @@
         <TabItem x:Name="tabPatientView" Header="Patient View" >
             <Grid Background="#FFE5E5E5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="125*"/>
-                    <RowDefinition Height="160*"/>
-                    <RowDefinition Height="312*"/>
-                    <RowDefinition Height="267*"/>
+                    <RowDefinition Height="151*"/>
+                    <RowDefinition Height="193*"/>
+                    <RowDefinition Height="700*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="225*"/>
                     <ColumnDefinition Width="106*"/>
                     <ColumnDefinition Width="251*"/>
                     <ColumnDefinition Width="535*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnViewPatientBack" Content="Назад" Grid.Column="0" Click="BtnNavMenuPatients_Click" Grid.RowSpan="4"/>
-                <Viewbox Grid.Column="4" Margin="0,-1,-1,248" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="4">
+                <Button x:Name="btnViewPatientBack" Content="Назад" Grid.Column="0" Click="BtnNavMenuPatients_Click" Grid.RowSpan="3"/>
+                <Viewbox Grid.Column="4" Margin="0,-1,-1,248" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
                     <Canvas Width="853" Height="956">
-                        <Image Canvas.Top="502" Stretch="Uniform" x:Name="imgPatientViewLegLeft" Height="396" Width="150" Source="/Resources/Bodies/Human/Male/LeftLeg.png" Canvas.Left="420" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="491" Stretch="Uniform" x:Name="imgPatientViewLegRight" Height="408" Width="151" Source="/Resources/Bodies/Human/Male/RightLeg.png" Canvas.Left="315" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="170" Stretch="Uniform" x:Name="imgPatientViewBody" Height="397" Width="220" Source="/Resources/Bodies/Human/Male/Body.png" Canvas.Left="327" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="104" Stretch="Uniform" x:Name="imgPatientViewHead" Width="81" Source="/Resources/Bodies/Human/Male/Head.png" Height="114" Canvas.Left="391" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="209" Stretch="Uniform" x:Name="imgPatientViewArmRight" Height="116" Width="333" Source="/Resources/Bodies/Human/Male/RightArm.png" Canvas.Left="40" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="214" Stretch="Uniform" x:Name="imgPatientViewArmLeft" Height="109" Width="315" Source="/Resources/Bodies/Human/Male/LeftArm.png" Canvas.Left="504" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="103" Stretch="Uniform" x:Name="imgPatientViewBrain" Height="48" Width="55" Source="/Resources/Bodies/Human/Male/Brain.png" Canvas.Left="404" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="245" Stretch="Uniform" x:Name="imgPatientViewBreath" Height="124" Width="135" Source="/Resources/Bodies/Human/Male/Breath.png" Canvas.Left="368" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="291" Stretch="Uniform" x:Name="imgPatientViewHeart" Height="59" Width="51" Source="/Resources/Bodies/Human/Male/Heart.png" Canvas.Left="453" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="366" Stretch="Uniform" x:Name="imgPatientViewLiver" Height="50" Width="79" Source="/Resources/Bodies/Human/Male/Liver.png" Canvas.Left="374" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="202" Stretch="Uniform" x:Name="imgPatientViewStomach" Height="288" Width="73" Source="/Resources/Bodies/Human/Male/Stomach.png" Canvas.Left="417" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="432" Stretch="Uniform" x:Name="imgPatientViewIntestines" Height="94" Width="108" Source="/Resources/Bodies/Human/Male/Intestines.png" Canvas.Left="381" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="504" Stretch="Uniform" x:Name="imgPatientViewBladder" Height="37" Width="46" Source="/Resources/Bodies/Human/Male/Bladder.png" Canvas.Left="416" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="494" Stretch="Uniform" x:Name="imgPatientViewReproduction" Height="71" Width="66" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Reproduction.png" Canvas.Left="407" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="417" Stretch="Uniform" x:Name="imgPatientViewKidneys" Height="65" Width="165" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Kidneys.png" Canvas.Left="354" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
-                        <Image Canvas.Top="355" Stretch="Uniform" x:Name="imgPatientViewSpleen" Height="26" Width="25" Source="/Resources/Bodies/Human/Male/Spleen.png" Canvas.Left="476" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="DisplayOrgan"/>
+                        <Image Canvas.Top="502" Stretch="Uniform" x:Name="imgPatientViewLegLeft" Height="396" Width="150" Source="/Resources/Bodies/Human/Male/LeftLeg.png" Canvas.Left="420" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="491" Stretch="Uniform" x:Name="imgPatientViewLegRight" Height="408" Width="151" Source="/Resources/Bodies/Human/Male/RightLeg.png" Canvas.Left="315" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="170" Stretch="Uniform" x:Name="imgPatientViewBody" Height="397" Width="220" Source="/Resources/Bodies/Human/Male/Body.png" Canvas.Left="327" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="104" Stretch="Uniform" x:Name="imgPatientViewHead" Width="81" Source="/Resources/Bodies/Human/Male/Head.png" Height="114" Canvas.Left="391" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="209" Stretch="Uniform" x:Name="imgPatientViewArmRight" Height="116" Width="333" Source="/Resources/Bodies/Human/Male/RightArm.png" Canvas.Left="40" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="214" Stretch="Uniform" x:Name="imgPatientViewArmLeft" Height="109" Width="315" Source="/Resources/Bodies/Human/Male/LeftArm.png" Canvas.Left="504" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="103" Stretch="Uniform" x:Name="imgPatientViewBrain" Height="48" Width="55" Source="/Resources/Bodies/Human/Male/Brain.png" Canvas.Left="404" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="245" Stretch="Uniform" x:Name="imgPatientViewBreath" Height="124" Width="135" Source="/Resources/Bodies/Human/Male/Breath.png" Canvas.Left="368" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="291" Stretch="Uniform" x:Name="imgPatientViewHeart" Height="59" Width="51" Source="/Resources/Bodies/Human/Male/Heart.png" Canvas.Left="453" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="366" Stretch="Uniform" x:Name="imgPatientViewLiver" Height="50" Width="79" Source="/Resources/Bodies/Human/Male/Liver.png" Canvas.Left="374" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="202" Stretch="Uniform" x:Name="imgPatientViewStomach" Height="288" Width="73" Source="/Resources/Bodies/Human/Male/Stomach.png" Canvas.Left="417" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="432" Stretch="Uniform" x:Name="imgPatientViewIntestines" Height="94" Width="108" Source="/Resources/Bodies/Human/Male/Intestines.png" Canvas.Left="381" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="504" Stretch="Uniform" x:Name="imgPatientViewBladder" Height="37" Width="46" Source="/Resources/Bodies/Human/Male/Bladder.png" Canvas.Left="416" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="494" Stretch="Uniform" x:Name="imgPatientViewReproduction" Height="71" Width="66" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Reproduction.png" Canvas.Left="407" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="417" Stretch="Uniform" x:Name="imgPatientViewKidneys" Height="65" Width="165" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Kidneys.png" Canvas.Left="354" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="355" Stretch="Uniform" x:Name="imgPatientViewSpleen" Height="26" Width="25" Source="/Resources/Bodies/Human/Male/Spleen.png" Canvas.Left="476" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
                     </Canvas>
                 </Viewbox>
-                <GroupBox Grid.Column="1" Header="Орган" Margin="10,10,0,0" Grid.RowSpan="2">
+                <GroupBox Grid.Column="1" Header="Орган" Margin="10,10,0,0" Grid.RowSpan="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="27*"/>
                             <RowDefinition Height="230*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="4,3,0,0" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="90" Grid.Row="1"/>
-                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16"/>
-                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,21,10,10" TextWrapping="Wrap" Grid.Row="1" Text="DESCRIPTIONTEXT"/>
-                        <TextBlock x:Name="textblockPatientOrganAugmentNotifier" Margin="0,0,0,4" TextWrapping="Wrap" Text="Аугментирован!" Grid.Row="1" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="92" Foreground="Red" Visibility="Collapsed"/>
+                        <TextBlock Margin="4,3,0,0" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="107" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,21,10,10" TextWrapping="Wrap" Grid.Row="1" Text="DESCRIPTIONTEXT" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganAugmentNotifier" Margin="0,0,0,4" TextWrapping="Wrap" Text="Аугментирован!" Grid.Row="1" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Foreground="Red"/>
                         <Rectangle x:Name="rectanglePatientOrgan" Fill="#FFAEAEAE" Stroke="Black" Grid.RowSpan="2" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="2" Header="Пациент" Margin="10,10,1,0" Grid.ColumnSpan="2">
+                <GroupBox Grid.Column="2" Header="Пациент" Margin="10,10,1,0" Grid.ColumnSpan="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="56*"/>
                             <ColumnDefinition Width="111*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock HorizontalAlignment="Left" Margin="4,5,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Height="16" Width="28"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="4,26,0,0" TextWrapping="Wrap" Text="Раса" VerticalAlignment="Top" Height="16" Width="29"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="4,47,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" Height="16" Width="22"/>
-                        <TextBlock Margin="20,0,10,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" Height="16" Grid.Column="1"/>
-                        <TextBlock x:Name="textblockPatientDescr" Margin="10,16,10,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Column="1"/>
-                        <TextBlock x:Name="textblockPatientName" Margin="37,5,0,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16"/>
-                        <TextBlock x:Name="textblockPatientRace" Margin="37,26,0,0" TextWrapping="Wrap" Text="RACETEXT" VerticalAlignment="Top" Height="16"/>
-                        <TextBlock x:Name="textblockPatientGender" Margin="37,47,0,0" TextWrapping="Wrap" Text="GENDERTEXT" Height="16" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="4,5,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Height="16" Width="43" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="4,26,0,0" TextWrapping="Wrap" Text="Раса" VerticalAlignment="Top" Height="16" Width="45" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="4,47,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" Height="16" Width="34" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
+                        <TextBlock Margin="20,0,10,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" Height="16" Grid.Column="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientDescr" Margin="10,16,10,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientName" Margin="52,5,0,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientRace" Margin="52,26,0,0" TextWrapping="Wrap" Text="RACETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientGender" Margin="52,47,0,0" TextWrapping="Wrap" Text="GENDERTEXT" Height="16" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="10"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="2" Header="Аугментация органа" Margin="0,0,0,2" Grid.ColumnSpan="2" Grid.Row="1">
+                <GroupBox Grid.Column="2" Header="Аугментация органа" Margin="0,0,0,2" Grid.ColumnSpan="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="99*"/>
-                            <ColumnDefinition Width="219*"/>
-                            <ColumnDefinition Width="412*"/>
+                            <ColumnDefinition Width="97*"/>
+                            <ColumnDefinition Width="153*"/>
+                            <ColumnDefinition Width="323*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="38*"/>
                             <RowDefinition Height="28*"/>
                             <RowDefinition Height="69*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="textblockPatientOrganAugDescription" Margin="5,21,5,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Row="2" Grid.ColumnSpan="2"/>
-                        <TextBlock Margin="10,0,0,0" TextWrapping="Wrap" Grid.Row="2" Height="21" VerticalAlignment="Top"><Run Text="Описание"/><LineBreak/><Run/></TextBlock>
-                        <TextBlock Margin="10,3,0,0" TextWrapping="Wrap" Text="Название"/>
-                        <TextBlock Margin="10,7,0,0" TextWrapping="Wrap" Text="Тип" Grid.Row="1"/>
-                        <TextBlock x:Name="textblockPatientOrganAugName" Margin="10,3,10,0" TextWrapping="Wrap" Text="NAMETEXT" Grid.Column="1"/>
-                        <TextBlock x:Name="textblockPatientOrganAugSlotType" Margin="10,7,10,0" TextWrapping="Wrap" Text="SLOTTYPE" Grid.Column="1" Grid.Row="1"/>
-                        <DataGrid x:Name="datagridPatientOrganAugParams" Grid.Column="2" Margin="0,3,4,0" Grid.RowSpan="3">
+                        <TextBlock x:Name="textblockPatientOrganAugDescription" Margin="5,21,5,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock Margin="5,0,0,0" TextWrapping="Wrap" Grid.Row="2" Height="21" VerticalAlignment="Top" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"><Run Text="Описание"/><LineBreak/><Run/></TextBlock>
+                        <TextBlock Margin="5,3,0,0" TextWrapping="Wrap" Text="Название" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
+                        <TextBlock Margin="5,7,0,0" TextWrapping="Wrap" Text="Тип" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
+                        <TextBlock x:Name="textblockPatientOrganAugName" Margin="10,3,10,0" TextWrapping="Wrap" Text="NAMETEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganAugSlotType" Margin="10,7,10,0" TextWrapping="Wrap" Text="SLOTTYPE" Grid.Column="1" Grid.Row="1" FontFamily="Lucida Console" FontSize="10"/>
+                        <DataGrid x:Name="datagridPatientOrganAugParams" Grid.Column="2" Margin="0,3,4,0" Grid.RowSpan="3" FontFamily="Lucida Console" FontSize="10">
                             <DataGrid.Columns>
                                 <DataGridTextColumn CanUserReorder="False" Header="Свойство" Binding="{Binding Path=Key}"/>
                                 <DataGridTextColumn CanUserReorder="False" Header="Описание" Binding="{Binding Path=Value}" Width="*"/>
@@ -151,23 +183,43 @@
                         <Rectangle x:Name="rectanglePatientOrganAug" Fill="#FFAEAEAE" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" Header="Неотображаемые импланты" Margin="10,0,0,0" Grid.ColumnSpan="2" Grid.Row="2">
-                    <ListBox Margin="0,0,-2,3"/>
+                <GroupBox Grid.Column="1" Header="Неотображаемые импланты" Margin="10,0,0,304" Grid.ColumnSpan="2" Grid.Row="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
+                    <ListBox Margin="0,0,-2,3" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
                 </GroupBox>
-                <GroupBox Grid.Column="3" Header="Аугментация импланта" Grid.Row="2">
+                <GroupBox Grid.Column="3" Header="Аугментация импланта" Grid.Row="2" Margin="0,0,0,304" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
                     <Grid>
 
                         <Rectangle x:Name="rectanglePatientAuxDetails" Fill="#FFAEAEAE" Stroke="Black" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="4" Header="Подготовить операцию" Margin="65,10" Grid.Row="3">
+                <GroupBox Visibility="Collapsed" x:Name="groupBoxSelectOperationType" Grid.Column="4" Header="Подготовить операцию" Margin="10,406,10,10" Grid.Row="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)">
                     <UniformGrid Columns="1">
-                        <Button Content="Лечение"/>
-                        <Button Content="Замена и удаление органов"/>
-                        <Button Content="Аугментация выбранного органа"/>
-                        <Button Content="Имплантация и удаление вторичных аугментов"/>
-                        <Button x:Name="DEBUG_TestDefaultOperation" Content="Test default operation"  Click="Debug_TestDefaultOperation"/>
+                        <Button x:Name="buttonHeal" Content="Лечение" Click="ButtonHeal_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
+                        <Button x:Name="buttonReplaceOrgan" Content="Замена и удаление органов" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
+                        <Button x:Name="buttonAugmentateOrgan" Content="Аугментация выбранного органа" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
+                        <Button x:Name="buttonImplantAugment" Content="Имплантация и удаление вторичных аугментов" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
+                        <Button x:Name="DEBUG_TestDefaultOperation" Content="Test default operation" Click="Debug_TestDefaultOperation" Visibility="Collapsed"/>
                     </UniformGrid>
+                </GroupBox>
+                <GroupBox x:Name="groupBoxPrepareHealOperation" Grid.Column="4" Header="Подготовка к операции" Grid.Row="2" Margin="10,408,10,8" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
+                    <Grid>
+                        <Button x:Name="ButtonPatientViewHealOperationCancel" Content="Отменить операцию" Margin="10,222,602,2" FontFamily="Lucida Console" FontSize="12" Foreground="#FFA63434" Click="ButtonPatientViewHealOperationCancel_Click"/>
+                        <DataGrid x:Name="DataGridPatientViewHealOperationWounds" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532" HorizontalAlignment="Left" Height="207" Margin="10,10,0,0" VerticalAlignment="Top" Width="825" SelectionChanged="DataGridPatientViewHealOperationWounds_SelectionChanged">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Орган" Binding="{Binding Path=OrganSlot}"/>
+                                <DataGridTextColumn Header="Повреждение" Binding="{Binding Path=DamageName}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="ButtonPatientViewHealOperationBegin" Content="Приступить" Margin="602,222,10,2" FontFamily="Lucida Console" FontSize="12" Click="ButtonPatientViewHealOperationBegin_Click"/>
+                        <Button x:Name="ButtonPatientViewHealOperationReplaceOrgan" Margin="427,222,258,2" Click="ButtonPatientViewHealOperationReplaceOrgan_Click">
+                            <Button.Content>
+                                <TextBlock Text="Устранить повреждение заменой органа" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="12" />
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="ButtonPatientViewHealOperationRemoveWound" Margin="262,222,423,2" Click="ButtonPatientViewHealOperationRemoveWound_Click">
+                            <TextBlock Text="Удалить ранение из списка" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="12" />
+                        </Button>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </TabItem>

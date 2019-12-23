@@ -69,8 +69,29 @@ namespace LARP.Science.Database
 
             public static string GetDefaultSlotPicture(SlotType? slot) 
                 => slot == null ? Controller.NotFoundImagePath : GetSlotPicture(slot, RaceType.Human, GenderType.Male);
-            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender) 
-                => "Resources\\Bodies\\" + race.ToString() + "\\" + gender.ToString() + "\\" + slot.ToString() + ".png";
+
+            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender, byte augLevel)
+            {
+                string result = "Resources\\Bodies\\" + race.ToString() + "\\" + gender.ToString() + "\\" + slot.ToString();
+                switch (augLevel)
+                {
+                    case 0: break;
+                    case 1:
+                        {
+                            result += "_Mod";
+                            break;
+                        }
+                    case 2:
+                    default:
+                        {
+                            result += "_Aug";
+                            break;
+                        }
+                }
+                return result += ".png";
+            }
+            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender)
+                => GetSlotPicture(slot, race, gender, 0);
             #endregion
 
             private static readonly IReadOnlyDictionary<SlotType, string> PresetDescriptions = new Dictionary<SlotType, string>()

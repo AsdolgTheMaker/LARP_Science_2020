@@ -19,7 +19,7 @@ namespace LARP.Science.Database
         [DataMember] public string Description { get; set; }
         [DataMember] private Dictionary<BodyPartSlot.SlotType?, Organ> Organs { get; set; } = new Dictionary<BodyPartSlot.SlotType?, Organ>();
         [DataMember] private readonly List<Augment> SecondaryAugments = new List<Augment>();
-        [DataMember] public Statistics Stat { get; set; }
+        [DataMember] public Statistics Stat { get; set; } = new Statistics();
         [DataMember] public bool Alive { get; set; } = true;
 
         // Primary organs/augments methods

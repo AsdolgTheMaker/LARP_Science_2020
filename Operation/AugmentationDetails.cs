@@ -17,7 +17,12 @@ namespace LARP.Science.Operation
         private readonly BodyPart target;
         private readonly BodyPart implant;
 
-        public override void PerformOperation() 
+        protected async override Task<bool> Process()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void OnStart()
         {
             switch (type)
             {
@@ -33,7 +38,7 @@ namespace LARP.Science.Operation
                             case AugmentationAction.Remove:
                                 {
                                     Patient.EjectOrgan((target as Organ).Slot);
-                                    break; 
+                                    break;
                                 }
                         }
                         break;
@@ -73,6 +78,21 @@ namespace LARP.Science.Operation
                         break;
                     }
             }
+        }
+
+        protected override void OnFail()
+        {
+            
+        }
+
+        protected override void OnSuccess()
+        {
+            
+        }
+
+        protected override void OnFinished() 
+        {
+            
         }
 
         /// <summary>
