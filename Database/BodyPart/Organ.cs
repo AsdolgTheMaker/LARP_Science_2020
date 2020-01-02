@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LARP.Science.Economics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,30 +15,28 @@ namespace LARP.Science.Database
     public partial class Organ : BodyPart
     {
         [DataMember] public Augment AugmentEquivalent = null;
+        [DataMember] public bool Virtual = false;
 
-        public bool IsAugmented()
-        {
-            if (AugmentEquivalent == null)
-                return false;
-            else
-                return true;
-        }
+        public bool IsAugmented => !(AugmentEquivalent == null);
 
         public Augment EjectAugment()
         {
-            if (IsAugmented())
+            if (IsAugmented)
             {
                 Augment aug = AugmentEquivalent;
                 AugmentEquivalent = null;
+                if (aug.IsReplacement) Virtual = true;
                 return aug;
             }
             else return null;
         }
 
-        public BitmapImage GetImageEntity()
+        public BitmapImage GetImage()
         {
-            // First, decide if we will use Organ's image or its Augment's one
-            string path = IsAugmented() ? (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) ? ImagePath : AugmentEquivalent.ImagePath) : ImagePath;
+            string path = Virtual 
+                ? Character.BodyPartSlot.GetSlotPictureEmpty(Slot) : (IsAugmented 
+                ? (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) 
+                ? ImagePath : AugmentEquivalent.ImagePath) : ImagePath);
             if (!File.Exists(path)) path = Character.BodyPartSlot.GetDefaultSlotPicture(this.Slot);
 
             FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -48,6 +47,8 @@ namespace LARP.Science.Database
             bitmapImage.EndInit();
             return bitmapImage;
         }
+
+        internal EjectedOrgan ConvertToEjectedOrgan() => new EjectedOrgan(this);
 
         public Organ(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "") : base(name, slot, image, description) { }
     }

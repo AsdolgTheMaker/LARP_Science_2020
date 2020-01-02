@@ -24,34 +24,43 @@ namespace LARP.Science.Database
         }
         public bool RemoveCustomParameter(string paramName) => CustomParameters.Remove(paramName);
 
-        // Getters
-        public bool IsVisible() => Visible;
-        public Dictionary<string, string> GetAllCustomParameters() => CustomParameters;
-        public Character.BodyPartSlot.SlotType? GetDestinationSlot() => Slot;
+        // Properties
+        public bool IsVisible => Visible;
+        public Dictionary<string, string> AllCustomParameters => CustomParameters;
+        public Character.BodyPartSlot.SlotType? DestinationSlot => Slot;
+        public bool IsReplacement => CustomParameters.ContainsKey("Полная замена");
 
-        [Obsolete("Использование устаревшего конструктора аугмента приведёт к невозможности отображения верных изображений. Ошибку необходимо устранить.")]
-        // !! OBSOLETE !! Primary augment constructor
-        public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null) 
+        [Obsolete("Использование устаревшего конструктора приведёт к невозможности отображения верных изображений на персонаже. Ошибку необходимо устранить.")]
+        public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null)
             : base(name, slot, image, description)
         {
             CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = true;
         }
 
+        // Economics converter
+        public Economics.EjectedAugment ConvertToEjectedAugment()
+        {
+            if (IsVisible) return new Economics.PrimaryAugment(this);
+            else return new Economics.AuxilaryAugment(this);
+        }
+
         // Valid primary augment constructor
-        public Augment(string name, string description, Character.BodyPartSlot.SlotType slot, Character.RaceType race, Character.GenderType gender, Dictionary<string, string> customParams = null)
+        public Augment(string name, string description,
+            Character.BodyPartSlot.SlotType slot, Character.RaceType race, Character.GenderType gender,
+            Dictionary<string, string> customParams = null)
             : base(name, slot, string.Empty, description)
         {
             CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = true;
 
-            if (CustomParameters.Count > 0) 
+            if (CustomParameters.Count > 0 && CustomParameters.Keys.Contains("Полная замена"))
                 ImagePath = Character.BodyPartSlot.GetSlotPicture(slot, race, gender, 2);
             else ImagePath = Character.BodyPartSlot.GetSlotPicture(slot, race, gender, 1);
         }
 
         // Secondary augment constructor
-        public Augment(string name, string image, string description = "", Dictionary<string, string> customParams = null) 
+        public Augment(string name, string image, string description = "", Dictionary<string, string> customParams = null)
             : base(name, image, description)
         {
             CustomParameters = customParams ?? new Dictionary<string, string>();

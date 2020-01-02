@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LARP.Science.Database;
+using AsdolgTools;
 
 namespace LARP.Science.Operation
 {
@@ -19,11 +20,6 @@ namespace LARP.Science.Operation
 
         protected async override Task<bool> Process()
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void OnStart()
-        {
             switch (type)
             {
                 case AugmentationType.Organ:
@@ -32,16 +28,26 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 {
-                                    Patient.InstallOrgan(implant as Organ);
-                                    break;
+                                    await Economics.Exchange.TakeItem((implant as Organ).ConvertToEjectedOrgan());
+                                    bool successful = Patient.InstallOrgan((implant as Organ).Slot);
+                                    if (successful) Journal.AddRecord("Орган \"" + implant.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                    else return false;
+                                    return true;
                                 }
                             case AugmentationAction.Remove:
                                 {
-                                    Patient.EjectOrgan((target as Organ).Slot);
-                                    break;
+                                    Organ ejected = Patient.EjectOrgan((target as Organ).Slot);
+                                    if (ejected != null)
+                                    {
+
+                                        Economics.Exchange.AddItem(ejected);
+                                        Journal.AddRecord("Из пациента" + Patient.Name + " извлечён орган \"" + ejected.Name + "\" и убран на склад.", Controller.LogOutputDuringOperation);
+                                        return true;
+                                    }
+                                    else return false;
                                 }
+                            default: return false;
                         }
-                        break;
                     }
                 case AugmentationType.Primary:
                     {
@@ -49,16 +55,35 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 {
-                                    Patient.InstallAugmentToOrganSlot(implant as Augment);
-                                    break;
+                                    Augment ejected = Patient.InstallAugmentToOrganSlot(implant as Augment);
+                                    await Economics.Exchange.TakeItem((implant as Augment).ConvertToEjectedAugment());
+                                    if ((implant as Augment).IsReplacement)
+                                        Journal.AddRecord("Протез \"" + implant.Name + "\" органа \"" + target.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                    else
+                                    {
+                                        Journal.AddRecord("Аугмент \"" + implant.Name + "\" для органа \"" + target.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                        if (ejected != null)
+                                        {
+                                            Economics.Exchange.AddItem(ejected);
+                                            Journal.AddRecord("Взамен, аугмент \"" + ejected.Name + "\" извлечён и убран на склад.", Controller.LogOutputDuringOperation);
+                                        }
+                                    }
+                                    return true;
                                 }
                             case AugmentationAction.Remove:
                                 {
-                                    Patient.EjectAugmentFromOrganSlot((target as Organ).Slot);
-                                    break;
+                                    Augment ejected = Patient.EjectAugmentFromOrganSlot((target as Organ).Slot);
+                                    if (ejected != null)
+                                    {
+                                        Economics.Exchange.AddItem(ejected);
+                                        if (ejected.IsReplacement) Journal.AddRecord("Протез \"" + ejected.Name + "\" органа \"" + ejected.Slot.GetDescription() + "\" извлечён из пациента " + Patient.Name + " и убран на склад.", Controller.LogOutputDuringOperation);
+                                        else Journal.AddRecord("Аугмент \"" + ejected.Name + "\" для органа \"" + ejected.Slot.GetDescription() + "\" извлечён из пациента " + Patient.Name + " и убран на склад.", Controller.LogOutputDuringOperation);
+                                        return true;
+                                    }
+                                    else return false;
                                 }
+                            default: return false;
                         }
-                        break;
                     }
                 case AugmentationType.Auxilary:
                     {
@@ -66,41 +91,50 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 {
+                                    await Economics.Exchange.TakeItem((implant as Augment).ConvertToEjectedAugment());
                                     Patient.AddAugment(implant as Augment);
-                                    break;
+                                    Journal.AddRecord("Аугмент \"" + implant.Name + "\" успешно имплантирован в пациента" + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                    return true;
                                 }
                             case AugmentationAction.Remove:
                                 {
-                                    Patient.EjectAugment(target as Augment);
-                                    break;
+                                    bool didEject = Patient.EjectAugment(target as Augment);
+                                    if (didEject) Journal.AddRecord("Извлечён имплант " + target.Name + " из пациента " + Patient.Name, Controller.LogOutputDuringOperation);
+                                    return didEject;
                                 }
+                            default: return false;
                         }
-                        break;
                     }
+                default: return false;
             }
+        }
+
+        protected override void OnStart()
+        {
+
         }
 
         protected override void OnFail()
         {
-            
+
         }
 
         protected override void OnSuccess()
         {
-            
+
         }
 
-        protected override void OnFinished() 
+        protected override void OnFinished()
         {
-            
+
         }
 
         /// <summary>
-        /// Args depend on desired operation: <br/><br/>
-        /// Add Organ               - Pass Organ as IMPLANT <br/> 
-        /// Add Primary/Auxilary    - Pass Augment as IMPLANT <br/>
-        /// Delete Organ/Primary    - Pass Organ as TARGET <br/>
-        /// Delete Auxilary         - Pass Augment as TARGET
+        /// Набор агрументов зависит от желаемого типа операции: <br/><br/>
+        /// Добавить орган            - Передать Organ как IMPLANT <br/> 
+        /// Аугментировать            - Передать Augment как IMPLANT <br/>
+        /// Удалить орган или аугмент - Передать Organ как TARGET <br/>
+        /// Деимплантировать          - Передать Augment как TARGET
         /// </summary>
         public AugmentationDetails(AugmentationType _type, AugmentationAction _action, BodyPart _target = null, BodyPart _implant = null)
         {
@@ -113,7 +147,7 @@ namespace LARP.Science.Operation
         }
 
         /// <summary>
-        /// Validity pass to be assured that passed arguments correspond to Augmentation constructor instructions.
+        /// Validity pass to be assured that passed arguments correspond to constructor instructions.
         /// </summary>
         private void Validate()
         {
@@ -134,7 +168,7 @@ namespace LARP.Science.Operation
                                     break;
                                 }
                         }
-                        break; 
+                        break;
                     }
                 case AugmentationType.Primary:
                     {

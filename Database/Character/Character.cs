@@ -22,15 +22,28 @@ namespace LARP.Science.Database
         [DataMember] public Statistics Stat { get; set; } = new Statistics();
         [DataMember] public bool Alive { get; set; } = true;
 
-        // Primary organs/augments methods
+        // Primary organs/augments 
         public Organ GetOrgan(BodyPartSlot.SlotType? slot) => Organs.Keys.Contains(slot) ? Organs[slot] : null;
-        public List<Organ> GetOrgansList() => Organs.Values.ToList();
-        public List<Augment> GetPrimaryAugments()
+        public List<Organ> OrgansList
         {
-            List<Augment> res = new List<Augment>();
-            foreach (Organ organ in Organs.Values)
-                if (organ.IsAugmented()) res.Add(organ.AugmentEquivalent);
-            return res;
+            get
+            {
+                List<Organ> organs = Organs.Values.ToList();
+                while (organs.Contains(null))
+                    organs.Remove(null);
+                return organs;
+            }
+        }
+
+        public List<Augment> PrimaryAugments
+        {
+            get
+            {
+                List<Augment> res = new List<Augment>();
+                foreach (Organ organ in Organs.Values)
+                    if (organ.IsAugmented) res.Add(organ.AugmentEquivalent);
+                return res;
+            }
         }
 
         /// <summary>
@@ -38,31 +51,29 @@ namespace LARP.Science.Database
         /// </summary>
         /// <param name="newOrgan"></param>
         /// <returns></returns>
-        public Organ InstallOrgan(Organ newOrgan)
+        public bool InstallOrgan(BodyPartSlot.SlotType? Slot)
         {
-            BodyPartSlot.SlotType? slot = newOrgan.Slot;
-            Organ removed = GetOrgan(slot);
-            Organs[slot] = newOrgan;
-
-            return removed;
-        }
-        public List<Organ> InstallOrgansRange(List<Organ> organs)
-        {
-            List<Organ> ejectedOrgans = new List<Organ>();
-            foreach (var item in organs)
+            if (Organs[Slot].Virtual == true)
             {
-                Organ replacing = InstallOrgan(item);
-                if (replacing != null) ejectedOrgans.Add(replacing);
+                Organs[Slot].Virtual = false;
+                return true;
             }
-            return ejectedOrgans;
+            else return false;
+
+        }
+
+        public void InstallOrgansRange(List<Organ> organs)
+        {
+            foreach (Organ item in organs)
+                Organs.Add(item.Slot, item);
         }
 
         public Augment InstallAugmentToOrganSlot(Augment augment)
         {
             // Store installed augment if present
             Augment removed = null;
-            Organ organ = GetOrgan(augment.GetDestinationSlot());
-            if (organ.IsAugmented())
+            Organ organ = GetOrgan(augment.DestinationSlot);
+            if (organ.IsAugmented)
                 removed = organ.AugmentEquivalent;
 
             // Install new augment
@@ -76,7 +87,7 @@ namespace LARP.Science.Database
             if (slot == null) return null;
 
             Organ removed = GetOrgan(slot);
-            Organs[slot] = null;
+            Organs[slot].Virtual = true;
             return removed;
         }
         public Augment EjectAugmentFromOrganSlot(BodyPartSlot.SlotType? slot) => slot == null ? null : GetOrgan(slot).EjectAugment();

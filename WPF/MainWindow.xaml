@@ -7,10 +7,128 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920"
         WindowState="Maximized" WindowStyle="None" Background="#FF260638">
-
-    <TabControl x:Name="tabctrlRootNavigator" Height="auto" Width="auto">
+    <Window.Resources>
+        <ControlTemplate x:Key="NavigationButton" TargetType="{x:Type Button}">
+            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/30x30.png"/>
+                </Border.Background>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/30x30_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/30x30_Click.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="NavButtonDir" TargetType="Button">
+            <Border Name="Border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDir.png"/>
+                </Border.Background>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDir_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDir_Click.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDir_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="NavButtonDirInv" TargetType="Button">
+            <Border Name="Border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDirInv.png"/>
+                </Border.Background>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDirInv_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDirInv_Click.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButtonDirInv_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <ControlTemplate x:Key="LongButton" TargetType="Button">
+            <Border Name="Border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton.png"/>
+                </Border.Background>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Click.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <TabControl x:Name="tabctrlRootNavigator" Height="auto" Width="auto" BorderBrush="Transparent">
         <TabControl.Background>
-            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/MainMenu.png" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/FixedSize/1920x1080.png" Stretch="UniformToFill"/>
         </TabControl.Background>
         <TabItem x:Name="tabNavigation" Header="Navigation">
             <Grid x:Name ="NavigationPage">
@@ -27,120 +145,176 @@
                     <RowDefinition Height="241*"/>
                     <RowDefinition Height="319*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btnNavMenuPatients" Click="BtnNavMenuPatients_Click"  Grid.Column="1" Grid.Row="1" Focusable="False" >
+                <Button x:Name="btnNavMenuPatients" Click="BtnNavMenuPatients_Click"  Grid.Column="1" Grid.Row="1" Focusable="False" Template="{StaticResource NavigationButton}">
                     <Button.Background>
-                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients.png"/>
+                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButton.png"/>
                     </Button.Background>
-                    <Button.Template>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="Button.IsMouseOver" Value="True">
-                                    <Setter TargetName="Border" Property="Background">
-                                        <Setter.Value>
-                                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients_MouseOver.png"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Trigger>
-                                <Trigger Property="Button.IsPressed" Value="True">
-                                    <Setter TargetName="Border" Property="Background">
-                                        <Setter.Value>
-                                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/ButtonPatients_Click.png"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
+                    <Button.Content>
+                        <TextBlock Text="Пациенты" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
+                    </Button.Content>
                 </Button>
-                <Button x:Name="btnNavMenuJournal" Content="Журнал" Click="BtnNavMenuJournal_Click" Grid.Column="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
-                <Button x:Name="btnNavMenuStorage" Content="Склад" Click="BtnNavMenuStorage_Click" Grid.Column="3" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
-                <Button x:Name="btnNavMenuEconomics" Content="Экономика" Click="BtnNavMenuEconomics_Click" Grid.Column="4" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" />
+                <Button x:Name="btnNavMenuJournal" Click="BtnNavMenuJournal_Click" Grid.Column="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Template="{StaticResource NavigationButton}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButton.png"/>
+                    </Button.Background>
+                    <Button.Content>
+                        <TextBlock Text="Журнал" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnNavMenuStorage" Click="BtnNavMenuStorage_Click" Grid.Column="3" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Template="{StaticResource NavigationButton}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButton.png"/>
+                    </Button.Background>
+                    <Button.Content>
+                        <TextBlock Text="Склад" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btnNavMenuEconomics" Click="BtnNavMenuEconomics_Click" Grid.Column="4" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Template="{StaticResource NavigationButton}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/NavButton.png"/>
+                    </Button.Background>
+                    <Button.Content>
+                        <TextBlock Text="Экономика" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
+                    </Button.Content>
+                </Button>
             </Grid>
         </TabItem>
 
         <!-- Patients Page -->
-        <!--  Column 1 - Menu -->
-        <!--    Row 2 - To Main Menu -->
-        <TabItem x:Name="tabPatients" Header="Patients">
-            <Grid Background="#FFE5E5E5">
+        <TabItem x:Name="tabPatients" Header="Patients" BorderBrush="Transparent">
+            <Grid>
+                <Grid.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/FixedSize/1920x1080.png" Stretch="UniformToFill"/>
+                </Grid.Background>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="199"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="199"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btnPatientsBack" Content="В главное меню" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"/>
-                <DataGrid Name="datagridPatientsList" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532">
+                <Button x:Name="btnPatientsBack" Grid.Column="0" Grid.Row="1" Click="BtnBackToNavMenu_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"
+                        Template="{StaticResource NavButtonDir}"/>
+                <DataGrid Name="datagridPatientsList" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532" Margin="0,85,0,84" Background="#CD04161F">
+                    <DataGrid.BorderBrush>
+                        <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                    </DataGrid.BorderBrush>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#367498"/>
+                            <Setter Property="Foreground" Value="LightCyan"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                    <Setter Property="Background" Value="Azure"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <Trigger Property="DataGridRow.IsFocused" Value="true">
+                                    <Setter Property="Background" Value="Azure"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding Path=ID}"/>
-                        <DataGridTextColumn Header="Имя" Binding="{Binding Path=Name}"/>
-                        <DataGridTextColumn Header="Раса" Binding="{Binding Path=GetRace}"/>
+                        <DataGridTextColumn MinWidth="40" Header="ID" Binding="{Binding Path=ID}" Foreground="Black"/>
+                        <DataGridTextColumn MinWidth="340" Header="Имя" Binding="{Binding Path=Name}"/>
+                        <DataGridTextColumn MinWidth="120" Header="Раса" Binding="{Binding Path=GetRace}"/>
                         <DataGridTextColumn Header="Дополнительно" Binding="{Binding Path=Description}" Width="*"/>
                     </DataGrid.Columns>
+                    <ListBoxItem/>
                 </DataGrid>
-                <Button x:Name="btnPatientsForward" Content="Просмотреть" Grid.Column="2" Click="BtnNavViewPatients_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"/>
-                <Button x:Name="DEBUG_btnSerializeTest" Content="Тест сериализатора"  Click="Debug_SerializerTest" Grid.Column="1" Margin="37,551,0,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167"/>
-                <Button x:Name="DEBUG_btnDeserializeTest" Content="Тест десериализатора"  Click="Debug_DeserializerTest" Grid.Column="1" Margin="204,551,0,0" HorizontalAlignment="Left" Width="167" Height="31" VerticalAlignment="Top"/>
-                <Button x:Name="DEBUG_btnClearCharacters" Content="Очистить персонажей из контроллера"  Click="Debug_ClearCharacters" Grid.Column="1" Margin="457,551,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
-                <Button x:Name="DEBUG_btnCreateTestingDB" Content="Ренициализировать тестовую базу данных"  Click="Debug_ReinitializeTestingDatabase" Grid.Column="1" Margin="702,551,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
+                <Button x:Name="btnPatientsForward" Grid.Column="2" Click="BtnNavViewPatients_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"
+                        Template="{StaticResource NavButtonDirInv}" />
+                <Button x:Name="DEBUG_btnSerializeTest" Content="Тест сериализатора"  Click="Debug_SerializerTest" Grid.Column="1" Margin="13,1003,0,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167"/>
+                <Button x:Name="DEBUG_btnDeserializeTest" Content="Тест десериализатора"  Click="Debug_DeserializerTest" Grid.Column="1" Margin="180,1003,0,0" HorizontalAlignment="Left" Width="167" Height="31" VerticalAlignment="Top"/>
+                <Button x:Name="DEBUG_btnClearCharacters" Content="Очистить персонажей из контроллера"  Click="Debug_ClearCharacters" Grid.Column="1" Margin="433,1003,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
+                <Button x:Name="DEBUG_btnCreateTestingDB" Content="Ренициализировать тестовую базу данных"  Click="Debug_ReinitializeTestingDatabase" Grid.Column="1" Margin="678,1003,0,0" HorizontalAlignment="Left" Width="245" Height="31" VerticalAlignment="Top"/>
             </Grid>
         </TabItem>
 
-        <!-- View Patient -->
-        <TabItem x:Name="tabPatientView" Header="Patient View" >
-            <Grid Background="#FFE5E5E5">
+        <!-- View Patient Page-->
+        <TabItem x:Name="tabPatientView" Header="Patient View" BorderBrush="Transparent">
+            <Grid>
+                <Grid.Background>
+                    <ImageBrush/>
+                </Grid.Background>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="151*"/>
-                    <RowDefinition Height="193*"/>
-                    <RowDefinition Height="700*"/>
+                    <RowDefinition Height="214*"/>
+                    <RowDefinition Height="370*"/>
+                    <RowDefinition Height="309*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75"/>
-                    <ColumnDefinition Width="225*"/>
-                    <ColumnDefinition Width="106*"/>
-                    <ColumnDefinition Width="251*"/>
-                    <ColumnDefinition Width="535*"/>
+                    <ColumnDefinition Width="199"/>
+                    <ColumnDefinition Width="363*"/>
+                    <ColumnDefinition Width="527*"/>
+                    <ColumnDefinition Width="817*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnViewPatientBack" Content="Назад" Grid.Column="0" Click="BtnNavMenuPatients_Click" Grid.RowSpan="3"/>
-                <Viewbox Grid.Column="4" Margin="0,-1,-1,248" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
-                    <Canvas Width="853" Height="956">
+                <Button x:Name="btnViewPatientBack" Content="Назад" Grid.Column="0" Click="BtnNavMenuPatients_Click" Grid.RowSpan="4"
+                        Template="{StaticResource NavButtonDir}"/>
+                <GroupBox Grid.Column="3" Margin="0,10,0,0" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1">
+                    <GroupBox.Header>
+                        <TextBlock Text="Журнал" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
+                    <TextBox x:Name="TextBoxPatientViewJournal" IsReadOnly="True" IsReadOnlyCaretVisible="False" Foreground="#FF899AA4" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                             Text="" Background="#FF041425" FontFamily="Lucida Console" FontSize="12"/>
+                </GroupBox>
+                <Viewbox Grid.Column="3" Margin="10,-1,-1,10" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="4">
+                    <Canvas Width="897" Height="963">
                         <Image Canvas.Top="502" Stretch="Uniform" x:Name="imgPatientViewLegLeft" Height="396" Width="150" Source="/Resources/Bodies/Human/Male/LeftLeg.png" Canvas.Left="420" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="491" Stretch="Uniform" x:Name="imgPatientViewLegRight" Height="408" Width="151" Source="/Resources/Bodies/Human/Male/RightLeg.png" Canvas.Left="315" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="491" Stretch="Uniform" x:Name="imgPatientViewLegRight" Height="408" Width="148" Source="/Resources/Bodies/Human/Male/RightLeg.png" Canvas.Left="318" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
                         <Image Canvas.Top="170" Stretch="Uniform" x:Name="imgPatientViewBody" Height="397" Width="220" Source="/Resources/Bodies/Human/Male/Body.png" Canvas.Left="327" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="104" Stretch="Uniform" x:Name="imgPatientViewHead" Width="81" Source="/Resources/Bodies/Human/Male/Head.png" Height="114" Canvas.Left="391" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="103" Stretch="Uniform" x:Name="imgPatientViewHead" Width="81" Source="/Resources/Bodies/Human/Male/Head.png" Height="114" Canvas.Left="393" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="170" Stretch="Uniform" x:Name="imgPatientViewStomach" Height="281" Width="73" Source="/Resources/Bodies/Human/Male/Stomach.png" Canvas.Left="420" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
                         <Image Canvas.Top="209" Stretch="Uniform" x:Name="imgPatientViewArmRight" Height="116" Width="333" Source="/Resources/Bodies/Human/Male/RightArm.png" Canvas.Left="40" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="214" Stretch="Uniform" x:Name="imgPatientViewArmLeft" Height="109" Width="315" Source="/Resources/Bodies/Human/Male/LeftArm.png" Canvas.Left="504" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="217" Stretch="Uniform" x:Name="imgPatientViewArmLeft" Height="109" Width="315" Source="/Resources/Bodies/Human/Male/LeftArm.png" Canvas.Left="501" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
                         <Image Canvas.Top="103" Stretch="Uniform" x:Name="imgPatientViewBrain" Height="48" Width="55" Source="/Resources/Bodies/Human/Male/Brain.png" Canvas.Left="404" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="245" Stretch="Uniform" x:Name="imgPatientViewBreath" Height="124" Width="135" Source="/Resources/Bodies/Human/Male/Breath.png" Canvas.Left="368" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="291" Stretch="Uniform" x:Name="imgPatientViewHeart" Height="59" Width="51" Source="/Resources/Bodies/Human/Male/Heart.png" Canvas.Left="453" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="366" Stretch="Uniform" x:Name="imgPatientViewLiver" Height="50" Width="79" Source="/Resources/Bodies/Human/Male/Liver.png" Canvas.Left="374" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="202" Stretch="Uniform" x:Name="imgPatientViewStomach" Height="288" Width="73" Source="/Resources/Bodies/Human/Male/Stomach.png" Canvas.Left="417" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="432" Stretch="Uniform" x:Name="imgPatientViewIntestines" Height="94" Width="108" Source="/Resources/Bodies/Human/Male/Intestines.png" Canvas.Left="381" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="504" Stretch="Uniform" x:Name="imgPatientViewBladder" Height="37" Width="46" Source="/Resources/Bodies/Human/Male/Bladder.png" Canvas.Left="416" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="494" Stretch="Uniform" x:Name="imgPatientViewReproduction" Height="71" Width="66" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Reproduction.png" Canvas.Left="407" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="417" Stretch="Uniform" x:Name="imgPatientViewKidneys" Height="65" Width="165" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Kidneys.png" Canvas.Left="354" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
-                        <Image Canvas.Top="355" Stretch="Uniform" x:Name="imgPatientViewSpleen" Height="26" Width="25" Source="/Resources/Bodies/Human/Male/Spleen.png" Canvas.Left="476" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="249" Stretch="Uniform" x:Name="imgPatientViewBreath" Height="124" Width="135" Source="/Resources/Bodies/Human/Male/Breath.png" Canvas.Left="366" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="343" Stretch="Uniform" x:Name="imgPatientViewLiver" Height="50" Width="79" Source="/Resources/Bodies/Human/Male/Liver.png" Canvas.Left="383" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="271" Stretch="Uniform" x:Name="imgPatientViewHeart" Height="72" Width="72" Source="/Resources/Bodies/Human/Male/Heart.png" Canvas.Left="414" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="398" Stretch="Uniform" x:Name="imgPatientViewIntestines" Height="106" Width="108" Source="/Resources/Bodies/Human/Male/Intestines.png" Canvas.Left="385" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="481" Stretch="Uniform" x:Name="imgPatientViewBladder" Height="30" Width="46" Source="/Resources/Bodies/Human/Male/Bladder.png" Canvas.Left="416" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="481" Stretch="Uniform" x:Name="imgPatientViewReproduction" Height="84" Width="90" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Reproduction.png" Canvas.Left="396" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="393" Stretch="Uniform" x:Name="imgPatientViewSpleen" Height="26" Width="25" Source="/Resources/Bodies/Human/Male/Spleen.png" Canvas.Left="476" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
+                        <Image Canvas.Top="373" Stretch="Uniform" x:Name="imgPatientViewKidneys" Height="46" Width="144" Grid.Column="1" Source="/Resources/Bodies/Human/Male/Kidneys.png" Canvas.Left="366" MouseEnter="PatientImageMouseEnter" MouseLeave="PatientImageMouseLeave" MouseDown="OrganClick"/>
                     </Canvas>
                 </Viewbox>
-                <GroupBox Grid.Column="1" Header="Орган" Margin="10,10,0,0" Grid.RowSpan="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
+                <GroupBox Grid.Column="1" Margin="10,10,0,160" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1" Grid.RowSpan="2">
+                    <GroupBox.Header>
+                        <TextBlock Text="Орган" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="27*"/>
                             <RowDefinition Height="230*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Margin="4,3,0,0" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="107" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,21,10,10" TextWrapping="Wrap" Grid.Row="1" Text="DESCRIPTIONTEXT" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="12"/>
+                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,21,10,10" TextWrapping="Wrap" Grid.Row="1" Text="DESCRIPTIONTEXT" FontFamily="Lucida Console" FontSize="12"/>
+                        <Button x:Name="ButtonPatientViewInstallOrgan" Margin="142,0,0,139" Template="{StaticResource LongButton}" Grid.RowSpan="2" Click="ButtonPatientViewInstallOrgan_Click">
+                            <Button.Content>
+                                <TextBlock TextWrapping="Wrap" Text="Орган отсутствует Установить?" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                            </Button.Content>
+                        </Button>
                         <TextBlock x:Name="textblockPatientOrganAugmentNotifier" Margin="0,0,0,4" TextWrapping="Wrap" Text="Аугментирован!" Grid.Row="1" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Foreground="Red"/>
-                        <Rectangle x:Name="rectanglePatientOrgan" Fill="#FFAEAEAE" Stroke="Black" Grid.RowSpan="2" Visibility="Collapsed"/>
+                        <Rectangle x:Name="rectanglePatientOrgan" Fill="#FF5C7A8B" Stroke="Black" Grid.RowSpan="2" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="2" Header="Пациент" Margin="10,10,1,0" Grid.ColumnSpan="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
+                <GroupBox Grid.Column="2" Margin="0,10,1,160" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1" Grid.RowSpan="2">
+                    <GroupBox.Header>
+                        <TextBlock Text="Пациент" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="56*"/>
@@ -150,106 +324,334 @@
                         <TextBlock HorizontalAlignment="Left" Margin="4,26,0,0" TextWrapping="Wrap" Text="Раса" VerticalAlignment="Top" Height="16" Width="45" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
                         <TextBlock HorizontalAlignment="Left" Margin="4,47,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" Height="16" Width="34" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
                         <TextBlock Margin="20,0,10,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" Height="16" Grid.Column="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientDescr" Margin="10,16,10,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientName" Margin="52,5,0,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientRace" Margin="52,26,0,0" TextWrapping="Wrap" Text="RACETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientGender" Margin="52,47,0,0" TextWrapping="Wrap" Text="GENDERTEXT" Height="16" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientDescr" Margin="10,16,10,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="12"/>
+                        <TextBlock x:Name="textblockPatientName" Margin="52,5,0,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="12"/>
+                        <TextBlock x:Name="textblockPatientRace" Margin="52,26,0,0" TextWrapping="Wrap" Text="RACETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="12"/>
+                        <TextBlock x:Name="textblockPatientGender" Margin="52,47,0,0" TextWrapping="Wrap" Text="GENDERTEXT" Height="16" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="2" Header="Аугментация органа" Margin="0,0,0,2" Grid.ColumnSpan="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
-                    <Grid>
+                <GroupBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1" Margin="10,54,0,0">
+                    <GroupBox.Header>
+                        <TextBlock Text="Аугментация   органа" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
+                    <Grid Background="#FFA2C4D1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="97*"/>
-                            <ColumnDefinition Width="153*"/>
-                            <ColumnDefinition Width="323*"/>
+                            <ColumnDefinition Width="146*"/>
+                            <ColumnDefinition Width="141*"/>
+                            <ColumnDefinition Width="581*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="38*"/>
                             <RowDefinition Height="28*"/>
                             <RowDefinition Height="69*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="textblockPatientOrganAugDescription" Margin="5,21,5,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Lucida Console" FontSize="10"/>
+                        <TextBlock x:Name="textblockPatientOrganAugDescription" Margin="5,21,5,10" TextWrapping="Wrap" Text="DESCRIPTIONTEXT" Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Lucida Console" FontSize="12"/>
                         <TextBlock Margin="5,0,0,0" TextWrapping="Wrap" Grid.Row="2" Height="21" VerticalAlignment="Top" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"><Run Text="Описание"/><LineBreak/><Run/></TextBlock>
                         <TextBlock Margin="5,3,0,0" TextWrapping="Wrap" Text="Название" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
                         <TextBlock Margin="5,7,0,0" TextWrapping="Wrap" Text="Тип" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="8"/>
-                        <TextBlock x:Name="textblockPatientOrganAugName" Margin="10,3,10,0" TextWrapping="Wrap" Text="NAMETEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientOrganAugSlotType" Margin="10,7,10,0" TextWrapping="Wrap" Text="SLOTTYPE" Grid.Column="1" Grid.Row="1" FontFamily="Lucida Console" FontSize="10"/>
-                        <DataGrid x:Name="datagridPatientOrganAugParams" Grid.Column="2" Margin="0,3,4,0" Grid.RowSpan="3" FontFamily="Lucida Console" FontSize="10">
+                        <TextBlock x:Name="textblockPatientOrganAugName" Margin="10,3,10,0" TextWrapping="Wrap" Text="NAMETEXT" Grid.Column="1" FontFamily="Lucida Console" FontSize="12"/>
+                        <TextBlock x:Name="textblockPatientOrganAugSlotType" Margin="10,7,10,0" TextWrapping="Wrap" Text="SLOTTYPE" Grid.Column="1" Grid.Row="1" FontFamily="Lucida Console" FontSize="12"/>
+                        <DataGrid x:Name="datagridPatientOrganAugParams" Grid.Column="2" Grid.RowSpan="3" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B">
+                            <DataGrid.BorderBrush>
+                                <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                            </DataGrid.BorderBrush>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#367498"/>
+                                    <Setter Property="Foreground" Value="LightCyan"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                            <Setter Property="Background" Value="Azure"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn CanUserReorder="False" Header="Свойство" Binding="{Binding Path=Key}"/>
-                                <DataGridTextColumn CanUserReorder="False" Header="Описание" Binding="{Binding Path=Value}" Width="*"/>
+                                <DataGridTextColumn MinWidth="80" CanUserReorder="False" Header="Свойство" Binding="{Binding Path=Key}"/>
+                                <DataGridTextColumn CanUserReorder="False" Header="Описание" Binding="{Binding Path=Value}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="AcceptsReturn" Value="true" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Rectangle x:Name="rectanglePatientOrganAug" Fill="#FFAEAEAE" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
+                        <Rectangle x:Name="rectanglePatientOrganAug" Fill="#FF5C7A8B" Stroke="Black" Grid.ColumnSpan="3" Grid.RowSpan="3" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Column="1" Header="Неотображаемые импланты" Margin="10,0,0,304" Grid.ColumnSpan="2" Grid.Row="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
-                    <ListBox Margin="0,0,-2,3" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
-                </GroupBox>
-                <GroupBox Grid.Column="3" Header="Аугментация импланта" Grid.Row="2" Margin="0,0,0,304" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
+                <GroupBox Grid.Column="1" Background="#FFA2C4D1" Margin="10,0,0,304" Grid.Row="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Grid.RowSpan="2">
+                    <GroupBox.Header>
+                        <TextBlock Text="Вторичные   импланты" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
                     <Grid>
-
-                        <Rectangle x:Name="rectanglePatientAuxDetails" Fill="#FFAEAEAE" Stroke="Black" Visibility="Collapsed"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="172*"/>
+                            <ColumnDefinition Width="169*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="161*"/>
+                            <RowDefinition Height="17*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid x:Name="dataGridPatientAuxilaryAugs" Margin="0,0,-2,0" FontFamily="Lucida Console" FontSize="14" Background="#FF5C7A8B" Grid.ColumnSpan="2">
+                            <DataGrid.BorderBrush>
+                                <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                            </DataGrid.BorderBrush>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#367498"/>
+                                    <Setter Property="Foreground" Value="LightCyan"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                            <Setter Property="Background" Value="Azure"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn MinWidth="120" CanUserReorder="False" Header="Название" Binding="{Binding Path=Name}"/>
+                                <DataGridTextColumn CanUserReorder="False" Header="Описание" Binding="{Binding Path=Description}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                    <DataGridTextColumn.EditingElementStyle>
+                                        <Style TargetType="TextBox">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="AcceptsReturn" Value="true" />
+                                        </Style>
+                                    </DataGridTextColumn.EditingElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="ButtonPatientViewRemoveImplant" Grid.Row="1" Template="{StaticResource LongButton}" Click="ButtonPatientViewRemoveImplant_Click">
+                            <TextBlock Text="Удалить" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="ButtonPatientViewAddImplant" Grid.Column="1" Grid.Row="1" Template="{StaticResource LongButton}" Click="ButtonPatientViewAddImplant_Click">
+                            <TextBlock Text="Установить" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Button>
+                        <Rectangle x:Name="rectanglePatientAuxilaryAugs" Fill="#FF5C7A8B" Stroke="Black" Visibility="Collapsed" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Visibility="Collapsed" x:Name="groupBoxSelectOperationType" Grid.Column="4" Header="Подготовить операцию" Margin="10,406,10,10" Grid.Row="2" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)">
+                <GroupBox Grid.Column="2" Grid.Row="2" Margin="0,0,0,304" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1" Grid.RowSpan="2">
+                    <GroupBox.Header>
+                        <TextBlock Text="Описание   импланта" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
+                    <Grid>
+                        <DataGrid x:Name="datagridPatientAuxilaryAugParams" Margin="0,2,4,0" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B">
+                            <DataGrid.BorderBrush>
+                                <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                            </DataGrid.BorderBrush>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#367498"/>
+                                    <Setter Property="Foreground" Value="LightCyan"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                            <Setter Property="Background" Value="Azure"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn MinWidth="80" CanUserReorder="False" Header="Свойство" Binding="{Binding Path=Key}"/>
+                                <DataGridTextColumn CanUserReorder="False" Header="Описание" Binding="{Binding Path=Value}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Rectangle x:Name="rectanglePatientAuxilaryAugParams" Fill="#FF5C7A8B" Stroke="Black" Visibility="Collapsed"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox x:Name="groupBoxSelectOperationType" Grid.Column="1" Margin="10,5,5,7" Grid.Row="3" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" 
+                          Background="#FFA2C4D1" Foreground="White" FontSize="14" Grid.ColumnSpan="2" Visibility="Collapsed">
+                    <GroupBox.Header>
+                        <TextBlock Text="Подготовить   операцию" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
                     <UniformGrid Columns="1">
-                        <Button x:Name="buttonHeal" Content="Лечение" Click="ButtonHeal_Click" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
-                        <Button x:Name="buttonReplaceOrgan" Content="Замена и удаление органов" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
-                        <Button x:Name="buttonAugmentateOrgan" Content="Аугментация выбранного органа" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
-                        <Button x:Name="buttonImplantAugment" Content="Имплантация и удаление вторичных аугментов" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Foreground="#FF0F0A2E"/>
-                        <Button x:Name="DEBUG_TestDefaultOperation" Content="Test default operation" Click="Debug_TestDefaultOperation" Visibility="Collapsed"/>
-                    </UniformGrid>
-                </GroupBox>
-                <GroupBox x:Name="groupBoxPrepareHealOperation" Grid.Column="4" Header="Подготовка к операции" Grid.Row="2" Margin="10,408,10,8" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10">
-                    <Grid>
-                        <Button x:Name="ButtonPatientViewHealOperationCancel" Content="Отменить операцию" Margin="10,222,602,2" FontFamily="Lucida Console" FontSize="12" Foreground="#FFA63434" Click="ButtonPatientViewHealOperationCancel_Click"/>
-                        <DataGrid x:Name="DataGridPatientViewHealOperationWounds" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532" HorizontalAlignment="Left" Height="207" Margin="10,10,0,0" VerticalAlignment="Top" Width="825" SelectionChanged="DataGridPatientViewHealOperationWounds_SelectionChanged">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Орган" Binding="{Binding Path=OrganSlot}"/>
-                                <DataGridTextColumn Header="Повреждение" Binding="{Binding Path=DamageName}" Width="*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Button x:Name="ButtonPatientViewHealOperationBegin" Content="Приступить" Margin="602,222,10,2" FontFamily="Lucida Console" FontSize="12" Click="ButtonPatientViewHealOperationBegin_Click"/>
-                        <Button x:Name="ButtonPatientViewHealOperationReplaceOrgan" Margin="427,222,258,2" Click="ButtonPatientViewHealOperationReplaceOrgan_Click">
+                        <Button Template="{StaticResource LongButton}" x:Name="buttonHeal" Click="ButtonHeal_Click">
                             <Button.Content>
-                                <TextBlock Text="Устранить повреждение заменой органа" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="12" />
+                                <TextBlock Text="Лечение" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
                             </Button.Content>
                         </Button>
-                        <Button x:Name="ButtonPatientViewHealOperationRemoveWound" Margin="262,222,423,2" Click="ButtonPatientViewHealOperationRemoveWound_Click">
-                            <TextBlock Text="Удалить ранение из списка" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="12" />
+                        <Button Template="{StaticResource LongButton}" x:Name="ButtonRemoveOrgan" Click="ButtonRemoveOrgan_Click">
+                            <TextBlock Text="Удаление органов" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Button>
+                        <Button Template="{StaticResource LongButton}" x:Name="ButtonAugmentateOrgan" Click="ButtonAugmentateOrgan_Click">
+                            <TextBlock Text="Аугметация органа" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                        </Button>
+                        <Button Template="{StaticResource LongButton}" x:Name="DEBUG_TestDefaultOperation" Content="Test default operation" Click="Debug_TestDefaultOperation" Visibility="Collapsed"/>
+                    </UniformGrid>
+                </GroupBox>
+                <GroupBox Visibility="Collapsed" x:Name="groupBoxPrepareHealOperation" Grid.Column="1" Grid.Row="3" Margin="10,10,0,10" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Grid.ColumnSpan="2"
+                          Background="#FFA2C4D1" Foreground="White" FontSize="14">
+                    <GroupBox.Header>
+                        <TextBlock Text="Подготовка   к операции" Background="#CC000000" Foreground="#FF99ECFF"/>
+                    </GroupBox.Header>
+                    <Grid>
+                        <Button x:Name="ButtonPatientViewHealOperationCancel" Margin="0,217,606,-2" FontFamily="Lucida Console" FontSize="14" Foreground="#FFDC3232" Click="ButtonPatientViewHealOperationCancel_Click"
+                                Template="{StaticResource LongButton}">
+                            <TextBlock Text="Отменить   операцию" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+                        <DataGrid x:Name="DataGridPatientViewHealOperationWounds" AutoGenerateColumns="False" Margin="0,0,0,49" SelectionChanged="DataGridPatientViewHealOperationWounds_SelectionChanged"
+                                  SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B">
+                            <DataGrid.BorderBrush>
+                                <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                            </DataGrid.BorderBrush>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#367498"/>
+                                    <Setter Property="Foreground" Value="LightCyan"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Background" Value="LightBlue"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                            <Setter Property="Background" Value="Azure"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn MinWidth="120" Header="Орган" Binding="{Binding Path=OrganSlot}"/>
+                                <DataGridTextColumn Header="Повреждение" Binding="{Binding Path=DamageName}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="ButtonPatientViewHealOperationBegin" Margin="610,217,0,-2" FontFamily="Lucida Console" FontSize="12" Click="ButtonPatientViewHealOperationBegin_Click"
+                                Template="{StaticResource LongButton}">
+                            <TextBlock Text="Приступить" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#FF5FABEA"/>
+                        </Button>
+                        <Button x:Name="ButtonPatientViewHealOperationReplaceOrgan" Margin="437,217,258,-2" Click="ButtonPatientViewHealOperationReplaceOrgan_Click"
+                                Template="{StaticResource LongButton}">
+                            <TextBlock Text="Устранить повреждение заменой органа" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#FF5FABEA" 
+                                       FontFamily="Lucida Console" TextWrapping="Wrap" TextAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="ButtonPatientViewHealOperationRemoveWound" Margin="262,217,431,-2" Click="ButtonPatientViewHealOperationRemoveWound_Click"
+                                Template="{StaticResource LongButton}">
+                            <TextBlock Text="Удалить ранение из списка" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="14" Foreground="#FF5FABEA"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>
                     </Grid>
                 </GroupBox>
+                <Button Template="{StaticResource LongButton}" x:Name="ButtonCancelGenericOperation" Grid.Column="1" Margin="8,175,814,64" Grid.Row="3" Click="ButtonCancelGenericOperation_Click" Grid.ColumnSpan="3">
+                    <TextBlock Text="Отмена" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
+                </Button>
+                <Image Stretch="Uniform" x:Name="imgPatientViewDead" Source="/Resources/Interface/Dead.png" Grid.Column="3" Margin="0,10,-1,7" Grid.Row="3"/>
             </Grid>
         </TabItem>
 
         <!-- Journal Page -->
-        <TabItem x:Name="tabJournal" Header="Journal">
-            <Grid Background="#FFE5E5E5">
-                <Button x:Name="btnJournalBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+        <TabItem x:Name="tabJournal" Header="Journal" BorderBrush="Transparent">
+            <Grid Background="#EF061829">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="245*"/>
+                    <RowDefinition Height="16*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="199"/>
+                    <ColumnDefinition Width="1679*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnJournalBack" Grid.Row="0" Click="BtnBackToNavMenu_Click" Template="{StaticResource NavButtonDir}" Grid.RowSpan="2"/>
+                <TextBox IsReadOnly="True" x:Name="TextBoxJournal" Grid.Column="1" HorizontalAlignment="Left" Height="980" TextWrapping="Wrap" VerticalAlignment="Top" Width="1707"
+                         Background="Transparent" Foreground="#FF96B6D3" FontFamily="Lucida Console" FontSize="14" SelectionBrush="#FF98C1E2"/>
+                <TextBox x:Name="TextBoxJournalNew" Grid.Column="1" HorizontalAlignment="Left" Height="49" Margin="23,0,0,4" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="1360"
+                         Background="#FF080F17" Foreground="#FF96B6D3" KeyUp="TextBoxJournalNew_KeyUp" Grid.Row="1"/>
+                <Button x:Name="ButtonJournalAddRecord" Grid.Column="1" Margin="1388,0,10,4" Template="{StaticResource LongButton}" Click="ButtonJournalAddRecord_Click" Grid.Row="1" Height="49" VerticalAlignment="Bottom">
+                    <TextBlock Text="Добавить запись" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Foreground="#FF96B6D3" FontSize="14"/>
+                </Button>
             </Grid>
         </TabItem>
 
         <!-- Storage Page -->
-        <TabItem x:Name="tabStorage" Header="Storage">
-            <Grid Background="#FFE5E5E5">
-                <Button x:Name="btnStorageBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
+        <TabItem x:Name="tabStorage" Header="Storage" BorderBrush="Transparent">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="199"/>
+                    <ColumnDefinition Width="852*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnStorageBack" Grid.Column="0" Click="BtnBackToNavMenu_Click" Template="{StaticResource NavButtonDir}" BorderBrush="Transparent"/>
+                <DataGrid Name="datagridStorage" AutoGenerateColumns="False" Grid.Column="1" SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" Foreground="#FF191532" Background="#CD04161F">
+                    <DataGrid.BorderBrush>
+                        <SolidColorBrush Opacity="15" Color="AliceBlue"/>
+                    </DataGrid.BorderBrush>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#367498"/>
+                            <Setter Property="Foreground" Value="LightCyan"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsFocused" Value="true">
+                                    <Setter Property="Background" Value="Azure"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <Trigger Property="DataGridRow.IsFocused" Value="true">
+                                    <Setter Property="Background" Value="Azure"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn MinWidth="20" Header="Тип" Binding="{Binding Path=Type}" Foreground="Black"/>
+                        <DataGridTextColumn MinWidth="200" Header="Название" Binding="{Binding Path=Name}"/>
+                        <DataGridTextColumn MinWidth="100" Header="Слот" Binding="{Binding Path=SlotString}"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description}" Width="*"/>
+                    </DataGrid.Columns>
+                    <ListBoxItem/>
+                </DataGrid>
             </Grid>
         </TabItem>
 
         <!-- Economics Page -->
-        <TabItem x:Name="tabEconomics" Header="Economics">
-            <Grid Background="#FFE5E5E5">
-                <Button x:Name="btnEconomicsBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
-            </Grid>
-        </TabItem>
 
         <!-- Other Page -->
-        <TabItem x:Name="tabOther" Header="Other">
-            <Grid Background="#FFE5E5E5">
-                <Button x:Name="btnOtherBack" Content="В главное меню" Grid.Row="0" Click="BtnBackToNavMenu_Click"/>
-            </Grid>
-        </TabItem>
     </TabControl>
 </Window>

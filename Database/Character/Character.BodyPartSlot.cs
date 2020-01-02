@@ -12,15 +12,15 @@ namespace LARP.Science.Database
         public static partial class BodyPartSlot
         {
             #region // Default organs data
-            public static List<Organ> GetOrgansListForCharacter(RaceType race, GenderType gender)
+            internal static List<Organ> GetOrgansListForCharacter(RaceType race, GenderType gender)
             {
                 List<Organ> res = new List<Organ>();
                 foreach (SlotType slot in Enum.GetValues(typeof(SlotType))) res.Add(GetSlotOrgan(slot, race, gender));
                 return res;
             }
-            public static Organ GetSlotOrgan(SlotType slot, RaceType race, GenderType gender)
+            internal static Organ GetSlotOrgan(SlotType slot, RaceType race, GenderType gender)
                 => new Organ(GetSlotName(slot), slot, GetSlotPicture(slot, race, gender), GetSlotDescription(slot));
-            public static string GetSlotName(SlotType slot)
+            internal static string GetSlotName(SlotType slot)
             {
                 switch (slot)
                 {
@@ -61,16 +61,16 @@ namespace LARP.Science.Database
                 }
             }
 
-            public static string GetSlotDescription(SlotType slot)
+            internal static string GetSlotDescription(SlotType slot)
             {
                 if (PresetDescriptions.Keys.Contains(slot)) return PresetDescriptions[slot];
                 else return Controller.UnknownDataTemplate;
             }
 
-            public static string GetDefaultSlotPicture(SlotType? slot) 
+            internal static string GetDefaultSlotPicture(SlotType? slot)
                 => slot == null ? Controller.NotFoundImagePath : GetSlotPicture(slot, RaceType.Human, GenderType.Male);
 
-            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender, byte augLevel)
+            internal static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender, byte augLevel)
             {
                 string result = "Resources\\Bodies\\" + race.ToString() + "\\" + gender.ToString() + "\\" + slot.ToString();
                 switch (augLevel)
@@ -90,11 +90,14 @@ namespace LARP.Science.Database
                 }
                 return result += ".png";
             }
-            public static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender)
+
+            internal static string GetSlotPictureEmpty(SlotType? slot) => "Resources\\Bodies\\Empty\\" + slot.ToString() + ".png";
+
+            internal static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender)
                 => GetSlotPicture(slot, race, gender, 0);
             #endregion
 
-            private static readonly IReadOnlyDictionary<SlotType, string> PresetDescriptions = new Dictionary<SlotType, string>()
+            internal static readonly IReadOnlyDictionary<SlotType, string> PresetDescriptions = new Dictionary<SlotType, string>()
             {
                 [SlotType.Brain] = "Центральный отдел нервной системы, обычно расположенный в головном (переднем) отделе тела и представляющий собой компактное скопление нервных клеток и их отростков-дендритов. У многих животных содержит также глиальные клетки, может быть окружен оболочкой из соединительной ткани. У позвоночных животных (в том числе и у человека) различают головной мозг, размещённый в полости черепа, и спинной, находящийся в позвоночном канале.",
                 [SlotType.Heart] = "Полый фиброзно-мышечный орган, обеспечивающий посредством повторных ритмичных сокращений ток крови по кровеносным сосудам. Присутствует у всех живых организмов с развитой кровеносной системой, включая всех позвоночных. Сердце позвоночных состоит главным образом из сердечной, эндотелиальной и соединительной ткани. При этом сердечная мышца представляет собой особый вид поперечно-полосатой мышечной ткани, встречающейся исключительно в сердце.",

@@ -22,7 +22,7 @@ namespace LARP.Science.Operation
             MinesweeperWindow sweeper = new MinesweeperWindow(operationSetup);
             sweeper.ShowDialog();
             operationSuccess = await sweeper.Execute();
-            if (operationSuccess >= 2200) return false; else return true;
+            if (operationSuccess == -1) return false; else return true;
         }
 
         protected override void OnFail()
@@ -32,15 +32,28 @@ namespace LARP.Science.Operation
 
         protected override void OnSuccess()
         {
+            if (Patient.Stat == null)
+                Patient.Stat = new Database.Statistics();
+
             Patient.Stat.operationsSurvived++;
-            Database.Controller.SaveCharacters();
         }
 
         protected override void OnFinished()
         {
-            
+            WPFCustomMessageBox.CustomMessageBox.ShowOK("Здесь должны быть последствия операции, но их нет.", "", "Да блин");
+            Database.Controller.SaveCharacters();
         }
 
+        /// <summary>
+        /// Параметризированный расчёт сложности операции.
+        /// </summary>
+        /// <param name="randomizer">Объект-рандомайзер</param>
+        /// <param name="minMines">Минимальное количество мин в первом раунде</param>
+        /// <param name="minAttempts">Минимальное количество раундов</param>
+        /// <param name="maxAttempts">Максимальная количество раундов</param>
+        /// <param name="minIncreasage">Минимальное увеличение сложности для следующего раунда</param>
+        /// <param name="maxIncreasage">Максимальное увеличение сложности для следующего раунда</param>
+        /// <returns></returns>
         private static List<int> ParametrizedDifficultyCalculation(Random randomizer, int minMines, int minAttempts, int maxAttempts, int minIncreasage, int maxIncreasage)
         {
             List<int> result = new List<int>();
@@ -93,9 +106,6 @@ namespace LARP.Science.Operation
             operationSetup = result.ToArray();
         }
 
-        public HealingDetails(List<DamageType> damageDealt)
-        {
-            CalculateDifficulty(damageDealt);
-        }
+        public HealingDetails(List<DamageType> damageDealt) : base() => CalculateDifficulty(damageDealt);
     }
 }

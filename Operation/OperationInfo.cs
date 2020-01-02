@@ -24,5 +24,8 @@ namespace LARP.Science.Operation
         protected abstract void OnFail();
         protected abstract void OnSuccess();
         protected abstract void OnFinished();
+
+        public OperationInfo()
+            => Patient = Controller.SelectedCharacter;
     }
 }

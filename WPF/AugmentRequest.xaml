@@ -1,0 +1,142 @@
+﻿<Window x:Class="LARP.Science.AugmentRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LARP.Science"
+        mc:Ignorable="d"
+        Title="AugmentRequest" Height="624" Width="474"
+        WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/FixedSize/330x406.png" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Window.Resources>
+        <ControlTemplate x:Key="LongButton" TargetType="Button">
+            <Border Name="Border" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}">
+                <Border.Background>
+                    <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton.png"/>
+                </Border.Background>
+                <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Click.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter TargetName="Border" Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/LongButton_Hover.png"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid Margin="0,0,0,2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="233*"/>
+            <ColumnDefinition Width="233*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="350*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="120*"/>
+            <RowDefinition Height="39*"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap" Text="Выберите аугмент" TextAlignment="Center"
+                   Background="#3340C0E6" Foreground="#FF19A9EC" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="14"
+                   HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <DataGrid x:Name="DataGridList" AutoGenerateColumns="False" SelectionChanged="DataGridList_SelectionChanged"
+                                  SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B" Grid.Row="1" Grid.ColumnSpan="2">
+            <DataGrid.BorderBrush>
+                <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+            </DataGrid.BorderBrush>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#367498"/>
+                    <Setter Property="Foreground" Value="LightCyan"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsFocused" Value="true">
+                            <Setter Property="Background" Value="Azure"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="100" Header="Название" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Описание" Binding="{Binding Path=Description}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <GroupBox Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="#FFA2C4D1">
+            <Grid>
+                <DataGrid x:Name="DataGridCustomParams" AutoGenerateColumns="False"
+                                  SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B" Margin="-3,4,-3,-3">
+                    <DataGrid.BorderBrush>
+                        <SolidColorBrush Opacity="75" Color="AliceBlue"/>
+                    </DataGrid.BorderBrush>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#367498"/>
+                            <Setter Property="Foreground" Value="LightCyan"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsFocused" Value="true">
+                                    <Setter Property="Background" Value="Azure"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn MinWidth="80" Header="Свойство" Binding="{Binding Key}"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Value}" Width="*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <Button x:Name="ButtonCancel" Grid.Row="5" Template="{StaticResource LongButton}" Margin="0,0,0,-2" Click="ButtonCancel_Click">
+            <TextBlock Text="Отмена" FontSize="14" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"
+                       Foreground="#FF19A9EC" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap"/>
+        </Button>
+        <Button x:Name="ButtonConfirm" Grid.Row="5" Template="{StaticResource LongButton}" Grid.Column="1" Margin="0,0,0,-2" Click="ButtonConfirm_Click">
+            <TextBlock Text="Подтвердить выбор" FontSize="14" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"
+                       Foreground="#FF19A9EC" HorizontalAlignment="Right" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,2,13,3"/>
+        </Button>
+
+    </Grid>
+</Window>
