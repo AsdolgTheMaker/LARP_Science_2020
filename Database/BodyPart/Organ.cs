@@ -37,7 +37,7 @@ namespace LARP.Science.Database
                 ? Character.BodyPartSlot.GetSlotPictureEmpty(Slot) : (IsAugmented 
                 ? (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) 
                 ? ImagePath : AugmentEquivalent.ImagePath) : ImagePath);
-            if (!File.Exists(path)) path = Character.BodyPartSlot.GetDefaultSlotPicture(this.Slot);
+            if (!File.Exists(path)) path = Character.BodyPartSlot.GetDefaultSlotPicture(Slot);
 
             FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             BitmapImage bitmapImage = new BitmapImage();

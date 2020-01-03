@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LARP.Science.Database;
 
 namespace LARP.Science.Economics
 {
     public class AuxilaryAugment : EjectedAugment
     {
-        private Dictionary<string, string> CustomParams;
-
+        public string slot { get; set; } // serves only to determine that this is not actually auxilary augment
         public AuxilaryAugment() { }
 
-        public AuxilaryAugment(Database.Augment source)
+        public AuxilaryAugment(Augment source)
         {
-            this.Name = source.Name;
-            this.Description = source.Description;
-            this.CustomParams = source.AllCustomParameters;
+            name = source.Name;
+            description = source.Description;
+            customParams = source.AllCustomParameters;
         }
 
-        public override object ConvertToScienceObject()
-        {
-            throw new NotImplementedException();
-        }
+        public Augment ConvertToScienceObject() 
+            => new Augment(name, "", description, customParams) { Id = id };
     }
 }

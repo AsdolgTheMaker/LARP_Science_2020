@@ -120,9 +120,9 @@ namespace LARP.Science.Database
             Stat = statistics ?? new Statistics();
 
             // Install default organs list
-            this.InstallOrgansRange(BodyPartSlot.GetOrgansListForCharacter(race, gender));
+            InstallOrgansRange(BodyPartSlot.GetOrgansListForCharacter(race, gender));
 
-            this.ValidateCharacter();
+            ValidateCharacter();
             Controller.RegisterCharacter(this);
         }
 

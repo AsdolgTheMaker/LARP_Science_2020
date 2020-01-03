@@ -24,8 +24,12 @@ namespace LARP.Science
             foreach (TabItem tab in tabctrlRootNavigator.Items)
                 tab.Visibility = Visibility.Collapsed;
 
+            AuthSequence();
+
             #region Configurer
-#if DBWRITE
+#if ECONOMICS 
+            Test();
+#elif DBWRITE
             Database.Controller.CreateTestDatabase();
 #elif DBREAD
             if (File.Exists(Database.Controller.CharactersDatabaseFile))
@@ -51,18 +55,26 @@ namespace LARP.Science
             Adminka.Visibility = Visibility.Collapsed;
 #endif
             #endregion
+        }
 
-            AuthSequence();
+        private async void Test()
+        {
+            var AbstractOrgans = await Economics.Exchange.GetAbstractOrgans();
+            var AbstractAugs = await Economics.Exchange.GetAbstractAugments();
+
+            var UserOrgans = (await Economics.Exchange.GetUserItems(1)).Cast<Database.Organ>().ToList();
+            var UserPrimaryAugs= (await Economics.Exchange.GetUserItems(3)).Cast<Database.Augment>().ToList();
+            var UserAuxilaryAugs = (await Economics.Exchange.GetUserItems(4)).Cast<Database.Augment>().ToList();
+
         }
 
         #region Authentification
 
         private void AuthSequence()
         {
-            Database.Controller.Client = new System.Net.Http.HttpClient { BaseAddress = Economics.Exchange.ServerURL };
-            bool isAuthed = false;
-            isAuthed = AuthWindow.ShowAuthDialog();
-            if (!isAuthed) this.Close();
+            Database.Controller.Client = new System.Net.Http.HttpClient { BaseAddress = Economics.Exchange.UserURL };
+            bool isAuthed = Economics.Exchange.Auth();
+            if (!isAuthed) Close();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e) => AuthSequence();
@@ -370,9 +382,40 @@ namespace LARP.Science
             UpdateDataGridPatientViewHealOperationData();
         }
 
-        private void ButtonPatientViewHealOperationReplaceOrgan_Click(object sender, RoutedEventArgs e)
+        private async void ButtonPatientViewHealOperationReplaceOrgan_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException("Требуется реализация класса Storage.");
+            MessageBoxResult result = WPFCustomMessageBox.CustomMessageBox.ShowYesNoCancel("Заменить повреждение органом или протезом?", "", "Орган", "Протез", "Отменить");
+            switch (result)
+            {
+                case MessageBoxResult.Yes: // Install organ
+                    List<Database.Organ> organsList = (await Economics.Exchange.GetUserItems(1, selectedOrgan.Slot)).Cast<Database.Organ>().ToList();
+                    if (organsList.Count <= 0)
+                    {
+                        if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("К сожалению, на складе нет подходящих органов. Просмотреть протезы?", "", "Да", "Нет, отменить")
+                            == MessageBoxResult.Yes)
+                            goto case MessageBoxResult.No;
+                    }
+                    else
+                    {
+                        if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("Есть подходящий орган. Провести установку?", "", "Да", "Нет, отменить")
+                            == MessageBoxResult.Yes)
+                        {
+                            AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Install, _implant: organsList[0]);
+                            augmentation.Execute();
+                        }
+                    }
+                    break;
+                case MessageBoxResult.No: // Install augment
+                    AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, selectedOrgan.Slot);
+                    bool requestResult = augWindow.ShowDialog().GetValueOrDefault(false);
+                    if (requestResult)
+                    {
+                        AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Install, _implant: augWindow.Selection);
+                        augmentation.Execute();
+                    }
+                    else WPFCustomMessageBox.CustomMessageBox.ShowOK("Установка протеза отменена.", "", "ОК");
+                    break;
+            }
         }
 
         private void ButtonPatientViewHealOperationBegin_Click(object sender, RoutedEventArgs e)

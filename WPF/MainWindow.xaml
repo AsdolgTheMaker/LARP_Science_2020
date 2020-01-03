@@ -301,19 +301,20 @@
                     </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="27*"/>
-                            <RowDefinition Height="230*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="19*"/>
+                            <RowDefinition Height="139*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="4,3,0,0" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="107" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10"/>
-                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="12"/>
-                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,21,10,10" TextWrapping="Wrap" Grid.Row="1" Text="DESCRIPTIONTEXT" FontFamily="Lucida Console" FontSize="12"/>
-                        <Button x:Name="ButtonPatientViewInstallOrgan" Margin="142,0,0,139" Template="{StaticResource LongButton}" Grid.RowSpan="2" Click="ButtonPatientViewInstallOrgan_Click">
+                        <TextBlock Margin="4,3,0,0" TextWrapping="Wrap" Text="Описание" VerticalAlignment="Top" Height="18" HorizontalAlignment="Left" Width="107" Grid.Row="1" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Grid.RowSpan="2"/>
+                        <TextBlock x:Name="textblockPatientOrganName" Margin="10,5,10,0" TextWrapping="Wrap" Text="NAMETEXT" VerticalAlignment="Top" Height="16" FontFamily="Lucida Console" FontSize="12" Grid.RowSpan="2"/>
+                        <TextBlock x:Name="textblockPatientOrganDescription" Margin="10,2,10,10" TextWrapping="Wrap" Grid.Row="2" Text="DESCRIPTIONTEXT" FontFamily="Lucida Console" FontSize="12"/>
+                        <Button x:Name="ButtonPatientViewInstallOrgan" Margin="116,0,0,0" Template="{StaticResource LongButton}" Grid.RowSpan="2" Click="ButtonPatientViewInstallOrgan_Click">
                             <Button.Content>
                                 <TextBlock TextWrapping="Wrap" Text="Орган отсутствует Установить?" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
                             </Button.Content>
                         </Button>
-                        <TextBlock x:Name="textblockPatientOrganAugmentNotifier" Margin="0,0,0,4" TextWrapping="Wrap" Text="Аугментирован!" Grid.Row="1" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Foreground="Red"/>
-                        <Rectangle x:Name="rectanglePatientOrgan" Fill="#FF5C7A8B" Stroke="Black" Grid.RowSpan="2" Visibility="Collapsed"/>
+                        <TextBlock x:Name="textblockPatientOrganAugmentNotifier" Margin="0,0,0,4" TextWrapping="Wrap" Text="Аугментирован!" Grid.Row="2" Height="14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="181" Foreground="Red"/>
+                        <Rectangle x:Name="rectanglePatientOrgan" Fill="#FF5C7A8B" Stroke="Black" Grid.RowSpan="3" Visibility="Collapsed"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Grid.Column="2" Margin="0,10,1,160" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="10" Background="#FFA2C4D1" Grid.RowSpan="2">
@@ -498,7 +499,7 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox x:Name="groupBoxSelectOperationType" Grid.Column="1" Margin="10,5,5,7" Grid.Row="3" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" 
-                          Background="#FFA2C4D1" Foreground="White" FontSize="14" Grid.ColumnSpan="2" Visibility="Collapsed">
+                          Background="#FFA2C4D1" Foreground="White" FontSize="14" Grid.ColumnSpan="2">
                     <GroupBox.Header>
                         <TextBlock Text="Подготовить   операцию" Background="#CC000000" Foreground="#FF99ECFF"/>
                     </GroupBox.Header>
@@ -576,7 +577,7 @@
                         </Button>
                     </Grid>
                 </GroupBox>
-                <Button Template="{StaticResource LongButton}" x:Name="ButtonCancelGenericOperation" Grid.Column="1" Margin="8,175,814,64" Grid.Row="3" Click="ButtonCancelGenericOperation_Click" Grid.ColumnSpan="3">
+                <Button Template="{StaticResource LongButton}" x:Name="ButtonCancelGenericOperation" Grid.Column="1" Margin="8,175,814,64" Grid.Row="3" Click="ButtonCancelGenericOperation_Click" Grid.ColumnSpan="3" Visibility="Collapsed">
                     <TextBlock Text="Отмена" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)"  Foreground="#FF5FABEA" VerticalAlignment="Center" TextAlignment="Center"/>
                 </Button>
                 <Image Stretch="Uniform" x:Name="imgPatientViewDead" Source="/Resources/Interface/Dead.png" Grid.Column="3" Margin="0,10,-1,7" Grid.Row="3"/>

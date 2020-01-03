@@ -30,14 +30,6 @@ namespace LARP.Science.Database
         public Character.BodyPartSlot.SlotType? DestinationSlot => Slot;
         public bool IsReplacement => CustomParameters.ContainsKey("Полная замена");
 
-        [Obsolete("Использование устаревшего конструктора приведёт к невозможности отображения верных изображений на персонаже. Ошибку необходимо устранить.")]
-        public Augment(string name, Character.BodyPartSlot.SlotType slot, string image, string description = "", Dictionary<string, string> customParams = null)
-            : base(name, slot, image, description)
-        {
-            CustomParameters = customParams ?? new Dictionary<string, string>();
-            Visible = true;
-        }
-
         // Economics converter
         public Economics.EjectedAugment ConvertToEjectedAugment()
         {
@@ -53,6 +45,9 @@ namespace LARP.Science.Database
         {
             CustomParameters = customParams ?? new Dictionary<string, string>();
             Visible = true;
+
+            Race = race;
+            Gender = gender;
 
             if (CustomParameters.Count > 0 && CustomParameters.Keys.Contains("Полная замена"))
                 ImagePath = Character.BodyPartSlot.GetSlotPicture(slot, race, gender, 2);

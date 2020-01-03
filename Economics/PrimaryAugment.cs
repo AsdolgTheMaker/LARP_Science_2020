@@ -10,26 +10,39 @@ namespace LARP.Science.Economics
 {
     public class PrimaryAugment : EjectedAugment
     {
-        private string Slot;
-        private string Race;
-        private string Gender;
-        private Dictionary<string, string> CustomParams;
+        public string slot { get; set; }
+        public string race { get; set; }
+        public Character.GenderType? gender { get; set; }
+        public Character.GenderType genderInverted
+        {
+            get
+            {
+                if (gender == Character.GenderType.Male)
+                    return Character.GenderType.Female;
+                else return Character.GenderType.Male;
+            }
+        }
 
         public PrimaryAugment() { }
 
         public PrimaryAugment(Augment source)
         {
-            Name = source.Name;
-            Description = source.Description;
-            Slot = ((Character.BodyPartSlot.SlotType)(source.Slot)).GetDescription();
-            Race = source.Race == null ? "" : ((Character.RaceType)(source.Race)).GetDescription();
-            Gender = source.Gender == null ? "" : ((Character.GenderType)(source.Gender)).GetDescription();
-            CustomParams = source.AllCustomParameters;
+            name = source.Name;
+            description = source.Description;
+            slot = source.Slot.GetDescription();
+            race = source.Race == null ? "" : source.Race.GetDescription();
+            gender = source.Gender;
+            customParams = source.AllCustomParameters;
         }
 
-        public override object ConvertToScienceObject()
+        public Augment ConvertToScienceObject() => new Augment(
+            name, description,
+            CustomEnum.GetValueFromDescription<Character.BodyPartSlot.SlotType>(slot),
+            CustomEnum.GetValueFromDescription<Character.RaceType>(race),
+            genderInverted, customParams)
         {
-            throw new NotImplementedException();
-        }
+            Id = id
+        };
+
     }
 }

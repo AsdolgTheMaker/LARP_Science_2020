@@ -8,9 +8,9 @@ namespace LARP.Science.Economics
 {
     public abstract class GenericItem
     {
-        protected string Name;
-        protected string Description;
-
-        public abstract object ConvertToScienceObject();
+        public string id { get; set; }
+        public string name { get; set; }
+        public string description  { get; set; }
+        public int count { get; set; } = 0;
     }
 }

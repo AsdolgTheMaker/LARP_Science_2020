@@ -10,12 +10,13 @@ namespace LARP.Science.Database
     [DataContract]
     public abstract class BodyPart
     {
+        [DataMember] public string Id { get; set; }
         [DataMember] public string Name { get; set; }
         [DataMember] public string Description { get; set; }
         [DataMember] public string ImagePath { get; set; }
-        [DataMember] public readonly Character.BodyPartSlot.SlotType? Slot = null;
-        [DataMember] public readonly Character.RaceType? Race = null;
-        [DataMember] public readonly Character.GenderType? Gender = null;
+        [DataMember] public Character.BodyPartSlot.SlotType? Slot = null;
+        [DataMember] public Character.RaceType? Race = null;
+        [DataMember] public Character.GenderType? Gender = null;
 
         public string Type
         {

@@ -29,7 +29,7 @@ namespace LARP.Science.Database
         private static Storage Storage = new Storage();
 
         public static Economics.User User;
-        public static System.Net.Http.HttpClient Client = new System.Net.Http.HttpClient { BaseAddress = Economics.Exchange.ServerURL };
+        public static System.Net.Http.HttpClient Client = new System.Net.Http.HttpClient { BaseAddress = Economics.Exchange.AdminURL };
 
         public static System.Windows.Controls.TextBox LogOutputDuringOperation;
 

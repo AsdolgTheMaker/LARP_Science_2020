@@ -70,8 +70,16 @@ namespace LARP.Science
 
             Database.Controller.User = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 
-            if (response.IsSuccessStatusCode) return true;
-            else return false;
+            if (response.IsSuccessStatusCode)
+            {
+                Database.Journal.AddRecord("Авторизован пользователь " + Database.Controller.User.UserName + ".");
+                return true;
+            }
+            else
+            {
+                Database.Journal.AddRecord("Неудачная попытка авторизации с логином " + Login.Text + ".");
+                return false;
+            }
         }
 
         public static bool ShowAuthDialog()

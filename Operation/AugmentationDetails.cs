@@ -158,15 +158,11 @@ namespace LARP.Science.Operation
                         switch (action)
                         {
                             case AugmentationAction.Install:
-                                {
-                                    if (!(implant is Organ)) throw new ArgumentException();
-                                    break;
-                                }
+                                if (!(implant is Organ)) throw new ArgumentException();
+                                break;
                             case AugmentationAction.Remove:
-                                {
-                                    if (!(target is Organ)) throw new ArgumentException();
-                                    break;
-                                }
+                                if (!(target is Organ)) throw new ArgumentException();
+                                break;
                         }
                         break;
                     }
@@ -175,15 +171,11 @@ namespace LARP.Science.Operation
                         switch (action)
                         {
                             case AugmentationAction.Install:
-                                {
-                                    if (!(implant is Augment)) throw new ArgumentException();
-                                    break;
-                                }
+                                if (!(implant is Augment)) throw new ArgumentException();
+                                break;
                             case AugmentationAction.Remove:
-                                {
-                                    if (!(target is Organ)) throw new ArgumentException();
-                                    break;
-                                }
+                                if (!(target is Organ)) throw new ArgumentException();
+                                break;
                         }
                         break;
                     }
@@ -192,15 +184,11 @@ namespace LARP.Science.Operation
                         switch (action)
                         {
                             case AugmentationAction.Install:
-                                {
-                                    if (!(implant is Augment)) throw new ArgumentException();
+                                if (!(implant is Augment)) throw new ArgumentException();
                                     break;
-                                }
                             case AugmentationAction.Remove:
-                                {
-                                    if (!(target is Augment)) throw new ArgumentException();
-                                    break;
-                                }
+                                if (!(target is Augment)) throw new ArgumentException();
+                                break;
                         }
                         break;
                     }

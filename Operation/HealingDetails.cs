@@ -14,7 +14,7 @@ namespace LARP.Science.Operation
 
         protected override void OnStart()
         {
-
+            Database.Journal.AddRecord("Начата операция над пациентом " + Patient.Name + ".", Database.Controller.LogOutputDuringOperation);
         }
 
         protected async override Task<bool> Process()
@@ -22,12 +22,23 @@ namespace LARP.Science.Operation
             MinesweeperWindow sweeper = new MinesweeperWindow(operationSetup);
             sweeper.ShowDialog();
             operationSuccess = sweeper.operationQuality;
-            if (operationSuccess == -1) return false; else return true;
+            
+            if (operationSuccess == -1)
+            {
+                operationSuccess = 100;
+                return false;
+            }
+            else
+            {
+                operationSuccess = operationSuccess == -1 ? 100 : (operationSuccess * 100 / 2200);
+                return true;
+            }
         }
 
         protected override void OnFail()
         {
             Patient.Alive = false;
+            Database.Journal.AddRecord("Пациент " + Patient.Name + " скончался в результате неудачной операции.", Database.Controller.LogOutputDuringOperation);
         }
 
         protected override void OnSuccess()
@@ -35,6 +46,7 @@ namespace LARP.Science.Operation
             if (Patient.Stat == null)
                 Patient.Stat = new Database.Statistics();
 
+            Database.Journal.AddRecord("Завершена операция над пациентом " + Patient.Name + ". Уровень дестабилизации: " + operationSuccess + "%.");
             Patient.Stat.operationsSurvived++;
         }
 

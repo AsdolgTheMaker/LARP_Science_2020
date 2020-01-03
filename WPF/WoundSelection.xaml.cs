@@ -21,7 +21,7 @@ namespace LARP.Science.Operation
     {
         private HealingDetails.DamageType selection;
 
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e) => this.Close();
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e) => Close();
 
         #region Selection buttons event handlers
         private void ButtonBlade_Click(object sender, RoutedEventArgs e)
