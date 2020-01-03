@@ -113,6 +113,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="WPF\DatabaseWizard.xaml.cs">
+      <DependentUpon>DatabaseWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\AugmentRequest.xaml.cs">
       <DependentUpon>AugmentRequest.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,10 @@
     <Compile Include="WPF\WoundSelection.xaml.cs">
       <DependentUpon>WoundSelection.xaml</DependentUpon>
     </Compile>
+    <Page Include="WPF\DatabaseWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WPF\AugmentRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -191,7 +198,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Asdolg Software.snk" />
-    <None Include="LARP.Science_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

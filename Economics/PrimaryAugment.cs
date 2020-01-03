@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AsdolgTools;
+using LARP.Science.Database;
 
 namespace LARP.Science.Economics
 {
@@ -16,13 +17,13 @@ namespace LARP.Science.Economics
 
         public PrimaryAugment() { }
 
-        public PrimaryAugment(Database.Augment source)
+        public PrimaryAugment(Augment source)
         {
             Name = source.Name;
             Description = source.Description;
-            Slot = source.Slot.GetDescription();
-            Race = source.Race == null ? "" : source.Race.GetDescription();
-            Gender = source.Gender == null ? "" : source.Gender.GetDescription();
+            Slot = ((Character.BodyPartSlot.SlotType)(source.Slot)).GetDescription();
+            Race = source.Race == null ? "" : ((Character.RaceType)(source.Race)).GetDescription();
+            Gender = source.Gender == null ? "" : ((Character.GenderType)(source.Gender)).GetDescription();
             CustomParams = source.AllCustomParameters;
         }
 

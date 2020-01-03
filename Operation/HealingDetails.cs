@@ -21,7 +21,7 @@ namespace LARP.Science.Operation
         {
             MinesweeperWindow sweeper = new MinesweeperWindow(operationSetup);
             sweeper.ShowDialog();
-            operationSuccess = await sweeper.Execute();
+            operationSuccess = sweeper.operationQuality;
             if (operationSuccess == -1) return false; else return true;
         }
 

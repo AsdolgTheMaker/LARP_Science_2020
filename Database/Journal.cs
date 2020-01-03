@@ -12,7 +12,7 @@ namespace LARP.Science.Database
     {
         private static List<string> Records = new List<string>();
 
-        public static string[] GetOutput { get => Records.ToArray(); }
+        public static string[] Output { get => Records.ToArray(); }
 
         public static void AddRecord(string log)
         {
@@ -26,6 +26,7 @@ namespace LARP.Science.Database
             Records.Add(message);
             SaveJournal();
         }
+        public static void RemoveRecord(int at) => Records.RemoveAt(at);
 
         public static void SaveJournal() => File.WriteAllLines(Controller.JournalDatabaseFile, Records.ToArray());
         public static void ReadJournal() => Records = File.ReadAllLines(Controller.JournalDatabaseFile).ToList();

@@ -20,9 +20,9 @@ namespace LARP.Science.Economics
         {
             Name = organ.Name;
             Description = organ.Description;
-            Slot = organ.Slot.GetDescription();
-            Race = organ.Race.GetDescription();
-            Gender = organ.Gender.GetDescription();
+            Slot = ((Character.BodyPartSlot.SlotType)(organ.Slot)).GetDescription();
+            Race = ((Character.RaceType)(organ.Race)).GetDescription();
+            Gender = ((Character.GenderType)(organ.Gender)).GetDescription();
         }
 
         public override object ConvertToScienceObject()

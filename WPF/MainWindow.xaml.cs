@@ -24,7 +24,7 @@ namespace LARP.Science
             foreach (TabItem tab in tabctrlRootNavigator.Items)
                 tab.Visibility = Visibility.Collapsed;
 
-            #region Database creators for debug configs.
+            #region Configurer
 #if DBWRITE
             Database.Controller.CreateTestDatabase();
 #elif DBREAD
@@ -41,15 +41,33 @@ namespace LARP.Science
 
 #if DEBUG
             //DEBUG_TestDefaultOperation.Visibility = Visibility.Visible;
+            Adminka.Visibility = Visibility.Visible;
 #else
             DEBUG_btnSerializeTest.Visibility = Visibility.Collapsed;
             DEBUG_btnDeserializeTest.Visibility = Visibility.Collapsed;
             DEBUG_btnClearCharacters.Visibility = Visibility.Collapsed;
             DEBUG_btnCreateTestingDB.Visibility = Visibility.Collapsed;
             DEBUG_TestDefaultOperation.Visibility = Visibility.Collapsed;
+            Adminka.Visibility = Visibility.Collapsed;
 #endif
             #endregion
+
+            AuthSequence();
         }
+
+        #region Authentification
+
+        private void AuthSequence()
+        {
+            Database.Controller.Client = new System.Net.Http.HttpClient { BaseAddress = Economics.Exchange.ServerURL };
+            bool isAuthed = false;
+            isAuthed = AuthWindow.ShowAuthDialog();
+            if (!isAuthed) this.Close();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e) => AuthSequence();
+
+        #endregion
 
         #region Displayed data updaters
         private void UpdateDisplayedTables()
@@ -76,10 +94,10 @@ namespace LARP.Science
 
         private void UpdateJournalBox()
         {
-            TextBoxJournal.Text = string.Empty;
-            string[] output = Database.Journal.GetOutput;
+            ListBoxJournal.Items.Clear();
+            string[] output = Database.Journal.Output;
             for (int i = 0; i < output.Length; i++)
-                TextBoxJournal.Text += output[i] + "\n";
+                ListBoxJournal.Items.Add(output[i]);
         }
         #endregion
 
@@ -114,7 +132,9 @@ namespace LARP.Science
         private void BtnBackToNavMenu_Click(object sender, RoutedEventArgs e) => SwitchPage(tabNavigation);
         #endregion
 
-        #region Debug buttons in Patients tab
+        #region Tabs
+
+        #region Patients logic
 #if DEBUG
         private void Debug_SerializerTest(object sender, RoutedEventArgs e)
         {
@@ -153,11 +173,11 @@ namespace LARP.Science
             Database.Controller.SaveCharacters();
             UpdatePatientsTable();
         }
-        private async void Debug_TestDefaultOperation(object sender, RoutedEventArgs e)
+        private void Debug_TestDefaultOperation(object sender, RoutedEventArgs e)
         {
             Minesweeper.MinesweeperWindow sweeper = new Minesweeper.MinesweeperWindow(new int[] { 5, 10, 15 });
             sweeper.ShowDialog();
-            MessageBox.Show("Operation quality: " + await sweeper.Execute());
+            MessageBox.Show("Operation quality: " + sweeper.operationQuality);
         }
 #else
         private void Debug_SerializerTest(object sender, RoutedEventArgs e) { }
@@ -532,6 +552,7 @@ namespace LARP.Science
 
         #endregion
 
+        #region Journal logic
         private void ButtonJournalAddRecord_Click(object sender, RoutedEventArgs e)
         {
             if (TextBoxJournalNew.Text.Length > 0)
@@ -543,10 +564,33 @@ namespace LARP.Science
             }
         }
 
+        private void ButtonJournalRemoveRecord_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListBoxJournal.SelectedItem != null)
+                Database.Journal.RemoveRecord(ListBoxJournal.SelectedIndex);
+            Database.Journal.SaveJournal();
+            UpdateJournalBox();
+        }
+
         private void TextBoxJournalNew_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
                 ButtonJournalAddRecord_Click(sender, e);
+        }
+
+        private void ListBoxJournal_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Delete)
+                ButtonJournalRemoveRecord_Click(sender, e);
+        }
+        #endregion
+
+        #endregion
+
+        private void Adminka_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseWizard wizard = new DatabaseWizard(Database.Controller.CharactersDatabaseFile);
+            wizard.ShowDialog();
         }
     }
 }

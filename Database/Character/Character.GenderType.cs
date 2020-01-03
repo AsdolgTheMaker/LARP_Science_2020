@@ -1,11 +1,13 @@
-﻿namespace LARP.Science.Database
+﻿using System.ComponentModel;
+
+namespace LARP.Science.Database
 {
     public partial class Character
     {
         public enum GenderType
         {
-            Male, // Паркет
-            Female // Плитка (ничего не спрашивайте)
+            [Description("Мужской")] Male,
+            [Description("Женский")] Female
         }
 
         public string GetGender => GetGenderByEnum(Gender);

@@ -177,6 +177,11 @@
                         <TextBlock Text="Экономика" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
                     </Button.Content>
                 </Button>
+                <Button x:Name="Logout" HorizontalAlignment="Left" Margin="0,345,0,0" Grid.Row="2" VerticalAlignment="Top" Width="457" Height="34" Template="{StaticResource LongButton}" Grid.ColumnSpan="2" Click="Logout_Click">
+                    <TextBlock Text="Сменить учетную запись" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="14" Background="Transparent" Foreground="#FF8ED0F5" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+                <Button x:Name="Adminka" Content="АДМИНКА" Grid.Column="5" HorizontalAlignment="Left" Margin="298,359,0,0" Grid.Row="2" VerticalAlignment="Top" Width="75" Click="Adminka_Click"/>
             </Grid>
         </TabItem>
 
@@ -582,19 +587,24 @@
         <TabItem x:Name="tabJournal" Header="Journal" BorderBrush="Transparent">
             <Grid Background="#EF061829">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="245*"/>
-                    <RowDefinition Height="16*"/>
+                    <RowDefinition Height="980*"/>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="31*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="199"/>
                     <ColumnDefinition Width="1679*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnJournalBack" Grid.Row="0" Click="BtnBackToNavMenu_Click" Template="{StaticResource NavButtonDir}" Grid.RowSpan="2"/>
-                <TextBox IsReadOnly="True" x:Name="TextBoxJournal" Grid.Column="1" HorizontalAlignment="Left" Height="980" TextWrapping="Wrap" VerticalAlignment="Top" Width="1707"
-                         Background="Transparent" Foreground="#FF96B6D3" FontFamily="Lucida Console" FontSize="14" SelectionBrush="#FF98C1E2"/>
-                <TextBox x:Name="TextBoxJournalNew" Grid.Column="1" HorizontalAlignment="Left" Height="49" Margin="23,0,0,4" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="1360"
-                         Background="#FF080F17" Foreground="#FF96B6D3" KeyUp="TextBoxJournalNew_KeyUp" Grid.Row="1"/>
-                <Button x:Name="ButtonJournalAddRecord" Grid.Column="1" Margin="1388,0,10,4" Template="{StaticResource LongButton}" Click="ButtonJournalAddRecord_Click" Grid.Row="1" Height="49" VerticalAlignment="Bottom">
+                <Button x:Name="btnJournalBack" Grid.Row="0" Click="BtnBackToNavMenu_Click" Template="{StaticResource NavButtonDir}" Grid.RowSpan="3"/>
+                <ListBox x:Name="ListBoxJournal" Grid.Column="1" HorizontalAlignment="Left" Width="1707" KeyUp="ListBoxJournal_KeyUp"
+                         Background="Transparent" Foreground="#FF96B6D3" FontFamily="Lucida Console" FontSize="14" />
+                <TextBox x:Name="TextBoxJournalNew" Grid.Column="1" HorizontalAlignment="Left" Margin="23,5,0,4" TextWrapping="Wrap" Width="1360"
+                         Background="#FF080F17" Foreground="#FF96B6D3" KeyUp="TextBoxJournalNew_KeyUp" Grid.Row="1" Grid.RowSpan="2"/>
+                <Button x:Name="ButtonJournalRemoveRecord" Grid.Column="1" Margin="1388,5,10,0" Template="{StaticResource LongButton}" Click="ButtonJournalRemoveRecord_Click" Grid.Row="1">
+                    <TextBlock Text="Удалить запись" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" VerticalAlignment="Center" HorizontalAlignment="Center"
+                               Foreground="#FF96B6D3" FontSize="14"/>
+                </Button>
+                <Button x:Name="ButtonJournalAddRecord" Grid.Column="1" Margin="1388,0,10,4" Template="{StaticResource LongButton}" Click="ButtonJournalAddRecord_Click" Grid.Row="2">
                     <TextBlock Text="Добавить запись" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" VerticalAlignment="Center" HorizontalAlignment="Center"
                                Foreground="#FF96B6D3" FontSize="14"/>
                 </Button>

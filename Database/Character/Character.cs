@@ -29,10 +29,10 @@ namespace LARP.Science.Database
             get
             {
                 List<Organ> organs = Organs.Values.ToList();
-                while (organs.Contains(null))
-                    organs.Remove(null);
+                while (organs.Contains(null)) organs.Remove(null);
                 return organs;
             }
+            set => OrgansList = value;
         }
 
         public List<Augment> PrimaryAugments
@@ -78,6 +78,8 @@ namespace LARP.Science.Database
 
             // Install new augment
             organ.AugmentEquivalent = augment;
+
+            if (augment.IsReplacement) organ.Virtual = false;
 
             return removed;
         }

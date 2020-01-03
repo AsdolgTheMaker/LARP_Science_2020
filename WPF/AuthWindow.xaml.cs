@@ -33,12 +33,16 @@ namespace LARP.Science
             Login.IsEnabled = false;
             Password.IsEnabled = false;
 
-            if (await Auth())
+            if (Login.Text.Length > 0 && Password.Password.Length > 0)
             {
-                DialogResult = true;
-                Close();
+                if (await Auth())
+                {
+                    DialogResult = true;
+                    Close();
+                }
+                else WPFCustomMessageBox.CustomMessageBox.ShowOK("Не удалось авторизоваться на экономическом сервере.\nПроверьте введённые логин и пароль и попробуйте ещё раз.", "", "ОК");
             }
-            else WPFCustomMessageBox.CustomMessageBox.ShowOK("Не удалось авторизоваться на экономическом сервере.\nПроверьте введённые логин и пароль и попробуйте ещё раз.", "", "ОК");
+            else WPFCustomMessageBox.CustomMessageBox.ShowOK("Для авторизации введите логин и пароль.", "", "ОК");
 
             ButtonAuth.IsEnabled = true;
             ButtonCancel.IsEnabled = true;

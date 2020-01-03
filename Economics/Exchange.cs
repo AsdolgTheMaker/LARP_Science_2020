@@ -39,10 +39,9 @@ namespace LARP.Science.Economics
         {
             WPFCustomMessageBox.CustomMessageBox.ShowOK("Это не реализовано, ждём экономику.", "", "Блин, ладно");
         }
-        public static async Task<Database.BodyPart> TakeItem(GenericItem item)
+        public static async void TakeItem(GenericItem item)
         {
             WPFCustomMessageBox.CustomMessageBox.ShowOK("Это не реализовано, ждём экономику.", "", "Блин, ладно");
-            return new Database.Organ("", Database.Character.BodyPartSlot.SlotType.Bladder, "");
         }
 
         public static bool Auth()
