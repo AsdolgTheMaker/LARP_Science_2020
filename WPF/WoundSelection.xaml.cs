@@ -26,49 +26,49 @@ namespace LARP.Science.Operation
         #region Selection buttons event handlers
         private void ButtonBlade_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Blade;
+            selection = HealingDetails.DamageType.Blade;
             DialogResult = true;
             Close();
         }
 
         private void ButtonBlunt_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Blunt;
+            selection = HealingDetails.DamageType.Blunt;
             DialogResult = true;
             Close();
         }
 
         private void ButtonElectro_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Electro;
+            selection = HealingDetails.DamageType.Electro;
             DialogResult = true;
             Close();
         }
 
         private void ButtonBlaster_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Blaster;
+            selection = HealingDetails.DamageType.Blaster;
             DialogResult = true;
             Close();
         }
 
         private void ButtonSaber_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Saber;
+            selection = HealingDetails.DamageType.Saber;
             DialogResult = true;
             Close();
         }
 
         private void ButtonPoison_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.Poison;
+            selection = HealingDetails.DamageType.Poison;
             DialogResult = true;
             Close();
         }
 
         private void ButtonBodyHole_Click(object sender, RoutedEventArgs e)
         {
-            selection = Operation.HealingDetails.DamageType.BodyHole;
+            selection = HealingDetails.DamageType.BodyHole;
             DialogResult = true;
             Close();
         }

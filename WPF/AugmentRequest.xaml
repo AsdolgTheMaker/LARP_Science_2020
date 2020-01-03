@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:LARP.Science"
         mc:Ignorable="d"
         Title="AugmentRequest" Height="624" Width="474"
+        WindowStartupLocation="CenterOwner"
         WindowStyle="None">
     <Window.Background>
         <ImageBrush ImageSource="/LARP.Science;component/Resources/Interface/FixedSize/330x406.png" Stretch="UniformToFill"/>

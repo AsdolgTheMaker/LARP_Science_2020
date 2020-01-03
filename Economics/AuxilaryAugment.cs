@@ -19,7 +19,7 @@ namespace LARP.Science.Economics
             customParams = source.AllCustomParameters;
         }
 
-        public Augment ConvertToScienceObject() 
+        public Augment ConvertToScienceObject()
             => new Augment(name, "", description, customParams) { Id = id };
     }
 }

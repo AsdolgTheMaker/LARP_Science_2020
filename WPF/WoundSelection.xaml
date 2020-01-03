@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LARP.Science.Operation"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="WoundSelection" Height="auto" Width="585">

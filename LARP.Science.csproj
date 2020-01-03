@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -220,56 +220,71 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Bodies\Human\Male\Body.png">
+    <Content Include="Resources\Bodies\Human\Male\Body.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Head.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Body_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\LeftArm.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Body_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\LeftLeg.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Head.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\RightArm.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Head_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\RightLeg.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Head_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\LeftArm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\LeftArm_Mod.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\LeftLeg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\RightArm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\RightLeg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Bodies\Human\Male\Bladder.png">
+    <Content Include="Resources\Bodies\Human\Male\Bladder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Brain.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Brain.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Breath.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Breath.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Heart.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Heart.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Intestines.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Intestines.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Kidneys.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Kidneys.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Liver.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Liver.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Reproduction.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Reproduction.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Spleen.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Spleen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Stomach.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Stomach.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\NotFound.png">
@@ -334,66 +349,66 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Bodies\Human\Male\Bladder_Aug.png">
+    <Content Include="Resources\Bodies\Human\Male\Bladder_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Bladder_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Bladder_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Brain_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Brain_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Brain_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Brain_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Breath_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Breath_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Breath_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Breath_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Heart_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Heart_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Heart_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Heart_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Intestines_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Intestines_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Intestines_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Intestines_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Kidneys_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Kidneys_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Kidneys_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Kidneys_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Liver_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Liver_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Liver_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Liver_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Reproduction_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Reproduction_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Reproduction_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Reproduction_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Spleen_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Spleen_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Spleen_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Spleen_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Stomach_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Stomach_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\Stomach_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\Stomach_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Interface\Dead.png">
@@ -458,27 +473,24 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Bodies\Human\Male\LeftArm_Aug.png">
+    <Content Include="Resources\Bodies\Human\Male\LeftArm_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\LeftArm__Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\LeftLeg_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\LeftLeg_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\LeftLeg_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\LeftLeg_Mod.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\RightArm_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\RightArm_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\RightLeg_Aug.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\RightLeg_Aug.png">
+    </Content>
+    <Content Include="Resources\Bodies\Human\Male\RightLeg_Mod.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Human\Male\RightLeg_Mod.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ТЕЛО ЕБАТЬ.png" />
@@ -506,54 +518,54 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Bodies\Empty\Bladder.png">
+    <Content Include="Resources\Bodies\Empty\Bladder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Body.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Body.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Brain.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Brain.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Breath.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Breath.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Head.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Head.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Heart.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Heart.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Intestines.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Intestines.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Kidneys.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Kidneys.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\LeftArm.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\LeftArm.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\LeftLeg.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\LeftLeg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Liver.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Liver.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Reproduction.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Reproduction.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\RightArm.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\RightArm.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\RightLeg.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\RightLeg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Spleen.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Spleen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Bodies\Empty\Stomach.png">
+    </Content>
+    <Content Include="Resources\Bodies\Empty\Stomach.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,7 +15,7 @@ namespace LARP.Science.Database
     public partial class Organ : BodyPart
     {
         [DataMember] public Augment AugmentEquivalent = null;
-        [DataMember] public bool Virtual = false;
+        [DataMember] public bool Virtual { get; set; } = false;
 
         public bool IsAugmented => !(AugmentEquivalent == null);
 
@@ -33,11 +33,18 @@ namespace LARP.Science.Database
 
         public BitmapImage GetImage()
         {
-            string path = Virtual 
-                ? Character.BodyPartSlot.GetSlotPictureEmpty(Slot) : (IsAugmented 
-                ? (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) 
-                ? ImagePath : AugmentEquivalent.ImagePath) : ImagePath);
-            if (!File.Exists(path)) path = Character.BodyPartSlot.GetDefaultSlotPicture(Slot);
+            string path = Virtual ? Character.BodyPartSlot.GetSlotPictureEmpty(Slot) : 
+                (IsAugmented ? 
+                (string.IsNullOrEmpty(AugmentEquivalent.ImagePath) ? ImagePath : AugmentEquivalent.ImagePath) 
+                : ImagePath);
+            if (!File.Exists(path))
+            {
+                if (!IsAugmented)
+                    path = Character.BodyPartSlot.GetDefaultSlotPicture(Slot);
+                else if (AugmentEquivalent.IsReplacement)
+                    path = Character.BodyPartSlot.GetDefaultSlotPicture(Slot, 2);
+                else path = Character.BodyPartSlot.GetDefaultSlotPicture(Slot, 1);
+            }
 
             FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
             BitmapImage bitmapImage = new BitmapImage();

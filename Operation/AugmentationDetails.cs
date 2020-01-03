@@ -28,20 +28,18 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 {
-                                    Economics.Exchange.TakeItem((implant as Organ).ConvertToEjectedOrgan());
+                                    Economics.Exchange.TakeItem(implant as Organ);
                                     bool successful = Patient.InstallOrgan((implant as Organ).Slot);
                                     if (successful) Journal.AddRecord("Орган \"" + implant.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
-                                    else return false;
-                                    return true;
+                                    return successful;
                                 }
                             case AugmentationAction.Remove:
                                 {
                                     Organ ejected = Patient.EjectOrgan((target as Organ).Slot);
                                     if (ejected != null)
                                     {
-
                                         Economics.Exchange.AddItem(ejected);
-                                        Journal.AddRecord("Из пациента" + Patient.Name + " извлечён орган \"" + ejected.Name + "\" и убран на склад.", Controller.LogOutputDuringOperation);
+                                        Journal.AddRecord("Из пациента " + Patient.Name + " извлечён орган \"" + ejected.Name + "\" и убран на склад.", Controller.LogOutputDuringOperation);
                                         return true;
                                     }
                                     else return false;
@@ -56,12 +54,12 @@ namespace LARP.Science.Operation
                             case AugmentationAction.Install:
                                 {
                                     Augment ejected = Patient.InstallAugmentToOrganSlot(implant as Augment);
-                                    Economics.Exchange.TakeItem((implant as Augment).ConvertToEjectedAugment());
+                                    Economics.Exchange.TakeItem(implant as Augment);
                                     if ((implant as Augment).IsReplacement)
-                                        Journal.AddRecord("Протез \"" + implant.Name + "\" органа \"" + target.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                        Journal.AddRecord("Протез \"" + implant.Name + "\" органа \"" + implant.SlotString + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
                                     else
                                     {
-                                        Journal.AddRecord("Аугмент \"" + implant.Name + "\" для органа \"" + target.Name + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
+                                        Journal.AddRecord("Аугмент \"" + implant.Name + "\" для органа \"" + implant.SlotString + "\" установлен в пациента " + Patient.Name + ".", Controller.LogOutputDuringOperation);
                                         if (ejected != null)
                                         {
                                             Economics.Exchange.AddItem(ejected);
@@ -91,7 +89,7 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 {
-                                    Economics.Exchange.TakeItem((implant as Augment).ConvertToEjectedAugment());
+                                    Economics.Exchange.TakeItem(implant as Augment);
                                     Patient.AddAugment(implant as Augment);
                                     Journal.AddRecord("Аугмент \"" + implant.Name + "\" успешно имплантирован в пациента" + Patient.Name + ".", Controller.LogOutputDuringOperation);
                                     return true;
@@ -185,7 +183,7 @@ namespace LARP.Science.Operation
                         {
                             case AugmentationAction.Install:
                                 if (!(implant is Augment)) throw new ArgumentException();
-                                    break;
+                                break;
                             case AugmentationAction.Remove:
                                 if (!(target is Augment)) throw new ArgumentException();
                                 break;

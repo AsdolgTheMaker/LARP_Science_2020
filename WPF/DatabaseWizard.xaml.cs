@@ -36,10 +36,10 @@ namespace LARP.Science
             MemoryStream stream = new MemoryStream(File.ReadAllBytes(databaseFile)) { Position = 0 };
             chars = serializer.ReadObject(stream) as List<Character>;
 
-            foreach (Character.GenderType gender in System.Enum.GetValues(typeof(Character.GenderType)))
+            foreach (Character.GenderType gender in Enum.GetValues(typeof(Character.GenderType)))
                 BoxGender.Items.Add(gender.GetDescription());
 
-            foreach (Character.RaceType race in System.Enum.GetValues(typeof(Character.RaceType)))
+            foreach (Character.RaceType race in Enum.GetValues(typeof(Character.RaceType)))
                 BoxRace.Items.Add(race.GetDescription());
 
             BoxAlive.Items.Add("Да");
@@ -74,7 +74,7 @@ namespace LARP.Science
         {
             if (DatagridCharacters.SelectedItem is Character character)
             {
-                DatagridCharacters.Items.Remove(character);
+                chars.Remove(character);
                 UpdateGrids();
             }
         }
@@ -83,8 +83,8 @@ namespace LARP.Science
         {
             newCharacter.Name = BoxName.Text;
             newCharacter.Description = BoxDescription.Text;
-            newCharacter.Gender = AsdolgTools.CustomEnum.GetValueFromDescription<Character.GenderType>(BoxGender.Text);
-            newCharacter.Race = AsdolgTools.CustomEnum.GetValueFromDescription<Character.RaceType>(BoxRace.Text);
+            newCharacter.Gender = CustomEnum.GetValueFromDescription<Character.GenderType>(BoxGender.Text);
+            newCharacter.Race = CustomEnum.GetValueFromDescription<Character.RaceType>(BoxRace.Text);
 
             chars.Add(newCharacter);
             DefaultCharacter_Click(this, new RoutedEventArgs());
@@ -95,10 +95,11 @@ namespace LARP.Science
         {
             if (DatagridOrgans.SelectedItem is Organ organ)
             {
-                try 
+                try
                 {
                     AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, organ.Slot);
-                    new Operation.AugmentationDetails(Operation.AugmentationType.Primary, Operation.AugmentationAction.Install, _implant: augWindow.Selection).Execute();
+                    if (augWindow.ShowDialog().GetValueOrDefault(false))
+                        new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Install, _implant: augWindow.Selection).Execute();
                 }
                 catch (OperationCanceledException) { }
             }
@@ -108,7 +109,7 @@ namespace LARP.Science
         private void Deaugmentate_Click(object sender, RoutedEventArgs e)
         {
             if (DatagridOrgans.SelectedItem is Organ organ)
-                try { new Operation.AugmentationDetails(Operation.AugmentationType.Primary, Operation.AugmentationAction.Remove, _target: organ).Execute(); }
+                try { new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Remove, _target: organ).Execute(); }
                 catch (OperationCanceledException) { }
             UpdateGrids();
         }
@@ -118,6 +119,7 @@ namespace LARP.Science
             if (DatagridOrgans.SelectedItem is Organ organ)
                 if (organ.Virtual) new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Install, _implant: organ).Execute();
                 else new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Remove, _target: organ).Execute();
+            UpdateGrids();
         }
 
         private void DefaultCharacter_Click(object sender, RoutedEventArgs e)
@@ -135,6 +137,14 @@ namespace LARP.Science
         private void BoxGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void SaveDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            Controller.SetCharactersDatabase(chars);
+            Controller.SaveCharacters();
+            if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("База сохранена. Закрыть всё наконец?", "", "Да", "Нет, хочу работат") == MessageBoxResult.Yes)
+                Application.Current.Shutdown();
         }
     }
 }

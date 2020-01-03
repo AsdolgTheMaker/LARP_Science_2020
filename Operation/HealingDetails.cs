@@ -22,7 +22,7 @@ namespace LARP.Science.Operation
             MinesweeperWindow sweeper = new MinesweeperWindow(operationSetup);
             sweeper.ShowDialog();
             operationSuccess = sweeper.operationQuality;
-            
+
             if (operationSuccess == -1)
             {
                 operationSuccess = 100;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LARP.Science.Economics
 {
-    public class EjectedAugment : GenericItem 
+    public class EjectedAugment : GenericItem
     {
         public Dictionary<string, string> customParams { get; set; }
 

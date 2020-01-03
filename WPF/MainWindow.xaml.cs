@@ -57,6 +57,7 @@ namespace LARP.Science
             #endregion
         }
 
+#if ECONOMICS
         private async void Test()
         {
             var AbstractOrgans = await Economics.Exchange.GetAbstractOrgans();
@@ -66,7 +67,10 @@ namespace LARP.Science
             var UserPrimaryAugs= (await Economics.Exchange.GetUserItems(3)).Cast<Database.Augment>().ToList();
             var UserAuxilaryAugs = (await Economics.Exchange.GetUserItems(4)).Cast<Database.Augment>().ToList();
 
+            var AddItem = await Economics.Exchange.AddItem("1");
+            var TakeItem = await Economics.Exchange.TakeItem("1");
         }
+#endif
 
         #region Authentification
 
@@ -85,7 +89,6 @@ namespace LARP.Science
         private void UpdateDisplayedTables()
         {
             UpdatePatientsTable();
-            UpdateStorageTable();
             UpdateJournalBox();
         }
 
@@ -95,13 +98,6 @@ namespace LARP.Science
             datagridPatientsList.Items.Clear();
             foreach (Database.Character item in Database.Controller.GetCharacters())
                 datagridPatientsList.Items.Add(item);
-        }
-
-        private async void UpdateStorageTable()
-        {
-            datagridStorage.Items.Clear();
-            foreach (Database.BodyPart item in await Economics.Exchange.GetUserItems(0))
-                datagridStorage.Items.Add(item);
         }
 
         private void UpdateJournalBox()
@@ -125,11 +121,11 @@ namespace LARP.Science
             UpdateJournalBox();
             SwitchPage(tabJournal);
         }
-        private void BtnNavMenuStorage_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnNavMenuStorage_Click(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("https://sw.x-serv.ru/items");
+        /*{
             SwitchPage(tabStorage);
             UpdateStorageTable();
-        }
+        }*/
         private void BtnNavMenuEconomics_Click(object sender, RoutedEventArgs e) => System.Diagnostics.Process.Start("https://rpg.x-serv.ru/");
         private void BtnNavViewPatients_Click(object sender, RoutedEventArgs e)
         {
@@ -385,10 +381,12 @@ namespace LARP.Science
         private async void ButtonPatientViewHealOperationReplaceOrgan_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = WPFCustomMessageBox.CustomMessageBox.ShowYesNoCancel("Заменить повреждение органом или протезом?", "", "Орган", "Протез", "Отменить");
+            Database.Organ operatingOrgan = (DataGridPatientViewHealOperationWounds.SelectedItem as HealingDetails.Wound).Organ;
             switch (result)
             {
                 case MessageBoxResult.Yes: // Install organ
-                    List<Database.Organ> organsList = (await Economics.Exchange.GetUserItems(1, selectedOrgan.Slot)).Cast<Database.Organ>().ToList();
+                    List<Database.Organ> organsList = (await Economics.Exchange.GetUserItems(1, operatingOrgan.Slot))
+                        .Cast<Database.Organ>().ToList();
                     if (organsList.Count <= 0)
                     {
                         if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("К сожалению, на складе нет подходящих органов. Просмотреть протезы?", "", "Да", "Нет, отменить")
@@ -400,20 +398,31 @@ namespace LARP.Science
                         if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("Есть подходящий орган. Провести установку?", "", "Да", "Нет, отменить")
                             == MessageBoxResult.Yes)
                         {
-                            AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Install, _implant: organsList[0]);
-                            augmentation.Execute();
+                            if (operatingOrgan.IsAugmented) new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Remove, _target: operatingOrgan).Execute();
+                            new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Remove, _target: operatingOrgan).Execute();
+                            new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Install, _implant: organsList[0]).Execute();
+                            Database.Controller.SaveCharacters();
+                            DisplayCharacter();
+
+                            if (DataGridPatientViewHealOperationWounds.SelectedItem is HealingDetails.Wound)
+                                wounds.RemoveAll((HealingDetails.Wound wound) => { return wound.OrganSlot == operatingOrgan.SlotString; });
+                            UpdateDataGridPatientViewHealOperationData();
                         }
                     }
                     break;
                 case MessageBoxResult.No: // Install augment
-                    AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, selectedOrgan.Slot);
+                    AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, operatingOrgan.Slot, true);
                     bool requestResult = augWindow.ShowDialog().GetValueOrDefault(false);
                     if (requestResult)
                     {
                         AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Install, _implant: augWindow.Selection);
                         augmentation.Execute();
+                        Database.Controller.SaveCharacters();
+                        DisplayCharacter();
+
+                        if (DataGridPatientViewHealOperationWounds.SelectedItem is HealingDetails.Wound)
+                            wounds.RemoveAll((HealingDetails.Wound wound) => { return wound.OrganSlot == selectedOrgan.SlotString; });
                     }
-                    else WPFCustomMessageBox.CustomMessageBox.ShowOK("Установка протеза отменена.", "", "ОК");
                     break;
             }
         }
@@ -426,7 +435,7 @@ namespace LARP.Science
             HealingDetails operation = new HealingDetails(damages);
             operation.Execute();
 
-            
+
 
             SwitchOperationMode(OrganClickAction.DisplayOrganInfo);
         }
@@ -449,7 +458,7 @@ namespace LARP.Science
         #endregion
         #region Patient View - Augmentation buttons
         private void ButtonRemoveOrgan_Click(object sender, RoutedEventArgs e) => SwitchOperationMode(OrganClickAction.RemoveOrgan);
-        
+
         private void ButtonAugmentateOrgan_Click(object sender, RoutedEventArgs e) => SwitchOperationMode(OrganClickAction.AugmentateOrgan);
 
         private void ButtonCancelGenericOperation_Click(object sender, RoutedEventArgs e) => SwitchOperationMode(OrganClickAction.DisplayOrganInfo);
@@ -460,7 +469,7 @@ namespace LARP.Science
             switch (result)
             {
                 case MessageBoxResult.Yes: // Install organ
-                    List<Database.Organ> organsList = (await Economics.Exchange.GetUserItems(1, selectedOrgan.Slot)).Cast<Database.Organ>().ToList();
+                    List<Database.Organ> organsList = (await Economics.Exchange.GetUserItems(1, selectedOrgan.Slot, selectedOrgan.Race)).Cast<Database.Organ>().ToList();
                     if (organsList.Count <= 0)
                     {
                         if (WPFCustomMessageBox.CustomMessageBox.ShowYesNo("К сожалению, на складе нет подходящих органов. Просмотреть протезы?", "", "Да", "Нет, отменить")
@@ -474,18 +483,21 @@ namespace LARP.Science
                         {
                             AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Organ, AugmentationAction.Install, _implant: organsList[0]);
                             augmentation.Execute();
+                            Database.Controller.SaveCharacters();
+                            DisplayCharacter();
                         }
                     }
                     break;
                 case MessageBoxResult.No: // Install augment
-                    AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, selectedOrgan.Slot);
+                    AugmentRequest augWindow = await AugmentRequest.CreateInstance(1, selectedOrgan.Slot, true);
                     bool requestResult = augWindow.ShowDialog().GetValueOrDefault(false);
                     if (requestResult)
                     {
                         AugmentationDetails augmentation = new AugmentationDetails(AugmentationType.Primary, AugmentationAction.Install, _implant: augWindow.Selection);
                         augmentation.Execute();
+                        Database.Controller.SaveCharacters();
+                        DisplayCharacter();
                     }
-                    else WPFCustomMessageBox.CustomMessageBox.ShowOK("Установка протеза отменена.", "", "ОК");
                     break;
             }
         }
@@ -495,7 +507,6 @@ namespace LARP.Science
             AugmentRequest augWindow = await AugmentRequest.CreateInstance(2);
             bool result = augWindow.ShowDialog().GetValueOrDefault(false);
             if (result) new AugmentationDetails(AugmentationType.Auxilary, AugmentationAction.Install, _implant: augWindow.Selection).Execute();
-            else WPFCustomMessageBox.CustomMessageBox.ShowOK("Установка импланта отменена.", "", "ОК");
         }
 
         private void ButtonPatientViewRemoveImplant_Click(object sender, RoutedEventArgs e)

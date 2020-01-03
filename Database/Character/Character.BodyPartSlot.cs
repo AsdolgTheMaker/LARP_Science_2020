@@ -67,8 +67,8 @@ namespace LARP.Science.Database
                 else return Controller.UnknownDataTemplate;
             }
 
-            internal static string GetDefaultSlotPicture(SlotType? slot)
-                => slot == null ? Controller.NotFoundImagePath : GetSlotPicture(slot, RaceType.Human, GenderType.Male);
+            internal static string GetDefaultSlotPicture(SlotType? slot, byte augLevel = 0)
+                => slot == null ? Controller.NotFoundImagePath : GetSlotPicture(slot, RaceType.Human, GenderType.Male, augLevel);
 
             internal static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender, byte augLevel)
             {
@@ -96,6 +96,15 @@ namespace LARP.Science.Database
             internal static string GetSlotPicture(SlotType? slot, RaceType race, GenderType gender)
                 => GetSlotPicture(slot, race, gender, 0);
             #endregion
+
+            internal static List<SlotType> Obligatories = new List<SlotType>()
+            {
+                SlotType.Body,
+                SlotType.Head,
+                SlotType.Brain,
+                SlotType.Heart,
+                SlotType.Breath
+            };
 
             internal static readonly IReadOnlyDictionary<SlotType, string> PresetDescriptions = new Dictionary<SlotType, string>()
             {

@@ -86,7 +86,7 @@ namespace LARP.Science.Database
 
         public Organ EjectOrgan(BodyPartSlot.SlotType? slot)
         {
-            if (slot == null) return null;
+            if (slot == null) throw new InvalidOperationException("Критическая ошибка базы данных: обнаружен пустой слот.");
 
             Organ removed = GetOrgan(slot);
             Organs[slot].Virtual = true;

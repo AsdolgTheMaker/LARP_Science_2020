@@ -169,7 +169,7 @@ namespace LARP.Science.Database
                 Character.BodyPartSlot.SlotType.LeftLeg, tempContainer.Race, tempContainer.Gender,
                 new Dictionary<string, string>() { ["Полная замена"] = "Первичный орган полностью удалён и заменён протезом." }));
             tempContainer.InstallAugmentToOrganSlot(new Augment("Протезы пальцев", "Пальцы заменили :(", Character.BodyPartSlot.SlotType.RightArm, Character.RaceType.Human, Character.GenderType.Male));
-            
+
             // Human with fully replaced body
             tempContainer = new Character(name: "Терминатор", gender: Character.GenderType.Male,
                 race: Character.RaceType.Human,
@@ -223,11 +223,11 @@ namespace LARP.Science.Database
                 Character.BodyPartSlot.SlotType.Reproduction, tempContainer.Race, tempContainer.Gender,
                 new Dictionary<string, string>() { ["Полная замена"] = "Первичный орган полностью удалён и заменён протезом." }));
 
-            tempContainer.AddAugment(new Augment("Плечевая аннигиляторная пушка", "Рубит с плеча.", "", 
-                new Dictionary<string, string>() 
-                { 
+            tempContainer.AddAugment(new Augment("Плечевая аннигиляторная пушка", "Рубит с плеча.", "",
+                new Dictionary<string, string>()
+                {
                     ["Круговой угол обзора"] = "Пушка может проворачиваться на 360 градусов, т.е. вести огонь в любом направлении.",
-                    ["Складной механизм"] = "Есть возможность сложить пушку, когда она не используется, чтобы не нервировать окружающих." 
+                    ["Складной механизм"] = "Есть возможность сложить пушку, когда она не используется, чтобы не нервировать окружающих."
                 }));
 
             //Economics.Exchange.AddItem(new Organ("Кусок плоти", Character.BodyPartSlot.SlotType.Bladder, ""));

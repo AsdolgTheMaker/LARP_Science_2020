@@ -177,7 +177,7 @@
                         <TextBlock Text="Экономика" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="22" Margin="0,126,0,128" Background="#99000000" Foreground="#FF8ED0F5" />
                     </Button.Content>
                 </Button>
-                <Button x:Name="Logout" HorizontalAlignment="Left" Margin="0,345,0,0" Grid.Row="2" VerticalAlignment="Top" Width="457" Height="34" Template="{StaticResource LongButton}" Grid.ColumnSpan="2" Click="Logout_Click">
+                <Button x:Name="Logout" Grid.Row="2" VerticalAlignment="Top" Height="34" Template="{StaticResource LongButton}" Grid.ColumnSpan="4" Click="Logout_Click" Grid.Column="1">
                     <TextBlock Text="Сменить учетную запись" TextAlignment="Center" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" FontSize="14" Background="Transparent" Foreground="#FF8ED0F5" 
                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Button>
@@ -518,17 +518,21 @@
                         <Button Template="{StaticResource LongButton}" x:Name="DEBUG_TestDefaultOperation" Content="Test default operation" Click="Debug_TestDefaultOperation" Visibility="Collapsed"/>
                     </UniformGrid>
                 </GroupBox>
-                <GroupBox Visibility="Collapsed" x:Name="groupBoxPrepareHealOperation" Grid.Column="1" Grid.Row="3" Margin="10,10,0,10" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Grid.ColumnSpan="2"
+                <GroupBox Visibility="Visible" x:Name="groupBoxPrepareHealOperation" Grid.Column="1" Grid.Row="3" Margin="10,10,0,10" FontFamily="/LARP.Science;component/Resources/#NFSCarbon(FONT BY LYAJKA)" Grid.ColumnSpan="2"
                           Background="#FFA2C4D1" Foreground="White" FontSize="14">
                     <GroupBox.Header>
                         <TextBlock Text="Подготовка   к операции" Background="#CC000000" Foreground="#FF99ECFF"/>
                     </GroupBox.Header>
                     <Grid>
-                        <Button x:Name="ButtonPatientViewHealOperationCancel" Margin="0,217,606,-2" FontFamily="Lucida Console" FontSize="14" Foreground="#FFDC3232" Click="ButtonPatientViewHealOperationCancel_Click"
-                                Template="{StaticResource LongButton}">
-                            <TextBlock Text="Отменить   операцию" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="213*"/>
+                            <RowDefinition Height="53*"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="ButtonPatientViewHealOperationCancel" Margin="0,0,606,-2" FontFamily="Lucida Console" FontSize="14" Foreground="#FFDC3232" Click="ButtonPatientViewHealOperationCancel_Click"
+                                Template="{StaticResource LongButton}" Grid.Row="1">
+                            <TextBlock Text="Отменить операцию" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Button>
-                        <DataGrid x:Name="DataGridPatientViewHealOperationWounds" AutoGenerateColumns="False" Margin="0,0,0,49" SelectionChanged="DataGridPatientViewHealOperationWounds_SelectionChanged"
+                        <DataGrid x:Name="DataGridPatientViewHealOperationWounds" AutoGenerateColumns="False" Margin="0,0,0,1" SelectionChanged="DataGridPatientViewHealOperationWounds_SelectionChanged"
                                   SelectionMode="Single" IsReadOnly="True" FontFamily="Lucida Console" FontSize="14" Foreground="#FF191532" Background="#FF5C7A8B">
                             <DataGrid.BorderBrush>
                                 <SolidColorBrush Opacity="75" Color="AliceBlue"/>
@@ -561,17 +565,17 @@
                                 </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button x:Name="ButtonPatientViewHealOperationBegin" Margin="610,217,0,-2" FontFamily="Lucida Console" FontSize="12" Click="ButtonPatientViewHealOperationBegin_Click"
-                                Template="{StaticResource LongButton}">
+                        <Button x:Name="ButtonPatientViewHealOperationBegin" Margin="610,0,0,-2" FontFamily="Lucida Console" FontSize="12" Click="ButtonPatientViewHealOperationBegin_Click"
+                                Template="{StaticResource LongButton}" Grid.Row="1">
                             <TextBlock Text="Приступить" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#FF5FABEA"/>
                         </Button>
-                        <Button x:Name="ButtonPatientViewHealOperationReplaceOrgan" Margin="437,217,258,-2" Click="ButtonPatientViewHealOperationReplaceOrgan_Click"
-                                Template="{StaticResource LongButton}">
-                            <TextBlock Text="Устранить повреждение заменой органа" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#FF5FABEA" 
+                        <Button x:Name="ButtonPatientViewHealOperationReplaceOrgan" Margin="437,0,258,-2" Click="ButtonPatientViewHealOperationReplaceOrgan_Click"
+                                Template="{StaticResource LongButton}" Grid.Row="1">
+                            <TextBlock Text="Заменить повреждённый орган" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="#FF5FABEA" 
                                        FontFamily="Lucida Console" TextWrapping="Wrap" TextAlignment="Center"/>
                         </Button>
-                        <Button x:Name="ButtonPatientViewHealOperationRemoveWound" Margin="262,217,431,-2" Click="ButtonPatientViewHealOperationRemoveWound_Click"
-                                Template="{StaticResource LongButton}">
+                        <Button x:Name="ButtonPatientViewHealOperationRemoveWound" Margin="262,0,431,-2" Click="ButtonPatientViewHealOperationRemoveWound_Click"
+                                Template="{StaticResource LongButton}" Grid.Row="1">
                             <TextBlock Text="Удалить ранение из списка" TextWrapping="Wrap" TextAlignment="Center" FontFamily="Lucida Console" FontSize="14" Foreground="#FF5FABEA"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Button>

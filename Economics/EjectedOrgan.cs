@@ -10,7 +10,7 @@ namespace LARP.Science.Economics
 {
     public class EjectedOrgan : GenericItem
     {
-        public string slot { get; set; } 
+        public string slot { get; set; }
         public string race { get; set; }
         public Character.GenderType? gender { get; set; }
         public Character.GenderType genderInverted
@@ -41,7 +41,7 @@ namespace LARP.Science.Economics
             return new Organ(name, Slot,
                 Character.BodyPartSlot.GetSlotPicture(Slot, CustomEnum.GetValueFromDescription<Character.RaceType>(race), genderInverted),
                 description)
-            { 
+            {
                 Id = id,
                 Gender = genderInverted,
                 Race = CustomEnum.GetValueFromDescription<Character.RaceType>(race)

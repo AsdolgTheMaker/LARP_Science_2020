@@ -66,7 +66,7 @@ namespace LARP.Science
         }
 
         /// <param name="Type">0 - all, 1 - primary, 2 - auxilary</param>
-        public static async Task<AugmentRequest> CreateInstance(int Type, Database.Character.BodyPartSlot.SlotType? Slot = null)
+        public static async Task<AugmentRequest> CreateInstance(int Type, Database.Character.BodyPartSlot.SlotType? Slot = null, bool seekReplacements = false)
         {
             AugmentRequest window = new AugmentRequest();
             if (Type <= 0) // request all
@@ -75,6 +75,10 @@ namespace LARP.Science
                 window.AugsOnStorage = (await Economics.Exchange.GetUserItems(3, Slot)).Cast<Database.Augment>().ToList();
             else if (Type == 2) // request auxilary
                 window.AugsOnStorage = (await Economics.Exchange.GetUserItems(4, Slot)).Cast<Database.Augment>().ToList();
+
+            if (seekReplacements)
+                window.AugsOnStorage.RemoveAll((Database.Augment augment) => { return !augment.IsReplacement; });
+
             foreach (Database.Augment aug in window.AugsOnStorage)
                 window.DataGridList.Items.Add(aug);
             return window;
